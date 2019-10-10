@@ -4,9 +4,12 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class Item implements Serializable{
@@ -19,6 +22,8 @@ public class Item implements Serializable{
 	public static final int ON_DUE = 4;
 	private static final long serialVersionUID = 1L;
 	@Id
+	@GenericGenerator(name = "sequence_pr_id", strategy = "generators.MyGenerator")
+	@GeneratedValue(generator = "sequence_pr_id")
 	@Column(name="ItemID")
 	private String itemID;
 	@ManyToOne

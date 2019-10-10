@@ -6,12 +6,14 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.GenericGenerator;
 @Entity
 public class Rental implements Serializable{
 	/**
@@ -19,6 +21,8 @@ public class Rental implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
+	@GenericGenerator(name = "sequence_pr_id", strategy = "generators.MyGenerator")
+	@GeneratedValue(generator = "sequence_pr_id")
 	@Column(name="RentalID")
 	private String rentalID;
 	@ManyToOne

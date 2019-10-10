@@ -1,11 +1,13 @@
 package entities;
 
 import java.io.Serializable;
-import java.time.LocalTime;
-
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
+import org.hibernate.annotations.GenericGenerator;
 @Entity
 public class Title implements Serializable{
 	/**
@@ -13,16 +15,18 @@ public class Title implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
+	@GenericGenerator(name = "sequence_pr_id", strategy = "generators.MyGenerator")
+	@GeneratedValue(generator = "sequence_pr_id")
 	@Column(name="TitleID")
 	private String titleID;
 	private String titleName;
 	private double rentalRate;
-	private LocalTime rentalPeriod;
+	private LocalDate rentalPeriod;
 	
 	public Title() {
 		super();
 	}
-	public Title(String titleName, double rentalRate, LocalTime rentalPeriod) {
+	public Title(String titleName, double rentalRate, LocalDate rentalPeriod) {
 		super();
 		this.titleName = titleName;
 		this.rentalRate = rentalRate;
@@ -40,10 +44,10 @@ public class Title implements Serializable{
 	public void setRentalRate(double rentalRate) {
 		this.rentalRate = rentalRate;
 	}
-	public LocalTime getRentalPeriod() {
+	public LocalDate getRentalPeriod() {
 		return rentalPeriod;
 	}
-	public void setRentalPeriod(LocalTime rentalPeriod) {
+	public void setRentalPeriod(LocalDate rentalPeriod) {
 		this.rentalPeriod = rentalPeriod;
 	}
 	

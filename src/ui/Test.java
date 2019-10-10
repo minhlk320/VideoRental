@@ -1,6 +1,7 @@
 package ui;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Arrays;
 
 import daos.CustomerDAO;
@@ -16,18 +17,14 @@ import entities.Title;
 public class Test {
 
 	public static void main(String[] args) {
+		
 		Title title = new Title("Avatar", 4.0, null);
-		title.setTitleID("1");
 		Item item = new Item(title, Item.ON_SHELF);
-		item.setItemID("1");
 		Customer customer = new Customer("Minh", "Truong", "DN", "0987654321");
-				customer.setCustomerID("1");
 		Rental rental = new Rental(LocalDate.now());
 		rental.setCustomer(customer);
-		rental.setRentalID("1");
 		RentalDetail detail = new RentalDetail(rental, item, 6.0);
 		rental.setItems(Arrays.asList(detail));
-		
 		System.out.println(rental);
 		CustomerDAO customerDAO = new CustomerDAO();
 		TitleDAO titleDAO = new TitleDAO();
@@ -38,7 +35,10 @@ public class Test {
 		titleDAO.save(title);
 		itemDAO.save(item);
 		rentalDAO.save(rental);
-		System.out.println(customerDAO.getAll(Customer.class));
+		System.out.println(titleDAO.getAll(Title.class));
+		LocalTime l0 = LocalTime.of(4,20);
+		LocalTime l1 = LocalTime.now();
+		System.out.println(l1.getHour()+l1.getMinute()/60f);
 
 	}
 

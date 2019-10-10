@@ -35,6 +35,7 @@ public class Main extends Application{
 	public static void initLayout() throws IOException{
 
 		listUI.put("Home", "/resources/fxml/Home.fxml");
+		listUI.put("CustomerManagement", "/resources/fxml/CustomerManagement.fxml");
 		newWindow("Home", "Main Menus");
 
 	}

@@ -16,8 +16,8 @@ public class Customer implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-	//@GenericGenerator(name = "sequence_pr_id", strategy = "generator.MyGenerator")
-	//@GeneratedValue(generator = "sequence_pr_id")
+	@GenericGenerator(name = "sequence_pr_id", strategy = "generators.MyGenerator")
+	@GeneratedValue(generator = "sequence_pr_id")
 	@Column(name = "CustomerID")
 	private String customerID;
 	private String firstName;
