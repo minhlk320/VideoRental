@@ -11,6 +11,7 @@ import entities.Item;
 import entities.ItemClass;
 import entities.LateCharge;
 import entities.Rental;
+import entities.Reservation;
 import entities.Title;
 
 public class MyGenerator implements IdentifierGenerator {
@@ -21,6 +22,7 @@ public class MyGenerator implements IdentifierGenerator {
 	private String prefixItem = "ITMNo";
 	private String prefixItemClass = "CLASSNo";
 	private	String prefixLateCharge = "LATENo";
+	private String prefixReservation = "PRESERNo";
 	@Override
 	public Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {
 
@@ -36,13 +38,15 @@ public class MyGenerator implements IdentifierGenerator {
 			return genID(prefixItemClass, "ItemClass", session);
 		if(object.getClass().getName()==(LateCharge.class.getName()))
 			return genID(prefixLateCharge, "LateCharge", session);
+		if(object.getClass().getName()==(Reservation.class.getName()))
+			return genID(prefixReservation , "Reservation", session);
 		else
 			return null;
 		
 	}
 
 	private String genID(String pre, String name, SharedSessionContractImplementor session) {
-		String query = "SELECT e.id FROM " + name+" e";
+		String query = "SELECT e.id FROM " + name +" e";
 		Stream<String> ids = session.createQuery(query, String.class).stream();
 		Long max = ids.map(o -> o.replace(pre, "")).mapToLong(Long::parseLong).max().orElse(0L);
 		return pre + (String.format("%06d", max + 1));
