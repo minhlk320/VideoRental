@@ -88,7 +88,6 @@ public class TitleManagementController implements Initializable {
 		colTitle.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getTitleName()));
 		colDescription.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getDesciption()));
 		colNumOfCopies.setCellValueFactory((celldata->new SimpleStringProperty("0")));
-		
 		table.setItems(tkList);
 				table.setOnMousePressed(e->{
 					if(e.isPrimaryButtonDown() && e.getClickCount()==1) {

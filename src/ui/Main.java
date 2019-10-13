@@ -1,23 +1,21 @@
 package ui;
 import java.io.IOException;
 import java.util.HashMap;
+
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.concurrent.Task;
-import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 public class Main extends Application{
 	private static Stage primaryStage;
 	private static HashMap<String, String> listUI = new HashMap<>();
-	private static Stage stage;
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Main.primaryStage = primaryStage;
@@ -56,20 +54,22 @@ public class Main extends Application{
 		}
 
 	}
-	
+
 	public static void newWindow(String mapName, String titlename) {
 		try {
 
 			Stage stage = new Stage();
 			Parent root = loadFXML(listUI.get(mapName)).load();
+			Scene scene = new Scene(root);
+			scene.setFill(Color.TRANSPARENT);
 			stage.getIcons().add(new Image("/resources/img/icon.png"));
 			stage.setResizable(true);
 			stage.setTitle(titlename);
-			stage.setScene(new Scene(root));
+			stage.setScene(scene);
 			stage.initModality(Modality.WINDOW_MODAL);
 			stage.initStyle(StageStyle.DECORATED);
 			if(mapName=="Loading")
-			stage.initStyle(StageStyle.UNDECORATED);
+				stage.initStyle(StageStyle.TRANSPARENT);
 			stage.show();
 
 		} catch (final IOException e) {
