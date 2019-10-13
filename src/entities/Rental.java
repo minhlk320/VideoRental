@@ -28,17 +28,17 @@ public class Rental implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "CustomerID")
 	private Customer customer;
-	private LocalDate date;
+	private LocalDate rentalDate;
 	@OneToMany(mappedBy = "rental")
 	@Cascade(value = { org.hibernate.annotations.CascadeType.ALL })
-	private List<RentalDetail> details;
+	private List<RentalDetail> rentalDetails;
 	
 	public Rental() {
 		super();
 	}
 	public Rental(LocalDate date) {
 		super();
-		this.date = date;
+		this.rentalDate = date;
 	}
 	public String getRentalID() {
 		return rentalID;
@@ -53,16 +53,16 @@ public class Rental implements Serializable{
 		this.customer = customer;
 	}
 	public LocalDate getDate() {
-		return date;
+		return rentalDate;
 	}
 	public void setDate(LocalDate date) {
-		this.date = date;
+		this.rentalDate = date;
 	}
 	public List<RentalDetail> getItems() {
-		return details;
+		return rentalDetails;
 	}
 	public void setItems(List<RentalDetail> items) {
-		this.details = items;
+		this.rentalDetails = items;
 	}
 	@Override
 	public int hashCode() {
@@ -89,7 +89,7 @@ public class Rental implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "Rental [rentalID=" + rentalID + ", customer=" + customer + ", date=" + date + ", items=" + details + "]";
+		return "Rental [rentalID=" + rentalID + ", customer=" + customer + ", date=" + rentalDate + ", items=" + rentalDetails + "]";
 	}
 	
 	

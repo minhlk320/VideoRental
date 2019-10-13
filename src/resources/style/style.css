@@ -241,3 +241,7 @@
 .data-picker{
 	
 }
+.back {
+	-fx-background-image:url('../img/loading_background.png');
+	-fx-background-size:cover;
+}

@@ -36,7 +36,9 @@ public class Main extends Application{
 
 		listUI.put("Home", "/resources/fxml/Home.fxml");
 		listUI.put("CustomerManagement", "/resources/fxml/CustomerManagement.fxml");
-		newWindow("Home", "Main Menus");
+		listUI.put("TitleManagement", "/resources/fxml/TitleManagement.fxml");
+		listUI.put("Loading", "/resources/fxml/Loading.fxml");
+		newWindow("Loading", "Loading");
 
 	}
 	public static FXMLLoader loadFXML(String url) {
@@ -66,6 +68,8 @@ public class Main extends Application{
 			stage.setScene(new Scene(root));
 			stage.initModality(Modality.WINDOW_MODAL);
 			stage.initStyle(StageStyle.DECORATED);
+			if(mapName=="Loading")
+			stage.initStyle(StageStyle.UNDECORATED);
 			stage.show();
 
 		} catch (final IOException e) {
