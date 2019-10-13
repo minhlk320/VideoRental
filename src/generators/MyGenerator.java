@@ -8,15 +8,19 @@ import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.IdentifierGenerator;
 import entities.Customer;
 import entities.Item;
+import entities.ItemClass;
+import entities.LateCharge;
 import entities.Rental;
 import entities.Title;
 
 public class MyGenerator implements IdentifierGenerator {
 
-	String prefixRental = "RETZNo";
-	String prefixCustomer = "CUSNo";
-	String prefixTitle = "TTLNo";
-	String prefixItem = "ITMNo";
+	private String prefixRental = "RETZNo";
+	private String prefixCustomer = "CUSNo";
+	private String prefixTitle = "TTLNo";
+	private String prefixItem = "ITMNo";
+	private String prefixItemClass = "CLASSNo";
+	private	String prefixLateCharge = "LATENo";
 	@Override
 	public Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {
 
@@ -28,8 +32,13 @@ public class MyGenerator implements IdentifierGenerator {
 			return genID(prefixTitle, "Title", session);
 		if(object.getClass().getName()==(Item.class.getName()))
 			return genID(prefixItem, "Item", session);
+		if(object.getClass().getName()==(ItemClass.class.getName()))
+			return genID(prefixItemClass, "ItemClass", session);
+		if(object.getClass().getName()==(LateCharge.class.getName()))
+			return genID(prefixLateCharge, "LateCharge", session);
 		else
 			return null;
+		
 	}
 
 	private String genID(String pre, String name, SharedSessionContractImplementor session) {

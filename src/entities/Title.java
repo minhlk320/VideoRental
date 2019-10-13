@@ -1,7 +1,7 @@
 package entities;
 
+import java.io.File;
 import java.io.Serializable;
-import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,36 +20,43 @@ public class Title implements Serializable{
 	@Column(name="TitleID")
 	private String titleID;
 	private String titleName;
-	private double rentalRate;
-	private LocalDate rentalPeriod;
+	private String description;
+	private File imange;
 	
 	public Title() {
 		super();
 	}
-	public Title(String titleName, double rentalRate, LocalDate rentalPeriod) {
+
+	public Title(String titleName, String description, File imange) {
 		super();
 		this.titleName = titleName;
-		this.rentalRate = rentalRate;
-		this.rentalPeriod = rentalPeriod;
+		this.description = description;
+		this.imange = imange;
 	}
+
+	public String getDesciption() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public File getImange() {
+		return imange;
+	}
+
+	public void setImange(File imange) {
+		this.imange = imange;
+	}
+
 	public String getTitleName() {
 		return titleName;
 	}
 	public void setTitleName(String titleName) {
 		this.titleName = titleName;
 	}
-	public double getRentalRate() {
-		return rentalRate;
-	}
-	public void setRentalRate(double rentalRate) {
-		this.rentalRate = rentalRate;
-	}
-	public LocalDate getRentalPeriod() {
-		return rentalPeriod;
-	}
-	public void setRentalPeriod(LocalDate rentalPeriod) {
-		this.rentalPeriod = rentalPeriod;
-	}
+	
 	
 	public String getTitleID() {
 		return titleID;
@@ -80,11 +87,12 @@ public class Title implements Serializable{
 			return false;
 		return true;
 	}
+
 	@Override
 	public String toString() {
-		return "Title [titleID=" + titleID + ", titleName=" + titleName + ", rentalRate=" + rentalRate
-				+ ", rentalPeriod=" + rentalPeriod + "]";
+		return "Title [titleID=" + titleID + ", titleName=" + titleName + ", description=" + description + "]";
 	}
+	
 	
 
 }

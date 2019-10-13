@@ -9,26 +9,27 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import ui.Main;
 
 public class HomeController implements Initializable{
 
-    @FXML
+	@FXML
     private JFXButton btnCustomers;
 
     @FXML
     private FontAwesomeIcon btnProcess;
 
     @FXML
-    private FontAwesomeIcon btnRentalItems;
+    private JFXButton btnRentalItems;
 
     @FXML
-    private FontAwesomeIcon btnSettings;
+    private JFXButton btnSettings;
 
     @FXML
-    private FontAwesomeIcon btnReturn;
+    private JFXButton btnReturn;
 
     @FXML
-    private FontAwesomeIcon btnReport;
+    private JFXButton btnReport;
 
     @FXML
     private TableView<?> table;
@@ -50,8 +51,11 @@ public class HomeController implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
-		
+		btnRentalItems.setOnAction(e->{
+			
+			Main.newWindow("TitleManagement", "Title Management");
+			Main.closeWindow(e.getSource());
+		});
 	}
 
 }

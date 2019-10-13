@@ -30,10 +30,15 @@ public class Item implements Serializable{
 	@JoinColumn(name = "TitleID")
 	private Title title;
 	private int status;
-	public Item(Title title, int status) {
+	@ManyToOne
+	@JoinColumn(name = "ItemClassID")
+	private ItemClass itemClass;
+	
+	public Item(Title title, int status, ItemClass itemClass) {
 		super();
 		this.title = title;
 		this.status = status;
+		this.itemClass = itemClass;
 	}
 	public Item() {
 		super();
@@ -57,6 +62,13 @@ public class Item implements Serializable{
 		this.itemID = itemID;
 	}
 	
+	
+	public ItemClass getItemClass() {
+		return itemClass;
+	}
+	public void setItemClass(ItemClass itemClass) {
+		this.itemClass = itemClass;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;

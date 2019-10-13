@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #3763a0;" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TitleManagementController">
+   <children>
+      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="4.0">
+         <top>
+            <VBox alignment="CENTER" prefHeight="57.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label prefHeight="21.0" prefWidth="1593.0" style="-fx-font-size: 23;" text="Video Rental Store">
+                     <font>
+                        <Font name="System Bold" size="27.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="12.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label layoutX="10.0" layoutY="10.0" prefHeight="36.0" prefWidth="1604.0" stylesheets="@../style/style.css" text="Title Management">
+                     <font>
+                        <Font name="System Bold" size="27.0" />
+                     </font>
+                  </Label>
+               </children>
+               <BorderPane.margin>
+                  <Insets left="12.0" />
+               </BorderPane.margin>
+            </VBox>
+         </top>
+         <center>
+            <AnchorPane>
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="421.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="12.0">
+                     <children>
+                        <VBox layoutX="10.0" layoutY="10.0" prefHeight="598.0" prefWidth="598.0">
+                           <children>
+                              <TextField fx:id="txtTitleID" editable="false" focusTraversable="false" layoutX="10.0" layoutY="10.0" promptText="No." style="-fx-background-color: #4f81bc;">
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </TextField>
+                              <BorderPane prefHeight="454.0" prefWidth="450.0">
+                                 <center>
+                                    <ImageView fx:id="imageView" fitHeight="270.0" fitWidth="189.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                                       <image>
+                                          <Image url="@../img/default_poster.jpg" />
+                                       </image>
+                                    </ImageView>
+                                 </center>
+                                 <bottom>
+                                    <JFXButton fx:id="btnChoose" contentDisplay="TOP" focusTraversable="false" prefHeight="30.0" prefWidth="98.0" text="Choose" BorderPane.alignment="CENTER">
+                                       <BorderPane.margin>
+                                          <Insets top="12.0" />
+                                       </BorderPane.margin>
+                                    </JFXButton>
+                                 </bottom>
+                                 <VBox.margin>
+                                    <Insets top="12.0" />
+                                 </VBox.margin>
+                              </BorderPane>
+                              <TextField fx:id="txtTitle" focusTraversable="false" promptText="Title" style="-fx-background-color: #4f81bc;">
+                                 <VBox.margin>
+                                    <Insets top="24.0" />
+                                 </VBox.margin>
+                              </TextField>
+                              <Text fx:id="lbTitle" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="txtTitle" />
+                              <TextField fx:id="txtDescription" focusTraversable="false" promptText="Description" style="-fx-background-color: #4f81bc;">
+                                 <VBox.margin>
+                                    <Insets top="24.0" />
+                                 </VBox.margin>
+                              </TextField>
+                              <Text fx:id="lbDescription" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="txtLname" />
+                              <AnchorPane prefHeight="397.0" prefWidth="450.0">
+                                 <children>
+                                    <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <JFXButton fx:id="btnBack" contentDisplay="TOP" focusTraversable="false" prefHeight="50.0" prefWidth="245.0" text="Back">
+                                             <graphic>
+                                                <FontAwesomeIcon fill="WHITE" glyphName="ARROW_LEFT" />
+                                             </graphic>
+                                             <HBox.margin>
+                                                <Insets right="12.0" />
+                                             </HBox.margin>
+                                          </JFXButton>
+                                          <JFXButton fx:id="btnNew" contentDisplay="TOP" focusTraversable="false" prefHeight="50.0" prefWidth="245.0" text="New">
+                                             <graphic>
+                                                <FontAwesomeIcon fill="WHITE" glyphName="PLUS" />
+                                             </graphic>
+                                             <HBox.margin>
+                                                <Insets right="12.0" />
+                                             </HBox.margin>
+                                          </JFXButton>
+                                          <JFXButton fx:id="btnSave" contentDisplay="TOP" focusTraversable="false" prefHeight="50.0" prefWidth="245.0" text="Save">
+                                             <graphic>
+                                                <FontAwesomeIcon fill="WHITE" glyphName="SAVE" />
+                                             </graphic>
+                                             <HBox.margin>
+                                                <Insets right="12.0" />
+                                             </HBox.margin>
+                                          </JFXButton>
+                                          <JFXButton fx:id="btnDelete" contentDisplay="TOP" focusTraversable="false" prefHeight="50.0" prefWidth="245.0" text="Delete">
+                                             <graphic>
+                                                <FontAwesomeIcon fill="WHITE" glyphName="TRASH" />
+                                             </graphic>
+                                             <HBox.margin>
+                                                <Insets right="12.0" />
+                                             </HBox.margin>
+                                          </JFXButton>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </VBox>
+                        <AnchorPane prefHeight="788.0" prefWidth="923.0">
+                           <children>
+                              <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Label text="List of Titles" />
+                                    <TableView fx:id="table" prefHeight="577.0" prefWidth="879.0" stylesheets="@../style/style.css">
+                                       <columns>
+                                          <TableColumn fx:id="colTitleID" prefWidth="129.0" resizable="false" text="No." />
+                                          <TableColumn fx:id="colTitle" maxWidth="400.0" prefWidth="210.0" text="Title" />
+                                          <TableColumn fx:id="colNumOfCopies" maxWidth="300.0" minWidth="0.0" prefWidth="183.0" text="Number of copies" />
+                                          <TableColumn fx:id="colDescription" maxWidth="300.0" minWidth="0.0" prefWidth="247.0" text="Description" />
+                                       </columns>
+                                    </TableView>
+                                 </children>
+                              </VBox>
+                           </children>
+                           <HBox.margin>
+                              <Insets left="24.0" />
+                           </HBox.margin>
+                        </AnchorPane>
+                     </children>
+                  </HBox>
+               </children>
+            </AnchorPane>
+         </center>
+         <bottom>
+            <VBox prefHeight="23.0" prefWidth="576.0">
+               <children>
+                  <Text fill="#909090" strokeLineCap="ROUND" strokeType="OUTSIDE" strokeWidth="0.0" text="Powered by B.H.M" textAlignment="RIGHT" wrappingWidth="106.2109375" />
+               </children>
+               <BorderPane.margin>
+                  <Insets right="24.0" />
+               </BorderPane.margin>
+            </VBox>
+         </bottom>
+      </BorderPane>
+   </children>
+</AnchorPane>
