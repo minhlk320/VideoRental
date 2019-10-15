@@ -1,8 +1,11 @@
-.root {
-    -fx-background-color: #fafaf6a3;
-}
 .label {
     -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+    -fx-opacity: 1.0;
+}
+.welcome{
+-fx-font-size: 13pt;
     -fx-font-family: "Segoe UI Semibold";
     -fx-text-fill: white;
     -fx-opacity: 1.0;
@@ -214,11 +217,11 @@
     -fx-padding:0;
     -fx-background-radius:0;
     -fx-background-insets: 0;
-    -fx-background-color: #a5aeff;
+    -fx-background-color: #008e20;
 }
 
 .progress-bar > .track {
-    -fx-background-color: #ffe867;
+    -fx-background-color: #ffffff;
     -fx-background-radius:0;
     -fx-background-insets: 0, 1;
 
@@ -242,6 +245,6 @@
 	
 }
 .back {
-	-fx-background-image:url('../img/loading_background.png');
+	-fx-background-color:#3763a0;
 	-fx-background-size:cover;
 }

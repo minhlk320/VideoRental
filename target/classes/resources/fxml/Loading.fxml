@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 
-<VBox style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoadingController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="226.0" prefWidth="524.0" styleClass="back" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoadingController">
    <children>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="226.0" prefWidth="524.0" styleClass="back" stylesheets="@../style/style.css">
-         <children>
-            <ProgressBar fx:id="progressBar" layoutY="193.0" opacity="0.7" prefHeight="33.0" prefWidth="524.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="193.0" />
-         </children>
-         <VBox.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </VBox.margin>
-         <effect>
-            <DropShadow />
-         </effect>
-      </AnchorPane>
+      <ProgressBar fx:id="progressBar" layoutY="204.0" opacity="0.7" prefHeight="16.0" prefWidth="524.0" progress="0.04" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="204.0" />
+      <FontAwesomeIcon fill="WHITE" glyphName="FILM" layoutX="40.0" layoutY="122.0" size="6EM" />
+      <AnchorPane layoutX="68.0" layoutY="103.0" prefHeight="43.0" prefWidth="86.0" styleClass="back" />
+      <FontAwesomeIcon fill="WHITE" glyphName="GAMEPAD" layoutX="61.0" layoutY="139.0" size="6EM" />
+      <Label layoutX="165.0" layoutY="62.0" prefHeight="57.0" prefWidth="345.0" styleClass="welcome" text="MOVIE AND VIDEO GAME RENTAL STORE" />
+      <Label layoutX="408.0" layoutY="95.0" style="-fx-font-size: 11;" text="Powerd by B.H.M" />
+      <Label layoutX="2.0" layoutY="188.0" style="-fx-font-size: 11;" text="Starting application" />
    </children>
-</VBox>
+   <effect>
+      <DropShadow />
+   </effect>
+</AnchorPane>

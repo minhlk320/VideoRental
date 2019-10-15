@@ -26,16 +26,22 @@ public class LateCharge implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "ItemID")
 	private Item item;
+	@ManyToOne
+	@JoinColumn(name = "CustomerID")
+	private Customer customer;
 	
 	public LateCharge() {
 		super();
 	}
-	public LateCharge(LocalDate returnDate, int status, Item item) {
+	
+	public LateCharge(LocalDate returnDate, int status, Item item, Customer customer) {
 		super();
 		this.returnDate = returnDate;
 		this.status = status;
 		this.item = item;
+		this.customer = customer;
 	}
+
 	public String getLateChargeID() {
 		return lateChargeID;
 	}
@@ -60,6 +66,15 @@ public class LateCharge implements Serializable {
 	public void setItem(Item item) {
 		this.item = item;
 	}
+	
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -83,10 +98,11 @@ public class LateCharge implements Serializable {
 			return false;
 		return true;
 	}
+
 	@Override
 	public String toString() {
 		return "LateCharge [lateChargeID=" + lateChargeID + ", returnDate=" + returnDate + ", status=" + status
-				+ ", item=" + item + "]";
+				+ ", item=" + item + ", customer=" + customer + "]";
 	}
 	
 	

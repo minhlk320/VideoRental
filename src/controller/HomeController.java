@@ -7,12 +7,24 @@ import com.jfoenix.controls.JFXButton;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import ui.Main;
 
 public class HomeController implements Initializable{
+	
+	@FXML
+    private Label lbSale;
 
+    @FXML
+    private Label lbDate;
+
+    @FXML
+    private Label lbTime;
+
+    @FXML
+    private JFXButton btnLogin;
 	@FXML
     private JFXButton btnCustomers;
 
@@ -52,9 +64,7 @@ public class HomeController implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		btnRentalItems.setOnAction(e->{
-			
-			Main.newWindow("TitleManagement", "Title Management");
-			Main.closeWindow(e.getSource());
+			Main.changelayout("TitleManagement", e);
 		});
 	}
 

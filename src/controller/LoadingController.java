@@ -42,7 +42,7 @@ public class LoadingController implements Initializable{
 				updateProgress(0, 10);
 				@SuppressWarnings("unused")
 				MyEntityManagerFactory em = MyEntityManagerFactory.getInstance();
-				for (int i = 0; i < 10; i++) {
+				for (int i = 4; i < 10; i++) {
 					updateProgress(i, 10);
 					Thread.sleep(100);
 				}

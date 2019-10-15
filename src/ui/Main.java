@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -53,6 +54,21 @@ public class Main extends Application{
 			e.printStackTrace();
 		}
 
+	}
+	public static void changelayout(String name, Event event) {
+		Stage window;
+		Parent fxml;
+		try {
+			fxml = loadFXML(listUI.get(name)).load();
+			Scene scene = new Scene(fxml);
+			scene.setFill(Color.TRANSPARENT);
+			window = (Stage)((Node)event.getSource()).getScene().getWindow();
+			window.setScene(scene);
+			window.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	
 	}
 
 	public static void newWindow(String mapName, String titlename) {
