@@ -64,9 +64,7 @@ public class HomeController implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		btnRentalItems.setOnAction(e->{
-			
-			Main.newWindow("TitleManagement", "Title Management");
-			Main.closeWindow(e.getSource());
+			Main.changelayout("TitleManagement", e);
 		});
 	}
 

@@ -20,14 +20,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import ui.Main;
 
 public class TitleManagementController implements Initializable {
 
 	@FXML
 	private TextField txtTitleID;
-	
-    @FXML
-    private ImageView imageView;
+
+	@FXML
+	private ImageView imageView;
 
 	@FXML
 	private JFXButton btnChoose;
@@ -77,11 +78,11 @@ public class TitleManagementController implements Initializable {
 		lbTitle.setText("");
 		lbDescription.setText("");
 		loadTable(listTitles);
-		
-		
+
+
 	}
 	void loadTable(List<Title> list) {
-		
+
 		ObservableList<Title> tkList = FXCollections.observableArrayList(list);
 		colTitleID.setSortable(false);
 		colTitleID.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getTitleID()));
@@ -89,21 +90,25 @@ public class TitleManagementController implements Initializable {
 		colDescription.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getDesciption()));
 		colNumOfCopies.setCellValueFactory((celldata->new SimpleStringProperty("0")));
 		table.setItems(tkList);
-				table.setOnMousePressed(e->{
-					if(e.isPrimaryButtonDown() && e.getClickCount()==1) {
-						txtTitleID.setText(table.getSelectionModel().getSelectedItem().getTitleID());
-						txtTitle.setText(table.getSelectionModel().getSelectedItem().getTitleName());
-						txtDescription.setText(table.getSelectionModel().getSelectedItem().getDesciption());
-						
-						File f = table.getSelectionModel().getSelectedItem().getImange();
-						try {
-							imageView.setImage(new Image(new FileInputStream(f)));
-						} catch (FileNotFoundException e1) {
-							e1.printStackTrace();
-						}
-			
-					}
-				});
+		table.setOnMousePressed(e->{
+			if(e.isPrimaryButtonDown() && e.getClickCount()==1) {
+				txtTitleID.setText(table.getSelectionModel().getSelectedItem().getTitleID());
+				txtTitle.setText(table.getSelectionModel().getSelectedItem().getTitleName());
+				txtDescription.setText(table.getSelectionModel().getSelectedItem().getDesciption());
+
+				File f = table.getSelectionModel().getSelectedItem().getImange();
+				try {
+					Image img = new Image(new FileInputStream(f));
+				
+					imageView.setImage(img);
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnBack.setOnAction(e->{
+			Main.changelayout("Home", e);
+		});
 	}
 
 }
