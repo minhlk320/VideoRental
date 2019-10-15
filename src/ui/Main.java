@@ -2,6 +2,7 @@ package ui;
 import java.io.IOException;
 import java.util.HashMap;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
