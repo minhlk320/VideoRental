@@ -4,7 +4,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -14,60 +13,76 @@ import ui.Main;
 
 public class HomeController implements Initializable{
 	
-	@FXML
-    private Label lbSale;
+	 @FXML
+	    private JFXButton btnRentalItems;
 
-    @FXML
-    private Label lbDate;
+	    @FXML
+	    private JFXButton btnReturnItem;
 
-    @FXML
-    private Label lbTime;
+	    @FXML
+	    private JFXButton btnReportItemStatus;
 
-    @FXML
-    private JFXButton btnLogin;
-	@FXML
-    private JFXButton btnCustomers;
+	    @FXML
+	    private JFXButton btnCheckLateCharge;
 
-    @FXML
-    private FontAwesomeIcon btnProcess;
+	    @FXML
+	    private JFXButton btnMakeReservation;
 
-    @FXML
-    private JFXButton btnRentalItems;
+	    @FXML
+	    private JFXButton btnReservationList;
 
-    @FXML
-    private JFXButton btnSettings;
+	    @FXML
+	    private JFXButton btnCustomers;
 
-    @FXML
-    private JFXButton btnReturn;
+	    @FXML
+	    private JFXButton btnTitle;
 
-    @FXML
-    private JFXButton btnReport;
+	    @FXML
+	    private JFXButton btnItem;
 
-    @FXML
-    private TableView<?> table;
+	    @FXML
+	    private JFXButton btnInventory;
 
-    @FXML
-    private TableColumn<?, ?> colRentalID;
+	    @FXML
+	    private TableView<?> table;
 
-    @FXML
-    private TableColumn<?, ?> colTitle;
+	    @FXML
+	    private TableColumn<?, ?> colRentalID;
 
-    @FXML
-    private TableColumn<?, ?> colStatus;
+	    @FXML
+	    private TableColumn<?, ?> colTitle;
 
-    @FXML
-    private TableColumn<?, ?> colDueOn;
+	    @FXML
+	    private TableColumn<?, ?> colStatus;
 
-    @FXML
-    private TableColumn<?, ?> colRentedOn;
+	    @FXML
+	    private TableColumn<?, ?> colRentedOn;
+
+	    @FXML
+	    private TableColumn<?, ?> colDueOn;
+
+	    @FXML
+	    private Label lbSale;
+
+	    @FXML
+	    private Label lbDate;
+
+	    @FXML
+	    private Label lbTime;
+
+	    @FXML
+	    private JFXButton btnLogin;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		btnRentalItems.setOnAction(e->{
+		btnTitle.setOnAction(e->{
 			Main.changelayout(Main.SCENE_TITLE_MANAGEMENT, e);
 		});
 		btnCustomers.setOnAction(e->{
 			Main.changelayout(Main.SCENE_CUSTOMER_MANAGEMENT, e);
+		});
+		btnItem.setOnAction(e->{
+			Main.changelayout(Main.SCENE_ITEM_MANAGEMENT, e);
 		});
 		
 	}

@@ -23,7 +23,7 @@ public class Test {
 		TitleDAO titleDAO = new TitleDAO();
 		System.out.println(titleDAO.getAll(Title.class));
 		//createDataBase();
-//		createTitle();
+		//createTitle();
 	}
 public static void createDataBase() {
 	ItemClass itemClass = new ItemClass(ItemClass.MOVIE, 2.0, 7, 1.5);
