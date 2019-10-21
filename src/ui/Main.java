@@ -20,9 +20,11 @@ public class Main extends Application{
 	public final static String SCENE_CUSTOMER_MANAGEMENT = "CustomerManagement";
 	public final static String SCENE_TITLE_MANAGEMENT = "TitleManagement";
 	public final static String SCENE_LOADING = "Loading";
+	public final static String SCENE_ITEM_MANAGEMENT = "ItemManagement";
 	public final static String URL_HOME = "/resources/fxml/Home.fxml";
 	public final static String URL_CUSTOMER_MANAGEMENT = "/resources/fxml/CustomerManagement.fxml";
 	public final static String URL_TITLE_MANAGEMENT = "/resources/fxml/TitleManagement.fxml";
+	public final static String URL_ITEM_MANAGEMENT = "/resources/fxml/ItemManagement.fxml";
 	public final static String URL_LOADING = "/resources/fxml/Loading.fxml";
 	public final static String TITLE_LOADING = "Loading";
 	public static Image MAIN_ICON = new Image("/resources/img/icon.png");
@@ -47,7 +49,9 @@ public class Main extends Application{
 		listUI.put(SCENE_CUSTOMER_MANAGEMENT,URL_CUSTOMER_MANAGEMENT);
 		listUI.put(SCENE_TITLE_MANAGEMENT, URL_TITLE_MANAGEMENT);
 		listUI.put(SCENE_LOADING, URL_LOADING);
+		listUI.put(SCENE_ITEM_MANAGEMENT, URL_ITEM_MANAGEMENT);
 		newWindow(SCENE_LOADING, TITLE_LOADING);
+		
 
 	}
 	public static FXMLLoader loadFXML(String url) {

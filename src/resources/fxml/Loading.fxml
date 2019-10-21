@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.effect.DropShadow?>
@@ -8,7 +9,10 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="226.0" prefWidth="524.0" styleClass="back" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoadingController">
    <children>
-      <ProgressBar fx:id="progressBar" layoutY="204.0" opacity="0.7" prefHeight="16.0" prefWidth="524.0" progress="0.04" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="204.0" />
+      <ProgressBar fx:id="progressBar" layoutY="204.0" opacity="0.7" prefHeight="16.0" prefWidth="524.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="204.0">
+         <padding>
+            <Insets left="5.0" right="5.0" />
+         </padding></ProgressBar>
       <FontAwesomeIcon fill="WHITE" glyphName="FILM" layoutX="40.0" layoutY="122.0" size="6EM" />
       <AnchorPane layoutX="68.0" layoutY="103.0" prefHeight="43.0" prefWidth="86.0" styleClass="back" />
       <FontAwesomeIcon fill="WHITE" glyphName="GAMEPAD" layoutX="61.0" layoutY="139.0" size="6EM" />

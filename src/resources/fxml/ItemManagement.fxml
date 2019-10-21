@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #3763a0;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ItemManagementController">
+   <children>
+      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="4.0">
+         <center>
+            <AnchorPane>
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="421.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="12.0">
+                     <children>
+                        <VBox layoutX="10.0" layoutY="10.0" prefHeight="598.0" prefWidth="598.0">
+                           <children>
+                              <TextField fx:id="txtItemID" editable="false" focusTraversable="false" layoutX="10.0" layoutY="10.0" promptText="ItemID" style="-fx-background-color: #4f81bc;">
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </TextField>
+                              <Text fx:id="lbItemID" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="txtItemID" />
+                              <ComboBox fx:id="cbTitle" prefWidth="150.0" promptText="CbTitle" style="-fx-background-color: #4f81bc;">
+                                 <VBox.margin>
+                                    <Insets top="24.0" />
+                                 </VBox.margin>
+                              </ComboBox>
+                              <ComboBox fx:id="cbType" prefWidth="150.0" promptText="CbType" style="-fx-background-color: #4f81bc;">
+                                 <VBox.margin>
+                                    <Insets top="24.0" />
+                                 </VBox.margin>
+                              </ComboBox>
+                              <TextField fx:id="txtInputDay" focusTraversable="false" promptText="InputDay" style="-fx-background-color: #4f81bc;">
+                                 <VBox.margin>
+                                    <Insets top="24.0" />
+                                 </VBox.margin>
+                              </TextField>
+                              <Text fx:id="lbInputDay" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="txtInputDay" />
+                              <AnchorPane prefHeight="397.0" prefWidth="450.0">
+                                 <children>
+                                    <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <JFXButton fx:id="btnBack" contentDisplay="TOP" focusTraversable="false" prefHeight="50.0" prefWidth="245.0" text="Back">
+                                             <graphic>
+                                                <FontAwesomeIcon fill="WHITE" glyphName="ARROW_LEFT" />
+                                             </graphic>
+                                             <HBox.margin>
+                                                <Insets right="12.0" />
+                                             </HBox.margin>
+                                          </JFXButton>
+                                          <JFXButton fx:id="btnNew" contentDisplay="TOP" focusTraversable="false" prefHeight="50.0" prefWidth="245.0" text="New">
+                                             <graphic>
+                                                <FontAwesomeIcon fill="WHITE" glyphName="PLUS" />
+                                             </graphic>
+                                             <HBox.margin>
+                                                <Insets right="12.0" />
+                                             </HBox.margin>
+                                          </JFXButton>
+                                          <JFXButton fx:id="btnSave" contentDisplay="TOP" focusTraversable="false" prefHeight="50.0" prefWidth="245.0" text="Save">
+                                             <graphic>
+                                                <FontAwesomeIcon fill="WHITE" glyphName="SAVE" />
+                                             </graphic>
+                                             <HBox.margin>
+                                                <Insets right="12.0" />
+                                             </HBox.margin>
+                                          </JFXButton>
+                                          <JFXButton fx:id="btnDelete" contentDisplay="TOP" focusTraversable="false" prefHeight="50.0" prefWidth="245.0" text="Delete">
+                                             <graphic>
+                                                <FontAwesomeIcon fill="WHITE" glyphName="TRASH" />
+                                             </graphic>
+                                             <HBox.margin>
+                                                <Insets right="12.0" />
+                                             </HBox.margin>
+                                          </JFXButton>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </VBox>
+                        <AnchorPane prefHeight="788.0" prefWidth="923.0">
+                           <children>
+                              <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Label text="List of DVD/DISK" />
+                                    <TableView fx:id="table" prefHeight="577.0" prefWidth="879.0" stylesheets="@../style/style.css">
+                                       <columns>
+                                          <TableColumn fx:id="colNumber" prefWidth="129.0" resizable="false" text="No." />
+                                          <TableColumn fx:id="colitemID" maxWidth="400.0" prefWidth="210.0" text="Item ID" />
+                                          <TableColumn fx:id="colTitle" maxWidth="300.0" minWidth="0.0" prefWidth="132.0" text="Title" />
+                                          <TableColumn fx:id="colType" maxWidth="300.0" minWidth="0.0" prefWidth="159.0" text="Type" />
+                                          <TableColumn fx:id="colInputDay" maxWidth="300.0" minWidth="0.0" prefWidth="280.0" text="Input Day" />
+                                       </columns>
+                                    </TableView>
+                                 </children>
+                              </VBox>
+                           </children>
+                           <HBox.margin>
+                              <Insets left="24.0" />
+                           </HBox.margin>
+                        </AnchorPane>
+                     </children>
+                  </HBox>
+               </children>
+            </AnchorPane>
+         </center>
+         <bottom>
+            <VBox prefHeight="23.0" prefWidth="576.0">
+               <children>
+                  <Text fill="#909090" strokeLineCap="ROUND" strokeType="OUTSIDE" strokeWidth="0.0" text="Powered by B.H.M" textAlignment="RIGHT" wrappingWidth="106.2109375" />
+               </children>
+               <BorderPane.margin>
+                  <Insets right="24.0" />
+               </BorderPane.margin>
+            </VBox>
+         </bottom>
+         <top>
+            <AnchorPane prefHeight="66.0" prefWidth="1272.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox prefHeight="73.0" prefWidth="1272.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="92.0" prefWidth="582.0">
+                           <children>
+                              <Label prefHeight="30.0" prefWidth="517.0" style="-fx-font-size: 25;" text="Video Rental Store">
+                                 <font>
+                                    <Font name="System Bold" size="27.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="12.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label layoutX="10.0" layoutY="10.0" prefHeight="36.0" prefWidth="1604.0" stylesheets="@../Downloads/VideoRental-Test/src/resources/style/style.css" text="Main Menu">
+                                 <font>
+                                    <Font name="System Bold" size="27.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets top="-24.0" />
+                                 </padding>
+                              </Label>
+                           </children>
+                           <HBox.margin>
+                              <Insets left="12.0" />
+                           </HBox.margin>
+                        </VBox>
+                        <VBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="92.0" prefWidth="325.0">
+                           <children>
+                              <Label alignment="TOP_LEFT" prefHeight="21.0" prefWidth="1593.0" style="-fx-font-size: 26;" text="Total Sale Today">
+                                 <font>
+                                    <Font name="System Bold" size="27.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="12.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label fx:id="lbSale" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="10.0" layoutY="10.0" prefHeight="36.0" prefWidth="1604.0" style="-fx-font-size: 30;" stylesheets="@../Downloads/VideoRental-Test/src/resources/style/style.css" text="\$645.00">
+                                 <font>
+                                    <Font name="System Bold" size="27.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets top="-8.0" />
+                                 </padding>
+                                 <VBox.margin>
+                                    <Insets left="42.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" layoutX="410.0" layoutY="10.0" prefHeight="92.0" prefWidth="387.0">
+                           <children>
+                              <Label fx:id="lbDate" alignment="TOP_RIGHT" prefHeight="30.0" prefWidth="378.0" style="-fx-font-size: 26;" text="Oct 15th, 2019">
+                                 <font>
+                                    <Font name="System Bold" size="27.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets right="5.0" top="12.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label fx:id="lbTime" alignment="TOP_RIGHT" contentDisplay="TOP" layoutX="10.0" layoutY="10.0" prefHeight="36.0" prefWidth="1604.0" style="-fx-font-size: 30;" stylesheets="@../Downloads/VideoRental-Test/src/resources/style/style.css" text="19:04:11">
+                                 <font>
+                                    <Font name="System Bold" size="27.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets top="-8.0" />
+                                 </padding>
+                                 <VBox.margin>
+                                    <Insets right="24.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </VBox>
+                        <VBox alignment="TOP_RIGHT" layoutX="856.0" layoutY="10.0" prefHeight="92.0" prefWidth="262.0">
+                           <children>
+                              <JFXButton fx:id="btnLogin" alignment="TOP_CENTER" contentDisplay="TOP" prefHeight="76.0" prefWidth="91.0" style="-fx-background-color: #3763a0;" text="Login">
+                                 <graphic>
+                                    <FontAwesomeIcon fill="WHITE" glyphName="USER" size="4EM" />
+                                 </graphic>
+                              </JFXButton>
+                           </children>
+                        </VBox>
+                     </children>
+                     <padding>
+                        <Insets right="5.0" />
+                     </padding>
+                  </HBox>
+               </children>
+            </AnchorPane>
+         </top>
+      </BorderPane>
+   </children>
+   <stylesheets>
+      <URL value="@../style/style.css" />
+      <URL value="@../Downloads/VideoRental-Test/src/resources/style/style.css" />
+   </stylesheets>
+</AnchorPane>
