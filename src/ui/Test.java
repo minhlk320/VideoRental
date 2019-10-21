@@ -20,6 +20,8 @@ import entities.Title;
 public class Test {
 
 	public static void main(String[] args) {
+		TitleDAO titleDAO = new TitleDAO();
+		System.out.println(titleDAO.getAll(Title.class));
 		//createDataBase();
 //		createTitle();
 	}

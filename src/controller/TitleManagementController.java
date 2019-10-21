@@ -78,18 +78,10 @@ public class TitleManagementController implements Initializable {
 		lbTitle.setText("");
 		lbDescription.setText("");
 		loadTable(listTitles);
-
-
-	}
-	void loadTable(List<Title> list) {
-
-		ObservableList<Title> tkList = FXCollections.observableArrayList(list);
-		colTitleID.setSortable(false);
-		colTitleID.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getTitleID()));
-		colTitle.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getTitleName()));
-		colDescription.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getDesciption()));
-		colNumOfCopies.setCellValueFactory((celldata->new SimpleStringProperty("0")));
-		table.setItems(tkList);
+		
+		btnBack.setOnAction(e->{
+			Main.changelayout(Main.SCENE_HOME, e);
+		});
 		table.setOnMousePressed(e->{
 			if(e.isPrimaryButtonDown() && e.getClickCount()==1) {
 				txtTitleID.setText(table.getSelectionModel().getSelectedItem().getTitleID());
@@ -106,9 +98,16 @@ public class TitleManagementController implements Initializable {
 				}
 			}
 		});
-		btnBack.setOnAction(e->{
-			Main.changelayout("Home", e);
-		});
+	}
+	void loadTable(List<Title> list) {
+
+		ObservableList<Title> tkList = FXCollections.observableArrayList(list);
+		colTitleID.setSortable(false);
+		colTitleID.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getTitleID()));
+		colTitle.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getTitleName()));
+		colDescription.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getDesciption()));
+		colNumOfCopies.setCellValueFactory((celldata->new SimpleStringProperty("0")));
+		table.setItems(tkList);
 	}
 
 }
