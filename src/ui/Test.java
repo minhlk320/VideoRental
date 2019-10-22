@@ -2,6 +2,7 @@ package ui;
 
 import java.io.File;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -12,21 +13,41 @@ import daos.RentalDAO;
 import daos.TitleDAO;
 import entities.Customer;
 import entities.Item;
-import entities.ItemClass;
+import entities.Rate;
 import entities.Rental;
 import entities.RentalDetail;
 import entities.Title;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 
 public class Test {
 
 	public static void main(String[] args) {
-		TitleDAO titleDAO = new TitleDAO();
-		System.out.println(titleDAO.getAll(Title.class));
-		//createDataBase();
-		//createTitle();
+		Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {        
+	        LocalTime currentTime = LocalTime.now();
+	        LocalDate currentDate = LocalDate.now();
+	        int second = currentTime.getSecond();
+	        int hour = currentTime.getHour();
+	        int minute = currentTime.getMinute();
+	        int day = currentDate.getDayOfMonth();       
+	        String month = currentDate.getMonth().toString().toLowerCase();
+	        		month = month.substring(0,1).toUpperCase() + month.substring(1,2);
+	        String time = hour<10?("0"+hour):hour+":";
+	        		time += minute<10?("0"+minute):minute+":";
+	        		time += second<10?("0"+second):second+"";
+	   
+	        String date = month +" " + day  ;
+	       System.out.println(time);
+	    }),
+	         new KeyFrame(Duration.seconds(1))
+	    );
+	    clock.setCycleCount(Animation.INDEFINITE);
+	    clock.play();
 	}
 public static void createDataBase() {
-	ItemClass itemClass = new ItemClass(ItemClass.MOVIE, 2.0, 7, 1.5);
+	Rate itemClass = new Rate(Rate.MOVIE, 2.0, 7, 1.5);
 	Title title = new Title("AVATAR", "Movie has the best profit in history", new File("D:\\XDPM\\misc\\Images\\avatar.jpg"));
 	Item item = new Item(title, Item.ON_SHELF, itemClass);
 	Customer customer = new Customer("Minh", "Truong", "DN", "0987654321");

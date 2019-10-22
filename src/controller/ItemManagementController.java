@@ -68,7 +68,13 @@ public class ItemManagementController implements Initializable{
     private Label lbSale;
 
     @FXML
-    private Label lbDate;
+    private Label lbMonthDay;
+
+    @FXML
+    private Label lbDaySurfix;
+
+    @FXML
+    private Label lbYear;
 
     @FXML
     private Label lbTime;
@@ -79,7 +85,7 @@ public class ItemManagementController implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		btnBack.setOnAction(e->{
-			Main.changelayout(Main.SCENE_HOME, e);
+			Main.changeLayout(Main.SCENE_HOME);
 		});
 		
 	}

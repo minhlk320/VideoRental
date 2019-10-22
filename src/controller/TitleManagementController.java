@@ -14,6 +14,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -71,6 +72,23 @@ public class TitleManagementController implements Initializable {
 
 	@FXML
 	private TableColumn<Title, String> colDescription;
+	 @FXML
+	    private Label lbSale;
+
+	    @FXML
+	    private Label lbMonthDay;
+
+	    @FXML
+	    private Label lbDaySurfix;
+
+	    @FXML
+	    private Label lbYear;
+
+	    @FXML
+	    private Label lbTime;
+
+	    @FXML
+	    private JFXButton btnLogin;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -80,7 +98,7 @@ public class TitleManagementController implements Initializable {
 		loadTable(listTitles);
 		
 		btnBack.setOnAction(e->{
-			Main.changelayout(Main.SCENE_HOME, e);
+			Main.changeLayout(Main.SCENE_HOME);
 		});
 		table.setOnMousePressed(e->{
 			if(e.isPrimaryButtonDown() && e.getClickCount()==1) {

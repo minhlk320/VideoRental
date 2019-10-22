@@ -127,7 +127,7 @@
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
 }
 .tab:selected {
-    -fx-background-color: #3763a0;
+    -fx-background-color:  #005c8a;
 }
 #tab-text{
     -fx-text-fill: white;
@@ -252,6 +252,6 @@
 	
 }
 .back {
-	-fx-background-color:#3763a0;
+	-fx-background-image:url('../img/Background.png');
 	-fx-background-size:cover;
 }

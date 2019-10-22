@@ -29,7 +29,9 @@ public class LoadingController implements Initializable{
 		task.addEventHandler(WorkerStateEvent.WORKER_STATE_SUCCEEDED, new EventHandler<WorkerStateEvent>() {
 			public void handle(WorkerStateEvent event) {
 				Main.closeWindow(progressBar);
-				Main.newWindow(Main.SCENE_HOME, "Home Sreen");
+//				Main.newWindow("Login", "Đăng Nhập");
+				Main.changeLayout("Home");
+				Main.enableWindow();
 			}
 		});
 		new Thread(task).start();

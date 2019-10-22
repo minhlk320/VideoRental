@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 public class Main extends Application{
 	private static Stage primaryStage;
-	public final static String  SCENE_HOME = "Home";
+	public final static String SCENE_HOME = "Home";
 	public final static String SCENE_CUSTOMER_MANAGEMENT = "CustomerManagement";
 	public final static String SCENE_TITLE_MANAGEMENT = "TitleManagement";
 	public final static String SCENE_LOADING = "Loading";
@@ -27,13 +27,13 @@ public class Main extends Application{
 	public final static String URL_ITEM_MANAGEMENT = "/resources/fxml/ItemManagement.fxml";
 	public final static String URL_LOADING = "/resources/fxml/Loading.fxml";
 	public final static String TITLE_LOADING = "Loading";
+	public static final float WIDTH = 1280, HEIGTH = 680;
 	public static Image MAIN_ICON = new Image("/resources/img/icon.png");
 	private static HashMap<String, String> listUI = new HashMap<>();
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Main.primaryStage = primaryStage;
 		initLayout();
-		primaryStage.setScene(new Scene(loadFXML(URL_HOME).load()));
 		primaryStage.getIcons().add(MAIN_ICON);
 		primaryStage.setTitle("Video Rental Store Application");
 		primaryStage.setResizable(true);
@@ -50,8 +50,10 @@ public class Main extends Application{
 		listUI.put(SCENE_TITLE_MANAGEMENT, URL_TITLE_MANAGEMENT);
 		listUI.put(SCENE_LOADING, URL_LOADING);
 		listUI.put(SCENE_ITEM_MANAGEMENT, URL_ITEM_MANAGEMENT);
+		primaryStage.setWidth(WIDTH);
+		primaryStage.setHeight(HEIGTH);
 		newWindow(SCENE_LOADING, TITLE_LOADING);
-		
+
 
 	}
 	public static FXMLLoader loadFXML(String url) {
@@ -64,6 +66,7 @@ public class Main extends Application{
 			Parent root = loadFXML(listUI.get(value)).load();
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);
+			primaryStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -82,23 +85,21 @@ public class Main extends Application{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	
+
 	}
 	public static void newWindow(String mapName, String titlename) {
 		try {
 
 			Stage stage = new Stage();
+			if (mapName.equalsIgnoreCase(SCENE_LOADING)) {
+				stage.initStyle(StageStyle.UNDECORATED);
+			}
 			Parent root = loadFXML(listUI.get(mapName)).load();
-			Scene scene = new Scene(root);
-			scene.setFill(Color.TRANSPARENT);
 			stage.getIcons().add(MAIN_ICON);
-			stage.setResizable(true);
+			stage.setResizable(false);
 			stage.setTitle(titlename);
-			stage.setScene(scene);
-			stage.initModality(Modality.WINDOW_MODAL);
-			stage.initStyle(StageStyle.DECORATED);
-			if(mapName==SCENE_LOADING)
-				stage.initStyle(StageStyle.TRANSPARENT);
+			stage.setScene(new Scene(root));
+			stage.initModality(Modality.APPLICATION_MODAL); // Lock window
 			stage.show();
 
 		} catch (final IOException e) {
@@ -115,9 +116,9 @@ public class Main extends Application{
 	}
 	public static void disableWindow(){
 		primaryStage.hide();
-		
+
 	}
-	
+
 	public static void main(final String[] args) {
 		launch(args);
 	}

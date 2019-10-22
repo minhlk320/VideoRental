@@ -32,9 +32,9 @@ public class Item implements Serializable{
 	private int status;
 	@ManyToOne
 	@JoinColumn(name = "ItemClassID")
-	private ItemClass itemClass;
+	private Rate itemClass;
 	
-	public Item(Title title, int status, ItemClass itemClass) {
+	public Item(Title title, int status, Rate itemClass) {
 		super();
 		this.title = title;
 		this.status = status;
@@ -63,10 +63,10 @@ public class Item implements Serializable{
 	}
 	
 	
-	public ItemClass getItemClass() {
+	public Rate getItemClass() {
 		return itemClass;
 	}
-	public void setItemClass(ItemClass itemClass) {
+	public void setItemClass(Rate itemClass) {
 		this.itemClass = itemClass;
 	}
 	@Override
