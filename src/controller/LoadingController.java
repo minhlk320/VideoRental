@@ -19,23 +19,19 @@ public class LoadingController implements Initializable{
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		Load();
+	    Main main = Main.getInstance();
+        progressBar.progressProperty().unbind();
+        Task<Void> task = loaddata();
+        progressBar.progressProperty().bind(task.progressProperty());
+        task.addEventHandler(WorkerStateEvent.WORKER_STATE_SUCCEEDED, new EventHandler<WorkerStateEvent>() {
+            public void handle(WorkerStateEvent event) {
+                main.closeWindow(progressBar);
+                main.changeLayout(main.SCENE_HOME);
+                main.enableWindow();
+            }
+        });
+        new Thread(task).start();
 		
-	}
-	void Load() {
-		progressBar.progressProperty().unbind();
-		Task<Void> task = loaddata();
-		progressBar.progressProperty().bind(task.progressProperty());
-		task.addEventHandler(WorkerStateEvent.WORKER_STATE_SUCCEEDED, new EventHandler<WorkerStateEvent>() {
-			public void handle(WorkerStateEvent event) {
-				Main.closeWindow(progressBar);
-//				Main.newWindow("Login", "Đăng Nhập");
-				Main.changeLayout("Home");
-				Main.enableWindow();
-			}
-		});
-		new Thread(task).start();
-
 	}
 	public Task<Void> loaddata() {
 		Task<Void> task = new Task<Void>() {

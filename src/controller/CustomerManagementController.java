@@ -69,13 +69,7 @@ public class CustomerManagementController implements Initializable{
     private Label lbSale;
 
     @FXML
-    private Label lbMonthDay;
-
-    @FXML
-    private Label lbDaySurfix;
-
-    @FXML
-    private Label lbYear;
+    private Label lbDate;
 
     @FXML
     private Label lbTime;
@@ -85,8 +79,9 @@ public class CustomerManagementController implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		btnBack.setOnAction(e->{
-			Main.changeLayout(Main.SCENE_HOME);
+	    Main main = Main.getInstance();
+	    btnBack.setOnAction(e->{
+            main.changeLayout(main.SCENE_HOME);
 		});
 		
 	}

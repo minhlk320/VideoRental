@@ -14,7 +14,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -24,6 +23,7 @@ import javafx.scene.text.Text;
 import ui.Main;
 
 public class TitleManagementController implements Initializable {
+
 
 	@FXML
 	private TextField txtTitleID;
@@ -72,33 +72,17 @@ public class TitleManagementController implements Initializable {
 
 	@FXML
 	private TableColumn<Title, String> colDescription;
-	 @FXML
-	    private Label lbSale;
-
-	    @FXML
-	    private Label lbMonthDay;
-
-	    @FXML
-	    private Label lbDaySurfix;
-
-	    @FXML
-	    private Label lbYear;
-
-	    @FXML
-	    private Label lbTime;
-
-	    @FXML
-	    private JFXButton btnLogin;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		Main main = Main.getInstance();
 		List<Title> listTitles = new TitleDAO().getAll(Title.class);
 		lbTitle.setText("");
 		lbDescription.setText("");
 		loadTable(listTitles);
 		
 		btnBack.setOnAction(e->{
-			Main.changeLayout(Main.SCENE_HOME);
+			main.changeLayout(main.SCENE_HOME);
 		});
 		table.setOnMousePressed(e->{
 			if(e.isPrimaryButtonDown() && e.getClickCount()==1) {
@@ -118,7 +102,6 @@ public class TitleManagementController implements Initializable {
 		});
 	}
 	void loadTable(List<Title> list) {
-
 		ObservableList<Title> tkList = FXCollections.observableArrayList(list);
 		colTitleID.setSortable(false);
 		colTitleID.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getTitleID()));
