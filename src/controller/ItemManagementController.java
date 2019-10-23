@@ -1,18 +1,14 @@
 package controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import ui.Main;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class ItemManagementController implements Initializable{
 
@@ -80,7 +76,7 @@ public class ItemManagementController implements Initializable{
 	public void initialize(URL location, ResourceBundle resources) {
 	    Main main = Main.getInstance();
 		btnBack.setOnAction(e->{
-			main.changeLayout(main.SCENE_HOME);
+			main.changeScene(main.SCENE_HOME);
 		});
 		
 	}

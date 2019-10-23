@@ -1,7 +1,10 @@
 package ui;
 
+import com.sun.javafx.application.LauncherImpl;
+import daos.MyEntityManagerFactory;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.application.Preloader;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -16,7 +19,8 @@ import java.io.IOException;
 import java.util.HashMap;
 public class Main extends Application{
 	private static final double MIN_HEIGHT = 720;
-	private static final double MIN_WIDTH = 960;
+	private static final double MIN_WIDTH = 1280;
+	private static final int COUNT_LIMIT = 10;
 	public static Image MAIN_ICON = new Image("/resources/img/icon.png");
 	private static Stage primaryStage;
 	private static HashMap<String, String> listUI = new HashMap<>();
@@ -30,7 +34,6 @@ public class Main extends Application{
 	public final String URL_CUSTOMER_MANAGEMENT = "/resources/fxml/CustomerManagement.fxml";
 	public final String URL_TITLE_MANAGEMENT = "/resources/fxml/TitleManagement.fxml";
 	public final String URL_ITEM_MANAGEMENT = "/resources/fxml/ItemManagement.fxml";
-	public final String URL_LOADING = "/resources/fxml/Loading.fxml";
 	public final String TITLE_LOADING = "Loading";
 
 	public Main() {
@@ -42,13 +45,12 @@ public class Main extends Application{
 	}
 
 	public static void main(final String[] args) {
-		launch(args);
+		LauncherImpl.launchApplication(Main.class, MyPreloader.class, args);
 	}
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Main.primaryStage = primaryStage;
-		initLayout();
 		primaryStage.setScene(new Scene(loadFXML(URL_HOME).load()));
 		primaryStage.getIcons().add(MAIN_ICON);
 		primaryStage.setTitle("Video Rental Store Application");
@@ -56,6 +58,7 @@ public class Main extends Application{
 		//primaryStage.setMaximized(true);
 		primaryStage.setMinWidth(MIN_WIDTH);
 		primaryStage.setMinHeight(MIN_HEIGHT);
+		primaryStage.show();
 		primaryStage.setOnCloseRequest(e -> {
 			System.exit(1);
 			Platform.exit();
@@ -63,13 +66,22 @@ public class Main extends Application{
 
 	}
 
-	public void initLayout() throws IOException{
+	@Override
+	public void init() throws Exception {
+		initLayout();
+		MyEntityManagerFactory.getInstance();
+		for (int i = 1; i <= COUNT_LIMIT; i++) {
+			double progress = (double) i / 10;
+			LauncherImpl.notifyPreloader(this, new Preloader.ProgressNotification(progress));
+			Thread.sleep(100);
+		}
+	}
+
+	public void initLayout() {
 		listUI.put(SCENE_HOME, URL_HOME);
 		listUI.put(SCENE_CUSTOMER_MANAGEMENT,URL_CUSTOMER_MANAGEMENT);
 		listUI.put(SCENE_TITLE_MANAGEMENT, URL_TITLE_MANAGEMENT);
-		listUI.put(SCENE_LOADING, URL_LOADING);
 		listUI.put(SCENE_ITEM_MANAGEMENT, URL_ITEM_MANAGEMENT);
-		newWindow(SCENE_LOADING, TITLE_LOADING);
 	}
 
 	public FXMLLoader loadFXML(String url) {
@@ -78,7 +90,7 @@ public class Main extends Application{
 		return loader;
 	}
 
-	public void changeLayout(final String value) {
+	public void changeScene(final String value) {
 		try {
 			Parent root = loadFXML(listUI.get(value)).load();
 			Scene scene = new Scene(root);
@@ -102,8 +114,6 @@ public class Main extends Application{
 			stage.setScene(scene);
 			stage.initModality(Modality.WINDOW_MODAL);
 			stage.initStyle(StageStyle.DECORATED);
-			if(mapName==SCENE_LOADING)
-				stage.initStyle(StageStyle.TRANSPARENT);
 			stage.show();
 
 		} catch (final IOException e) {

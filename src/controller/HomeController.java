@@ -77,13 +77,13 @@ public class HomeController implements Initializable{
 	public void initialize(URL location, ResourceBundle resources) {
 		Main main = Main.getInstance();
 		btnTitle.setOnAction(e->{
-			main.changeLayout(main.SCENE_TITLE_MANAGEMENT);
+			main.changeScene(main.SCENE_TITLE_MANAGEMENT);
 		});
 		btnCustomers.setOnAction(e->{
-			main.changeLayout(main.SCENE_CUSTOMER_MANAGEMENT);
+			main.changeScene(main.SCENE_CUSTOMER_MANAGEMENT);
 		});
 		btnItem.setOnAction(e->{
-			main.changeLayout(main.SCENE_ITEM_MANAGEMENT);
+			main.changeScene(main.SCENE_ITEM_MANAGEMENT);
 		});
 		
 	}

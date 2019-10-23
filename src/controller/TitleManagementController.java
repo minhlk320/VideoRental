@@ -1,11 +1,5 @@
 package controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
 import daos.TitleDAO;
 import entities.Title;
@@ -21,6 +15,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import ui.Main;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
 
 public class TitleManagementController implements Initializable {
 
@@ -82,7 +83,7 @@ public class TitleManagementController implements Initializable {
 		loadTable(listTitles);
 		
 		btnBack.setOnAction(e->{
-			main.changeLayout(main.SCENE_HOME);
+			main.changeScene(main.SCENE_HOME);
 		});
 		table.setOnMousePressed(e->{
 			if(e.isPrimaryButtonDown() && e.getClickCount()==1) {
