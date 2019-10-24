@@ -5,11 +5,15 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.layout.AnchorPane?>
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="226.0" prefWidth="524.0" styleClass="back" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoadingController">
+<?import javafx.scene.layout.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="226.0" prefWidth="524.0" styleClass="back"
+            stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/8.0.172-ea"
+            fx:controller="controller.LoadingController">
    <children>
-      <ProgressBar fx:id="progressBar" layoutY="204.0" opacity="0.7" prefHeight="16.0" prefWidth="524.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="204.0">
+      <ProgressBar fx:id="progressBar" layoutY="204.0" opacity="0.7" prefHeight="16.0" prefWidth="524.0" progress="0.0"
+                   AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                   AnchorPane.topAnchor="204.0">
          <padding>
             <Insets left="5.0" right="5.0" />
          </padding></ProgressBar>
