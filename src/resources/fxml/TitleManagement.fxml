@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
@@ -32,9 +33,9 @@
                                     <Insets top="20.0" />
                                  </VBox.margin>
                               </TextField>
-                              <BorderPane prefHeight="454.0" prefWidth="450.0">
+                              <BorderPane prefHeight="323.0" prefWidth="450.0">
                                  <center>
-                                    <ImageView fx:id="imageView" fitHeight="300.0" fitWidth="200.0" pickOnBounds="true" BorderPane.alignment="CENTER">
+                                    <ImageView fx:id="imageView" fitHeight="268.0" fitWidth="185.0" pickOnBounds="true" BorderPane.alignment="CENTER">
                                        <image>
                                           <Image url="@../img/default_poster.jpg" />
                                        </image>
@@ -60,15 +61,11 @@
                                  </VBox.margin>
                               </TextField>
                               <Text fx:id="lbTitle" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="txtTitle" />
-                              <TextField fx:id="txtDescription" focusTraversable="false" promptText="Description" style="-fx-background-color: #4f81bc;">
-                                 <VBox.margin>
-                                    <Insets top="24.0" />
-                                 </VBox.margin>
-                              </TextField>
+                              <JFXTextArea fx:id="txtDescription" prefHeight="64.0" prefWidth="450.0" promptText="Description" style="-fx-background-color: #4f81bc;" wrapText="true" />
                               <Text fx:id="lbDescription" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="txtLname" />
-                              <AnchorPane prefHeight="397.0" prefWidth="450.0">
+                              <AnchorPane prefHeight="83.0" prefWidth="450.0">
                                  <children>
-                                    <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <HBox alignment="BOTTOM_CENTER" layoutY="7.0" prefHeight="59.0" prefWidth="450.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="7.0">
                                        <children>
                                           <JFXButton fx:id="btnBack" contentDisplay="TOP" focusTraversable="false" prefHeight="50.0" prefWidth="245.0" text="Back">
                                              <graphic>

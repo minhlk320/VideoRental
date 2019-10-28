@@ -25,26 +25,27 @@ import javafx.util.Duration;
 public class Test {
 
 	public static void main(String[] args) {
-		Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {        
-	        LocalTime currentTime = LocalTime.now();
-	        LocalDate currentDate = LocalDate.now();
-	        int second = currentTime.getSecond();
-	        int hour = currentTime.getHour();
-	        int minute = currentTime.getMinute();
-	        int day = currentDate.getDayOfMonth();       
-	        String month = currentDate.getMonth().toString().toLowerCase();
-	        		month = month.substring(0,1).toUpperCase() + month.substring(1,2);
-	        String time = hour<10?("0"+hour):hour+":";
-	        		time += minute<10?("0"+minute):minute+":";
-	        		time += second<10?("0"+second):second+"";
-	   
-	        String date = month +" " + day  ;
-	       System.out.println(time);
-	    }),
-	         new KeyFrame(Duration.seconds(1))
-	    );
-	    clock.setCycleCount(Animation.INDEFINITE);
-	    clock.play();
+//		Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
+//	        LocalTime currentTime = LocalTime.now();
+//	        LocalDate currentDate = LocalDate.now();
+//	        int second = currentTime.getSecond();
+//	        int hour = currentTime.getHour();
+//	        int minute = currentTime.getMinute();
+//	        int day = currentDate.getDayOfMonth();
+//	        String month = currentDate.getMonth().toString().toLowerCase();
+//	        		month = month.substring(0,1).toUpperCase() + month.substring(1,2);
+//	        String time = hour<10?("0"+hour):hour+":";
+//	        		time += minute<10?("0"+minute):minute+":";
+//	        		time += second<10?("0"+second):second+"";
+//
+//		String date = month +" " + day  ;
+//		System.out.println(time);
+//	}),
+//			new KeyFrame(Duration.seconds(1))
+//			);
+//	    clock.setCycleCount(Animation.INDEFINITE);
+//	    clock.play();
+		createTitle();
 	}
 public static void createDataBase() {
 	Rate itemClass = new Rate(Rate.MOVIE, 2.0, 7, 1.5);

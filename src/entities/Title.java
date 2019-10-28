@@ -21,17 +21,17 @@ public class Title implements Serializable{
 	private String titleID;
 	private String titleName;
 	private String description;
-	private File imange;
+	private File image;
 	
 	public Title() {
 		super();
 	}
 
-	public Title(String titleName, String description, File imange) {
+	public Title(String titleName, String description, File image) {
 		super();
 		this.titleName = titleName;
 		this.description = description;
-		this.imange = imange;
+		this.image = image;
 	}
 
 	public String getDesciption() {
@@ -42,12 +42,12 @@ public class Title implements Serializable{
 		this.description = description;
 	}
 
-	public File getImange() {
-		return imange;
+	public File getImage() {
+		return image;
 	}
 
-	public void setImange(File imange) {
-		this.imange = imange;
+	public void setImage(File imange) {
+		this.image = imange;
 	}
 
 	public String getTitleName() {
