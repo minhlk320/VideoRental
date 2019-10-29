@@ -12,7 +12,7 @@ import daos.RentalDAO;
 import daos.TitleDAO;
 import entities.Customer;
 import entities.Item;
-import entities.ItemClass;
+import entities.Rate;
 import entities.Rental;
 import entities.RentalDetail;
 import entities.Title;
@@ -20,14 +20,19 @@ import entities.Title;
 public class Test {
 
 	public static void main(String[] args) {
-		//createDataBase();
+
 //		createTitle();
+//		System.out.println(new RentalDAO().getLatestRentalByItemID("ITMNo000003"));
+
+//		RentalAndReturnManagement rentalAndReturnManagement = new RentalAndReturnManagement();
+//		rentalAndReturnManagement.Return("ITMNo000004");
+
 	}
 public static void createDataBase() {
-	ItemClass itemClass = new ItemClass(ItemClass.MOVIE, 2.0, 7, 1.5);
+	Rate itemClass = new Rate(Rate.MOVIE, 2.0, 7, 1.5);
 	Title title = new Title("AVATAR", "Movie has the best profit in history", new File("D:\\XDPM\\misc\\Images\\avatar.jpg"));
 	Item item = new Item(title, Item.ON_SHELF, itemClass);
-	Customer customer = new Customer("Minh", "Truong", "DN", "0987654321");
+	Customer customer = new Customer("Minh", "Truong", "DN", "0987654321",LocalDate.now(),true);
 	Rental rental = new Rental(LocalDate.now());
 	rental.setCustomer(customer);
 	RentalDetail detail = new RentalDetail(rental, item, 6.0);
@@ -47,6 +52,7 @@ public static void createDataBase() {
 	
 }
 public static void createTitle() {
+	Title title = new Title("AVATAR", "Movie has the best profit in history", new File("D:\\XDPM\\misc\\Images\\avatar.jpg"));
 	Title title1 = new Title("AQUAMAN", "A movie from DCU has been announced in 2018", new File("D:\\XDPM\\misc\\Images\\aquaman.jpg"));
 	Title title2 = new Title("BLADE RUNNER", "Announced on 2016", new File("D:\\XDPM\\misc\\Images\\bladeRunner.jpg"));
 	Title title3= new Title("END GAME", "A movie from MCU has been announced in 2018", new File("D:\\XDPM\\misc\\Images\\endgame.jpg"));
@@ -56,7 +62,7 @@ public static void createTitle() {
 	Title title7 = new Title("REPLICAS", "A scientic fiction movie", new File("D:\\XDPM\\misc\\Images\\replicas.jpg"));
 	Title title8 = new Title("SILENT HILL", "An honor movie", new File("D:\\XDPM\\misc\\Images\\silenthill.jpg"));
 	Title title9 = new Title("WRECK IT RAPTH", "A cartoon movie has been announced in 2018", new File("D:\\XDPM\\misc\\Images\\wreckIt.jpg"));
-	List<Title> titles = Arrays.asList(title1,title2,title3,title4,title5,title6,title7,title8,title9);
+	List<Title> titles = Arrays.asList(title,title1,title2,title3,title4,title5,title6,title7,title8,title9);
 	titles.forEach(x->System.out.println(new TitleDAO().save(x)));
 }
 }

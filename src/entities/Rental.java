@@ -28,6 +28,7 @@ public class Rental implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "CustomerID")
 	private Customer customer;
+	@Column(name="RentalDate")
 	private LocalDate rentalDate;
 	@OneToMany(mappedBy = "rental")
 	@Cascade(value = { org.hibernate.annotations.CascadeType.ALL })

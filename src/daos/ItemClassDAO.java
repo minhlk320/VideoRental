@@ -1,7 +1,7 @@
 package daos;
 
-import entities.ItemClass;
+import entities.Rate;
 
-public class ItemClassDAO extends GeneralCRUD<ItemClass> {
+public class ItemClassDAO extends GeneralCRUD<Rate> {
 
 }

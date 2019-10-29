@@ -8,7 +8,7 @@ import javax.persistence.Id;
 
 import org.hibernate.annotations.GenericGenerator;
 @Entity
-public class ItemClass implements Serializable{
+public class Rate implements Serializable{
 	/**
 	 * 
 	 */
@@ -23,10 +23,10 @@ public class ItemClass implements Serializable{
 	private int rentalPeriod;
 	private double lateRate;
 	
-	public ItemClass() {
+	public Rate() {
 		super();
 	}
-	public ItemClass(String itemClassName, double rentalRate, int rentalPeriod, double lateRate) {
+	public Rate(String itemClassName, double rentalRate, int rentalPeriod, double lateRate) {
 		super();
 		this.itemClassName = itemClassName;
 		this.rentalRate = rentalRate;
@@ -78,7 +78,7 @@ public class ItemClass implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ItemClass other = (ItemClass) obj;
+		Rate other = (Rate) obj;
 		if (itemClassID == null) {
 			if (other.itemClassID != null)
 				return false;

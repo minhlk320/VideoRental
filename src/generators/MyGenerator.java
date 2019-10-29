@@ -8,7 +8,7 @@ import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.IdentifierGenerator;
 import entities.Customer;
 import entities.Item;
-import entities.ItemClass;
+import entities.Rate;
 import entities.LateCharge;
 import entities.Rental;
 import entities.Reservation;
@@ -34,8 +34,8 @@ public class MyGenerator implements IdentifierGenerator {
 			return genID(prefixTitle, "Title", session);
 		if(object.getClass().getName()==(Item.class.getName()))
 			return genID(prefixItem, "Item", session);
-		if(object.getClass().getName()==(ItemClass.class.getName()))
-			return genID(prefixItemClass, "ItemClass", session);
+		if(object.getClass().getName()==(Rate.class.getName()))
+			return genID(prefixItemClass, "Rate", session);
 		if(object.getClass().getName()==(LateCharge.class.getName()))
 			return genID(prefixLateCharge, "LateCharge", session);
 		if(object.getClass().getName()==(Reservation.class.getName()))

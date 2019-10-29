@@ -1,6 +1,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,13 +25,17 @@ public class Customer implements Serializable{
 	private String lastName;
 	private String address;
 	private String phoneNumber;
+	private LocalDate joinedDate;
+	private boolean gender;
 	
-	public Customer(String firstName, String lastName, String address, String phoneNumber) {
+	public Customer(String firstName, String lastName, String address, String phoneNumber, LocalDate joinedDate, boolean gender) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.address = address;
 		this.phoneNumber = phoneNumber;
+		this.joinedDate = joinedDate;
+		this.gender = gender;
 	}
 	
 	public Customer() {
@@ -67,7 +72,11 @@ public class Customer implements Serializable{
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	
+	public LocalDate getJoinedDate() { return joinedDate; }
+	public void setJoinedDate(LocalDate joinedDate) {this.joinedDate = joinedDate; }
+	public boolean isGender() { return gender; }
+	public void setGender(boolean gender) { this.gender = gender; }
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

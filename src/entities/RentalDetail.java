@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 @IdClass(RentalDetailPK.class)
 public class RentalDetail implements Serializable{
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -24,10 +24,12 @@ public class RentalDetail implements Serializable{
 	@JoinColumn(name = "ItemID", referencedColumnName = "ItemID")
 	private Item item;
 	private double unitPrice;
+	private int rentalPeriod;
+	private double lateRate;
 	public RentalDetail() {
 		super();
 	}
-	
+
 	public RentalDetail(Rental rental, Item item, double unitPrice) {
 		super();
 		this.rental = rental;
@@ -53,13 +55,13 @@ public class RentalDetail implements Serializable{
 	public void setUnitPrice(double unitPrice) {
 		this.unitPrice = unitPrice;
 	}
+	public int getRentalPeriod() {	return rentalPeriod;}
+	public void setRentalPeriod(int rentalPeriod) {	this.rentalPeriod = rentalPeriod; }
+	public double getLateRate() {	return lateRate;}
+	public void setLateRate(double lateRate) { this.lateRate = lateRate;	}
 
 	@Override
 	public String toString() {
 		return "RentalDetail [item=" + item + ", unitPrice=" + unitPrice + "]";
 	}
-	
-	
-	
-
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
@@ -17,31 +18,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #3763a0;" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TitleManagementController">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" styleClass="back" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TitleManagementController">
    <children>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="4.0">
-         <top>
-            <VBox alignment="CENTER" prefHeight="57.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Label prefHeight="21.0" prefWidth="1593.0" style="-fx-font-size: 23;" text="Video Rental Store">
-                     <font>
-                        <Font name="System Bold" size="27.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="12.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Label layoutX="10.0" layoutY="10.0" prefHeight="36.0" prefWidth="1604.0" stylesheets="@../style/style.css" text="Title Management">
-                     <font>
-                        <Font name="System Bold" size="27.0" />
-                     </font>
-                  </Label>
-               </children>
-               <BorderPane.margin>
-                  <Insets left="12.0" />
-               </BorderPane.margin>
-            </VBox>
-         </top>
          <center>
             <AnchorPane>
                <children>
@@ -54,9 +33,9 @@
                                     <Insets top="20.0" />
                                  </VBox.margin>
                               </TextField>
-                              <BorderPane prefHeight="454.0" prefWidth="450.0">
+                              <BorderPane prefHeight="323.0" prefWidth="450.0">
                                  <center>
-                                    <ImageView fx:id="imageView" fitHeight="300.0" fitWidth="200.0" pickOnBounds="true" BorderPane.alignment="CENTER">
+                                    <ImageView fx:id="imageView" fitHeight="268.0" fitWidth="185.0" pickOnBounds="true" BorderPane.alignment="CENTER">
                                        <image>
                                           <Image url="@../img/default_poster.jpg" />
                                        </image>
@@ -82,15 +61,11 @@
                                  </VBox.margin>
                               </TextField>
                               <Text fx:id="lbTitle" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="txtTitle" />
-                              <TextField fx:id="txtDescription" focusTraversable="false" promptText="Description" style="-fx-background-color: #4f81bc;">
-                                 <VBox.margin>
-                                    <Insets top="24.0" />
-                                 </VBox.margin>
-                              </TextField>
+                              <JFXTextArea fx:id="txtDescription" prefHeight="64.0" prefWidth="450.0" promptText="Description" style="-fx-background-color: #4f81bc;" wrapText="true" />
                               <Text fx:id="lbDescription" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="txtLname" />
-                              <AnchorPane prefHeight="397.0" prefWidth="450.0">
+                              <AnchorPane prefHeight="83.0" prefWidth="450.0">
                                  <children>
-                                    <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <HBox alignment="BOTTOM_CENTER" layoutY="7.0" prefHeight="59.0" prefWidth="450.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="7.0">
                                        <children>
                                           <JFXButton fx:id="btnBack" contentDisplay="TOP" focusTraversable="false" prefHeight="50.0" prefWidth="245.0" text="Back">
                                              <graphic>
@@ -165,6 +140,119 @@
                </BorderPane.margin>
             </VBox>
          </bottom>
+         <top>
+            <AnchorPane prefHeight="66.0" prefWidth="1272.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox prefHeight="73.0" prefWidth="1272.0">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="92.0" prefWidth="582.0">
+                           <children>
+                              <Label prefHeight="30.0" prefWidth="517.0" style="-fx-font-size: 25;" text="Video Rental Store">
+                                 <font>
+                                    <Font name="System Bold" size="27.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="12.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label layoutX="10.0" layoutY="10.0" prefHeight="36.0" prefWidth="517.0" stylesheets="@../style/style.css" text="Main Menu">
+                                 <font>
+                                    <Font name="System Bold" size="27.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets top="-24.0" />
+                                 </padding>
+                              </Label>
+                           </children>
+                           <HBox.margin>
+                              <Insets left="12.0" />
+                           </HBox.margin>
+                        </VBox>
+                        <VBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="92.0" prefWidth="325.0">
+                           <children>
+                              <Label alignment="TOP_LEFT" prefHeight="21.0" prefWidth="1593.0" style="-fx-font-size: 26;" text="Total Sale Today">
+                                 <font>
+                                    <Font name="System Bold" size="27.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="12.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label fx:id="lbSale" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="10.0" layoutY="10.0" prefHeight="36.0" prefWidth="1604.0" style="-fx-font-size: 30;" stylesheets="@../style/style.css" text="\$645.00">
+                                 <font>
+                                    <Font name="System Bold" size="27.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets top="-8.0" />
+                                 </padding>
+                                 <VBox.margin>
+                                    <Insets left="42.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" layoutX="410.0" layoutY="10.0" prefHeight="92.0" prefWidth="291.0">
+                           <children>
+                              <AnchorPane>
+                                 <VBox.margin>
+                                    <Insets right="5.0" top="12.0" />
+                                 </VBox.margin>
+                                 <children>
+                                    <HBox>
+                                       <children>
+                                          <Label fx:id="lbMonthDay" alignment="TOP_RIGHT" prefHeight="38.0" prefWidth="134.0" style="-fx-font-size: 26;" text="Oct 15">
+                                             <font>
+                                                <Font name="System Bold" size="27.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="lbDaySurfix" alignment="TOP_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="18.0" style="-fx-font-size: 16;" text="th">
+                                             <font>
+                                                <Font name="System Bold" size="27.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="lbYear" layoutX="147.0" layoutY="10.0" prefHeight="38.0" prefWidth="75.0" style="-fx-font-size: 26;" text=", 2019">
+                                             <font>
+                                                <Font name="System Bold" size="27.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <Label fx:id="lbTime" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="94.0" prefHeight="42.0" prefWidth="184.0" style="-fx-font-size: 30;" stylesheets="@../style/style.css" text="19:04:11" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="94.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <font>
+                                          <Font name="System Bold" size="27.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets top="-8.0" />
+                                       </padding>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </VBox>
+                        <VBox alignment="TOP_RIGHT" layoutX="856.0" layoutY="10.0" prefHeight="92.0" prefWidth="86.0">
+                           <children>
+                              <JFXButton fx:id="btnLogin" alignment="TOP_CENTER" contentDisplay="TOP" prefHeight="76.0" prefWidth="91.0" style="-fx-background-color: #005c8a;" text="Login">
+                                 <graphic>
+                                    <FontAwesomeIcon fill="WHITE" glyphName="USER" size="4EM" />
+                                 </graphic>
+                              </JFXButton>
+                           </children>
+                        </VBox>
+                     </children>
+                     <padding>
+                        <Insets right="5.0" />
+                     </padding>
+                  </HBox>
+               </children>
+            </AnchorPane>
+         </top>
       </BorderPane>
    </children>
 </AnchorPane>
