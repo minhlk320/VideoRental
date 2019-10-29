@@ -45,13 +45,19 @@ public class Test {
 //			);
 //	    clock.setCycleCount(Animation.INDEFINITE);
 //	    clock.play();
-		createTitle();
+	//	createDataBase();
+	//	createTitle();
+
+	//	System.out.println(new RentalDAO().getLatestRentalByItemID("ITMNo000003"));
+		RentalAndReturnManagement rentalAndReturnManagement = new RentalAndReturnManagement();
+		rentalAndReturnManagement.Return("ITMNo000003");
+
 	}
 public static void createDataBase() {
 	Rate itemClass = new Rate(Rate.MOVIE, 2.0, 7, 1.5);
 	Title title = new Title("AVATAR", "Movie has the best profit in history", new File("D:\\XDPM\\misc\\Images\\avatar.jpg"));
 	Item item = new Item(title, Item.ON_SHELF, itemClass);
-	Customer customer = new Customer("Minh", "Truong", "DN", "0987654321");
+	Customer customer = new Customer("Minh", "Truong", "DN", "0987654321",LocalDate.now(),true);
 	Rental rental = new Rental(LocalDate.now());
 	rental.setCustomer(customer);
 	RentalDetail detail = new RentalDetail(rental, item, 6.0);
