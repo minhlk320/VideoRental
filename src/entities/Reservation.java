@@ -27,6 +27,9 @@ public class Reservation implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "TitleID")
 	private Title title;
+	@ManyToOne
+	@JoinColumn(name = "ItemID")
+	private Item item;
 	private String comment;
 	public LocalDate getReservationDate() {
 		return reservationDate;
@@ -52,6 +55,11 @@ public class Reservation implements Serializable {
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
+	public Item getItem() {	return item; }
+	public void setItem(Item item) { this.item = item;}
+	public String getReservationID() {	return reservationID; }
+	public void setReservationID(String reservationID) { this.reservationID = reservationID; }
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
