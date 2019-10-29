@@ -181,24 +181,11 @@ public class TitleManagementController implements Initializable {
 				txtTitleID.setText(table.getSelectionModel().getSelectedItem().getTitleID());
 				txtTitle.setText(table.getSelectionModel().getSelectedItem().getTitleName());
 				txtDescription.setText(table.getSelectionModel().getSelectedItem().getDesciption());
-
-				File f = table.getSelectionModel().getSelectedItem().getImage();
-				try {
-					Image img = new Image(new FileInputStream(f));
-					imageView.setImage(img);
-				} catch (Exception e1) {
-					Image img = null;
-					try {
-						img = new Image(new FileInputStream(new File("src/resources/img/default_poster.jpg")));
-					} catch (FileNotFoundException ex) {
-						ex.printStackTrace();
-					}
-					imageView.setImage(img);
-				}
+				imageView.setImage(table.getSelectionModel().getSelectedItem().getImage());
 			}
 		});
 	}
-	void loadTable(List<Title> list) {
+	private void loadTable(List<Title> list) {
 		ObservableList<Title> tkList = FXCollections.observableArrayList(list);
 		colTitleID.setSortable(false);
 		colTitleID.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getTitleID()));
@@ -211,7 +198,7 @@ public class TitleManagementController implements Initializable {
 
 	}
 
-	void reloadTable(){
+	private void reloadTable(){
 		table.getColumns().clear();
 		table.getColumns().addAll(colTitleID,colTitle,colNumOfCopies,colDescription);
 		listTitles = new TitleDAO().getAll(Title.class);

@@ -9,7 +9,6 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class RentalAndReturnManagement {
     private RentalDAO rentalDAO = new RentalDAO();
@@ -52,7 +51,6 @@ public class RentalAndReturnManagement {
             if(rentalDetailList.get(i).getItem().equals(item)){
                 rentalDetailofItem = rentalDetailList.get(i);
             }
-
         }
         LocalDate rentedDate = lastestRental.getDate();
         LocalDate currentDate = LocalDate.now();
