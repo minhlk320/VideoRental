@@ -18,6 +18,10 @@ import javafx.stage.StageStyle;
 import java.io.IOException;
 import java.util.HashMap;
 public class Main extends Application{
+	public static final String SCENE_LATE_CHARGE_INFO = "LateChargeInfo";
+	public static final String URL_LATE_CHARGE_INFO = "/resources/fxml/LateChargeInfo.fxml";
+	public static final String TITLE_LATE_CHARGE_INFO = "Late Charge List";
+
 	private static final double MIN_HEIGHT = 720;
 	private static final double MIN_WIDTH = 1280;
 	private static final int COUNT_LIMIT = 10;
@@ -84,6 +88,7 @@ public class Main extends Application{
 		listUI.put(SCENE_TITLE_MANAGEMENT, URL_TITLE_MANAGEMENT);
 		listUI.put(SCENE_ITEM_MANAGEMENT, URL_ITEM_MANAGEMENT);
         listUI.put(SCENE_RENTAL_ITEMS, URL_RENTAL);
+		listUI.put(SCENE_LATE_CHARGE_INFO, URL_LATE_CHARGE_INFO);
 	}
 
 	public FXMLLoader loadFXML(String url) {

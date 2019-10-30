@@ -18,6 +18,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class RentalItemController implements Initializable {
+    private Main main;
     @FXML
     private JFXButton btnLogin;
     @FXML
@@ -52,7 +53,7 @@ public class RentalItemController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Main main = Main.getInstance();
+        main = Main.getInstance();
         btn_EnterCustomerID.setOnAction(e -> {
             String customerID = tf_CustomerID.getText();
             if (customerID.isEmpty()) {
@@ -81,7 +82,7 @@ public class RentalItemController implements Initializable {
         });
         btn_Done.setOnAction(e -> {
             checkInfo();
-            checkLateCharge();
+            checkLateCharge(tf_CustomerID.getText());
         });
         btn_Cancel.setOnAction(e -> {
             if (requestConfirmExit()) {
@@ -92,7 +93,7 @@ public class RentalItemController implements Initializable {
 
     private boolean requestConfirmExit() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Exit to Main menu");
+        alert.setTitle("Confirmation");
         alert.setHeaderText("Do you want to exit ?");
         Optional<ButtonType> option = alert.showAndWait();
         if (option.get() == null) {
@@ -107,8 +108,19 @@ public class RentalItemController implements Initializable {
         return false;
     }
 
-    private void checkLateCharge() {
+    private void checkLateCharge(String customerID) {
         //Call late charge function
+        if (customerID.isEmpty()) {
+            tf_CustomerID.requestFocus();
+            return;
+        }
+        if (hasLateCharge(customerID)) {
+            main.newWindow(main.SCENE_LATE_CHARGE_INFO, main.TITLE_LATE_CHARGE_INFO);
+        }
+    }
+
+    private boolean hasLateCharge(String customerID) {
+        return true;
     }
 
     private void checkInfo() {

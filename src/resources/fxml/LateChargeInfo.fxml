@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="480.0" prefWidth="640.0" styleClass="back"
+            stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/8.0.172-ea"
+            fx:controller="controller.LateChargeInfoController">
+    <children>
+        <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+                    AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="4.0"
+                    AnchorPane.topAnchor="4.0">
+            <center>
+                <AnchorPane>
+                    <children>
+                        <HBox alignment="CENTER" spacing="12.0" AnchorPane.bottomAnchor="12.0"
+                              AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="12.0">
+                            <children>
+                                <AnchorPane>
+                                    <children>
+                                        <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <children>
+                                                <Label text="List Late charge"/>
+                                                <TableView fx:id="table" stylesheets="@../style/style.css">
+                                                    <columns>
+                                                        <TableColumn fx:id="colNo" resizable="false" text="No."/>
+                                                        <TableColumn fx:id="colCustomerID" prefWidth="-1.0"
+                                                                     resizable="false" text="Customer ID"/>
+                                                        <TableColumn fx:id="colReturnDate" maxWidth="400.0"
+                                                                     prefWidth="210.0" text="Return Date"/>
+                                                        <TableColumn fx:id="colDays" maxWidth="300.0" minWidth="0.0"
+                                                                     prefWidth="132.0" text="Days"/>
+                                                        <TableColumn fx:id="colLateCharge" maxWidth="300.0"
+                                                                     minWidth="0.0" prefWidth="159.0"
+                                                                     text="Late Charge"/>
+                                                    </columns>
+                                                </TableView>
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                    <HBox.margin>
+                                        <Insets left="24.0"/>
+                                    </HBox.margin>
+                                </AnchorPane>
+                                <VBox alignment="BOTTOM_LEFT" layoutX="10.0" layoutY="10.0">
+                                    <children>
+                                        <Label text="Total Late charge"/>
+                                        <Text fx:id="text_TotalCharge" fill="WHITE" strokeType="OUTSIDE"
+                                              strokeWidth="0.0" text="0000000000"/>
+                                        <HBox alignment="BOTTOM_CENTER">
+                                            <children>
+                                                <JFXButton fx:id="btnPaid" contentDisplay="TOP" focusTraversable="false"
+                                                           minWidth="120.0" text="Paid">
+                                                    <graphic>
+                                                        <FontAwesomeIcon fill="WHITE" glyphName="MONEY"/>
+                                                    </graphic>
+                                                    <HBox.margin>
+                                                        <Insets right="12.0"/>
+                                                    </HBox.margin>
+                                                </JFXButton>
+                                                <JFXButton fx:id="btnCancel" contentDisplay="TOP"
+                                                           focusTraversable="false" text="Cancel">
+                                                    <graphic>
+                                                        <FontAwesomeIcon fill="WHITE" glyphName="QUIT"/>
+                                                    </graphic>
+                                                    <HBox.margin>
+                                                        <Insets right="12.0"/>
+                                                    </HBox.margin>
+                                                </JFXButton>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </VBox>
+                            </children>
+                        </HBox>
+                    </children>
+                </AnchorPane>
+            </center>
+            <bottom>
+                <VBox prefHeight="23.0" prefWidth="576.0">
+                    <children>
+                        <Text fill="#909090" strokeLineCap="ROUND" strokeType="OUTSIDE" strokeWidth="0.0"
+                              text="Powered by B.H.M" textAlignment="RIGHT" wrappingWidth="106.2109375"/>
+                    </children>
+                    <BorderPane.margin>
+                        <Insets right="24.0"/>
+                    </BorderPane.margin>
+                </VBox>
+            </bottom>
+        </BorderPane>
+    </children>
+</AnchorPane>
