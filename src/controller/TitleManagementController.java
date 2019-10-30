@@ -185,6 +185,8 @@ public class TitleManagementController implements Initializable {
 			}
 		});
 	}
+
+
 	private void loadTable(List<Title> list) {
 		ObservableList<Title> tkList = FXCollections.observableArrayList(list);
 		colTitleID.setSortable(false);
@@ -201,6 +203,7 @@ public class TitleManagementController implements Initializable {
 		listTitles = new TitleDAO().getAll(Title.class);
 		loadTable(listTitles);
 	}
+
 	private void configuringDirectoryChooser(DirectoryChooser directoryChooser) {
 
 		// Set tiêu đề cho DirectoryChooser
