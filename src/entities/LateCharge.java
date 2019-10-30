@@ -25,8 +25,8 @@ public class LateCharge implements Serializable {
 	private LocalDate purchaseDate;
 	private double totalAmount;
 	@ManyToOne
-	@JoinColumn(name = "ItemID")
-	private Item item;
+	@JoinColumn(name = "TitleID")
+	private Title title;
 	@ManyToOne
 	@JoinColumn(name = "CustomerID")
 	private Customer customer;
@@ -35,12 +35,12 @@ public class LateCharge implements Serializable {
 		super();
 	}
 	
-	public LateCharge(LocalDate returnDate,LocalDate dueOn, Item item, Customer customer, double totalAmount) {
+	public LateCharge(LocalDate returnDate,LocalDate dueOn, Title title, Customer customer, double totalAmount) {
 		super();
 		this.returnDate = returnDate;
 		this.dueOn = dueOn;
 		this.totalAmount = totalAmount;
-		this.item = item;
+		this.title = title;
 		this.customer = customer;
 		this.purchaseDate =null;
 	}
@@ -57,8 +57,8 @@ public class LateCharge implements Serializable {
 	public void setReturnDate(LocalDate returnDate) {
 		this.returnDate = returnDate;
 	}
-	public Item getItem() {	return item;}
-	public void setItem(Item item) {this.item = item;	}
+	public Title getItem() {	return title;}
+	public void setItem(Title item) {this.title = item;	}
 	public LocalDate getDueOn() { return dueOn;	}
 	public void setDueOn(LocalDate dueOn) {	this.dueOn = dueOn;	}
 	public double getTotalAmount() {return totalAmount;	}
@@ -104,7 +104,7 @@ public class LateCharge implements Serializable {
 				", dueOn=" + dueOn +
 				", purchaseDate=" + purchaseDate +
 				", totalAmount=" + totalAmount +
-				", item=" + item +
+				", Title=" + title +
 				", customer=" + customer +
 				'}';
 	}

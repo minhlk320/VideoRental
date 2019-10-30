@@ -3,6 +3,7 @@ package ui;
 import daos.ItemDAO;
 import daos.LateChargeDAO;
 import daos.RentalDAO;
+import daos.ReservationDAO;
 import entities.*;
 
 import java.time.Duration;
@@ -14,6 +15,7 @@ public class RentalAndReturnManagement {
     private RentalDAO rentalDAO = new RentalDAO();
     private ItemDAO itemDAO = new ItemDAO();
     private LateChargeDAO lateChargeDAO = new LateChargeDAO();
+    private ReservationDAO reservationDAO = new ReservationDAO();
     /**
      *
      * @param customer
@@ -62,8 +64,22 @@ public class RentalAndReturnManagement {
             double totalAmout = numOfOverDueDay * rentalDetailofItem.getLateRate();
             addLateCharge(item,customer,totalAmout,dueOn);
         }
-        //Activate 6b to check on-hold if return false set "on-shelf" to the item else "on-hold"
+        checkReservation(item);
         return true;
+    }
+    private void checkReservation(Item item){
+        Title titleOfItem = item.getTitle();
+        Reservation eldestReservation = reservationDAO.getEldestReservationByTitleID(titleOfItem.getTitleID());
+        if(eldestReservation!=null){
+            item.setStatus(Item.ON_HOLD);
+            eldestReservation.setItem(item);
+            itemDAO.update(item);
+            reservationDAO.update(eldestReservation);
+        }
+        else{
+            item.setStatus(Item.ON_SHELF);
+            itemDAO.update(item);
+        }
     }
 
     /**
@@ -73,8 +89,13 @@ public class RentalAndReturnManagement {
      * @description add late charge to customer along with the late return item
      */
     private void addLateCharge(Item item, Customer customer, double totalAmount, LocalDate dueOn){
-        LateCharge lateCharge = new LateCharge(LocalDate.now(),dueOn,item,customer,totalAmount);
+        LateCharge lateCharge = new LateCharge(LocalDate.now(),dueOn,item.getTitle(),customer,totalAmount);
         if( lateChargeDAO.save(lateCharge))
             System.out.println("Late charge added!");
     }
+    public  void recordLateChargePayment(LateCharge lateCharge){
+        lateCharge.setPurchaseDate(LocalDate.now());
+        lateChargeDAO.update(lateCharge);
+    }
+
 }
