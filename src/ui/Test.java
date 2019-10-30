@@ -1,27 +1,18 @@
 package ui;
 
+import daos.*;
+import entities.*;
+
 import java.io.File;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
-import daos.CustomerDAO;
-import daos.ItemClassDAO;
-import daos.ItemDAO;
-import daos.RentalDAO;
-import daos.TitleDAO;
-import entities.Customer;
-import entities.Item;
-import entities.Rate;
-import entities.Rental;
-import entities.RentalDetail;
-import entities.Title;
-
 public class Test {
 
 	public static void main(String[] args) {
 
-		//createTitle();
+//		createTitle();
 //		System.out.println(new RentalDAO().getLatestRentalByItemID("ITMNo000003"));
 
 //		RentalAndReturnManagement rentalAndReturnManagement = new RentalAndReturnManagement();

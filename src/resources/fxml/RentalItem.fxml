@@ -1,274 +1,137 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
-<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="720.0" prefWidth="1280.0" styleClass="back"
-            stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/8.0.172-ea"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea"
             fx:controller="controller.RentalItemController">
    <children>
-      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-                  AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="4.0"
-                  AnchorPane.topAnchor="4.0">
-         <bottom>
-            <VBox prefHeight="23.0" prefWidth="576.0">
+      <HBox spacing="32.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="4.0"
+            AnchorPane.topAnchor="4.0">
+         <children>
+            <VBox HBox.hgrow="ALWAYS">
                <children>
-                  <Text fill="#909090" strokeLineCap="ROUND" strokeType="OUTSIDE" strokeWidth="0.0" text="Powered by B.H.M" textAlignment="RIGHT" wrappingWidth="106.2109375" />
-               </children>
-               <BorderPane.margin>
-                  <Insets right="24.0" />
-               </BorderPane.margin>
-            </VBox>
-         </bottom>
-         <top>
-            <AnchorPane prefHeight="66.0" prefWidth="1272.0" BorderPane.alignment="CENTER">
-               <children>
-                  <HBox prefHeight="73.0" prefWidth="1272.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Label text="Customer ID"/>
+                  <HBox spacing="12.0">
                      <children>
-                        <VBox alignment="CENTER" prefHeight="92.0" prefWidth="582.0">
+                        <JFXTextField fx:id="tf_CustomerID" unFocusColor="WHITE" HBox.hgrow="ALWAYS"/>
+                        <Button fx:id="btn_EnterCustomerID" mnemonicParsing="false" text="Enter"/>
+                     </children>
+                  </HBox>
+                  <Label text="Customer Info">
+                     <padding>
+                        <Insets top="12.0"/>
+                     </padding>
+                  </Label>
+                  <VBox alignment="TOP_CENTER" prefHeight="212.0" prefWidth="214.0" spacing="4.0"
+                        style="-fx-border-color: white;">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" spacing="12.0">
                            <children>
-                              <Label prefHeight="30.0" prefWidth="517.0" style="-fx-font-size: 25;" text="Video Rental Store">
-                                 <font>
-                                    <Font name="System Bold" size="27.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets top="12.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <Label layoutX="10.0" layoutY="10.0" prefHeight="36.0" prefWidth="517.0"
-                                     stylesheets="@../style/style.css" text="Rental Item">
-                                 <font>
-                                    <Font name="System Bold" size="27.0" />
-                                 </font>
-                                 <padding>
-                                    <Insets top="-24.0" />
-                                 </padding>
-                              </Label>
+                              <Label prefWidth="120.0" text="Name"/>
+                              <Text fx:id="text_CustomerName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"/>
                            </children>
-                           <HBox.margin>
-                              <Insets left="12.0" />
-                           </HBox.margin>
-                        </VBox>
-                        <VBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="92.0" prefWidth="325.0">
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="12.0">
                            <children>
-                              <Label alignment="TOP_LEFT" prefHeight="21.0" prefWidth="1593.0" style="-fx-font-size: 26;" text="Total Sale Today">
-                                 <font>
-                                    <Font name="System Bold" size="27.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets top="12.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <Label fx:id="lbSale" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="10.0" layoutY="10.0" prefHeight="36.0" prefWidth="1604.0" style="-fx-font-size: 30;" stylesheets="@../style/style.css" text="\$645.00">
-                                 <font>
-                                    <Font name="System Bold" size="27.0" />
-                                 </font>
-                                 <padding>
-                                    <Insets top="-8.0" />
-                                 </padding>
-                                 <VBox.margin>
-                                    <Insets left="42.0" />
-                                 </VBox.margin>
-                              </Label>
+                              <Label prefWidth="120.0" text="Address"/>
+                              <Text fx:id="text_CustomerAddress" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+                                    wrappingWidth="60.0"/>
                            </children>
-                        </VBox>
-                        <VBox alignment="CENTER" layoutX="410.0" layoutY="10.0" prefHeight="92.0" prefWidth="291.0">
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="12.0">
                            <children>
-                              <AnchorPane>
-                                 <VBox.margin>
-                                    <Insets right="5.0" top="12.0" />
-                                 </VBox.margin>
-                                 <children>
-                                    <HBox>
-                                       <children>
-                                          <Label fx:id="lbMonthDay" alignment="TOP_RIGHT" prefHeight="38.0" prefWidth="134.0" style="-fx-font-size: 26;" text="Oct 15">
-                                             <font>
-                                                <Font name="System Bold" size="27.0" />
-                                             </font>
-                                          </Label>
-                                          <Label fx:id="lbDaySurfix" alignment="TOP_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="18.0" style="-fx-font-size: 16;" text="th">
-                                             <font>
-                                                <Font name="System Bold" size="27.0" />
-                                             </font>
-                                          </Label>
-                                          <Label fx:id="lbYear" layoutX="147.0" layoutY="10.0" prefHeight="38.0" prefWidth="75.0" style="-fx-font-size: 26;" text=", 2019">
-                                             <font>
-                                                <Font name="System Bold" size="27.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </AnchorPane>
-                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                                 <children>
-                                    <Label fx:id="lbTime" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="94.0" prefHeight="42.0" prefWidth="184.0" style="-fx-font-size: 30;" stylesheets="@../style/style.css" text="19:04:11" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="94.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                       <font>
-                                          <Font name="System Bold" size="27.0" />
-                                       </font>
-                                       <padding>
-                                          <Insets top="-8.0" />
-                                       </padding>
-                                    </Label>
-                                 </children>
-                              </AnchorPane>
+                              <Label prefWidth="120.0" text="Phone Number"/>
+                              <Text fx:id="text_CustomerPhone" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"/>
                            </children>
-                           <HBox.margin>
-                              <Insets left="5.0" />
-                           </HBox.margin>
-                        </VBox>
-                        <VBox alignment="TOP_RIGHT" layoutX="856.0" layoutY="10.0" prefHeight="92.0" prefWidth="86.0">
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="12.0">
                            <children>
-                              <JFXButton fx:id="btnLogin" alignment="TOP_CENTER" contentDisplay="TOP" prefHeight="76.0" prefWidth="91.0" style="-fx-background-color: #005c8a;" text="Login">
-                                 <graphic>
-                                    <FontAwesomeIcon fill="WHITE" glyphName="USER" size="4EM" />
-                                 </graphic>
-                              </JFXButton>
+                              <Label prefWidth="120.0" text="Joined Date"/>
+                              <Text fx:id="text_CustomerJoinedDate" fill="WHITE" strokeType="OUTSIDE"
+                                    strokeWidth="0.0"/>
                            </children>
-                        </VBox>
+                        </HBox>
                      </children>
                      <padding>
-                        <Insets right="5.0" />
+                        <Insets bottom="12.0" left="12.0" right="12.0" top="12.0"/>
                      </padding>
-                  </HBox>
+                  </VBox>
                </children>
-            </AnchorPane>
-         </top>
-         <center>
-            <HBox spacing="72.0">
+               <HBox.margin>
+                  <Insets left="24.0"/>
+               </HBox.margin>
+            </VBox>
+            <VBox HBox.hgrow="ALWAYS">
                <children>
-                  <VBox prefHeight="680.0">
+                  <Label text="Item Id"/>
+                  <HBox spacing="12.0">
                      <children>
-                        <Label text="Customer ID" />
-                        <HBox spacing="12.0">
-                           <children>
-                              <JFXTextField fx:id="tf_CustomerID" unFocusColor="WHITE"/>
-                              <Button fx:id="btn_EnterCustomerID" mnemonicParsing="false" text="Enter"/>
-                           </children>
-                        </HBox>
-                        <Label text="Customer Info">
-                           <padding>
-                              <Insets top="12.0" />
-                           </padding>
-                        </Label>
-                        <VBox alignment="TOP_CENTER" prefHeight="212.0" prefWidth="214.0" spacing="4.0"
-                              style="-fx-border-color: white;">
-                           <children>
-                              <HBox alignment="CENTER_LEFT" spacing="12.0">
-                                 <children>
-                                    <Label prefWidth="120.0" text="Name" />
-                                    <Text fx:id="text_CustomerName" fill="WHITE" strokeType="OUTSIDE"
-                                          strokeWidth="0.0"/>
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" spacing="12.0">
-                                 <children>
-                                    <Label prefWidth="120.0" text="Address" />
-                                    <Text fx:id="text_CustomerAddress" fill="WHITE" strokeType="OUTSIDE"
-                                          strokeWidth="0.0" wrappingWidth="60.0"/>
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" spacing="12.0">
-                                 <children>
-                                    <Label prefWidth="120.0" text="Phone Number" />
-                                    <Text fx:id="text_CustomerPhone" fill="WHITE" strokeType="OUTSIDE"
-                                          strokeWidth="0.0"/>
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" spacing="12.0">
-                                 <children>
-                                    <Label prefWidth="120.0" text="Joined Date" />
-                                    <Text fx:id="text_CustomerJoinedDate" fill="WHITE" strokeType="OUTSIDE"
-                                          strokeWidth="0.0"/>
-                                 </children>
-                              </HBox>
-                           </children>
-                           <padding>
-                              <Insets bottom="12.0" left="12.0" right="12.0" top="12.0"/>
-                           </padding>
-                        </VBox>
+                        <JFXTextField fx:id="tf_itemID" prefWidth="219.0" unFocusColor="WHITE" HBox.hgrow="ALWAYS"/>
+                        <Button fx:id="btn_EnterItemID" mnemonicParsing="false" text="Enter"/>
                      </children>
-                     <HBox.margin>
-                        <Insets left="24.0" />
-                     </HBox.margin>
-                  </VBox>
-                  <VBox prefHeight="680.0" prefWidth="500.0">
+                  </HBox>
+                  <VBox>
                      <children>
-                        <Label text="Item Id" />
-                        <HBox spacing="12.0">
-                           <children>
-                              <JFXTextField fx:id="tf_itemID" prefHeight="30.0" prefWidth="400.0" unFocusColor="WHITE"/>
-                              <Button fx:id="btn_EnterItemID" mnemonicParsing="false" text="Enter"/>
-                           </children>
-                        </HBox>
-                        <VBox>
-                           <children>
-                              <Label text="List of item">
-                                 <VBox.margin>
-                                    <Insets top="12.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <TableView fx:id="tableItemList">
-                                 <columns>
-                                    <TableColumn fx:id="colNo" prefWidth="40.0" text="No."/>
-                                    <TableColumn fx:id="colItemID" prefWidth="75.0" text="Item ID"/>
-                                    <TableColumn fx:id="colTitle" minWidth="200.0" prefWidth="75.0" text="Title"/>
-                                    <TableColumn fx:id="colPrice" prefWidth="75.0" text="Price"/>
-                                    <TableColumn fx:id="colDeleteButton" minWidth="30.0" prefWidth="75.0"/>
-                                 </columns>
-                              </TableView>
-                              <ToolBar prefHeight="40.0" prefWidth="200.0">
-                                 <items>
-                                    <Button fx:id="btnResetTable" mnemonicParsing="false" text="Reset"/>
-                                 </items>
-                              </ToolBar>
-                           </children>
-                        </VBox>
-                     </children>
-                  </VBox>
-                  <VBox alignment="BOTTOM_LEFT" spacing="24.0">
-                     <children>
-                        <Label text="Total">
-                           <tooltip>
-                              <Tooltip text="Empty Tooltip" />
-                           </tooltip>
+                        <Label text="List of item">
+                           <VBox.margin>
+                              <Insets top="12.0"/>
+                           </VBox.margin>
                         </Label>
-                        <HBox spacing="12.0">
-                           <children>
-                              <Label prefWidth="120.0" text="Rental Total" />
-                              <Text fx:id="text_RentalTotal" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
-                                    text="00000000"/>
-                           </children>
-                        </HBox>
-                        <HBox spacing="12.0">
-                           <children>
-                              <Label prefWidth="120.0" text="Late Charge" />
-                              <Text fx:id="text_LateCharge" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
-                                    text="00000000"/>
-                           </children>
-                        </HBox>
-                        <HBox spacing="12.0">
-                           <children>
-                              <Label prefWidth="120.0" text="Amount Due (USD)" />
-                              <Text fx:id="text_AmountDue" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
-                                    text="00000000"/>
-                           </children>
-                        </HBox>
-                        <ToolBar prefHeight="40.0" prefWidth="200.0">
-                          <items>
-                             <Button fx:id="btn_Done" mnemonicParsing="false" text="Done"/>
-                             <Button fx:id="btn_Cancel" mnemonicParsing="false" text="Cancel"/>
-                          </items>
+                        <TableView fx:id="tableItemList">
+                           <columns>
+                              <TableColumn fx:id="colNo" prefWidth="40.0" text="No."/>
+                              <TableColumn fx:id="colItemID" prefWidth="75.0" text="Item ID"/>
+                              <TableColumn fx:id="colTitle" minWidth="200.0" prefWidth="75.0" text="Title"/>
+                              <TableColumn fx:id="colPrice" prefWidth="75.0" text="Price"/>
+                              <TableColumn fx:id="colDeleteButton" minWidth="30.0" prefWidth="75.0"/>
+                           </columns>
+                        </TableView>
+                        <ToolBar>
+                           <items>
+                              <Button fx:id="btnResetTable" mnemonicParsing="false" text="Reset"/>
+                           </items>
                         </ToolBar>
                      </children>
                   </VBox>
                </children>
-            </HBox>
-         </center>
-      </BorderPane>
+            </VBox>
+            <VBox alignment="BOTTOM_LEFT" spacing="24.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Label text="Total">
+                     <tooltip>
+                        <Tooltip text="Empty Tooltip"/>
+                     </tooltip>
+                  </Label>
+                  <HBox spacing="12.0">
+                     <children>
+                        <Label prefWidth="120.0" text="Rental Total"/>
+                        <Text fx:id="text_RentalTotal" strokeType="OUTSIDE" strokeWidth="0.0" text="00000000"/>
+                     </children>
+                  </HBox>
+                  <HBox spacing="12.0">
+                     <children>
+                        <Label prefWidth="120.0" text="Late Charge"/>
+                        <Text fx:id="text_LateCharge" strokeType="OUTSIDE" strokeWidth="0.0" text="00000000"/>
+                     </children>
+                  </HBox>
+                  <HBox spacing="12.0">
+                     <children>
+                        <Label prefWidth="120.0" text="Amount Due (USD)"/>
+                        <Text fx:id="text_AmountDue" strokeType="OUTSIDE" strokeWidth="0.0" text="00000000"/>
+                     </children>
+                  </HBox>
+                  <ToolBar>
+                     <items>
+                        <Button fx:id="btn_Done" mnemonicParsing="false" text="Done"/>
+                        <Button fx:id="btn_Cancel" mnemonicParsing="false" text="Cancel"/>
+                     </items>
+                  </ToolBar>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

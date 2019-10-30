@@ -245,6 +245,7 @@ public class RentalItemController implements Initializable {
     }
 
     private Item findItem(String itemID) {
+        //Find Item from Database
         Title title = new Title("WRECK IT RAPTH", "A cartoon movie has been announced in 2018", new File("D:\\XDPM\\misc\\Images\\wreckIt.jpg"));
         Rate rate = new Rate("a", 123, 123, 123);
         Item item = new Item(title,Item.RENTED, rate);
@@ -253,6 +254,7 @@ public class RentalItemController implements Initializable {
     }
 
     private Customer findCustomer(String customerID) {
+        //Find Customer from Database
         return new Customer("Tran", "Gia Bao", "49 Le Loi", "0123456789", LocalDate.now(), true);
     }
 }

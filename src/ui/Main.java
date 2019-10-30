@@ -5,11 +5,13 @@ import daos.MyEntityManagerFactory;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.application.Preloader;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -21,7 +23,7 @@ public class Main extends Application{
 	public static final String SCENE_LATE_CHARGE_INFO = "LateChargeInfo";
 	public static final String URL_LATE_CHARGE_INFO = "/resources/fxml/LateChargeInfo.fxml";
 	public static final String TITLE_LATE_CHARGE_INFO = "Late Charge List";
-
+	public static final String MAIN_LAYOUT = "/resources/fxml/MainLayout.fxml";
 	private static final double MIN_HEIGHT = 720;
 	private static final double MIN_WIDTH = 1280;
 	private static final int COUNT_LIMIT = 10;
@@ -38,9 +40,11 @@ public class Main extends Application{
 	public final String URL_CUSTOMER_MANAGEMENT = "/resources/fxml/CustomerManagement.fxml";
 	public final String URL_TITLE_MANAGEMENT = "/resources/fxml/TitleManagement.fxml";
 	public final String URL_ITEM_MANAGEMENT = "/resources/fxml/ItemManagement.fxml";
-	public final String TITLE_LOADING = "Loading";
     public final String SCENE_RENTAL_ITEMS = "RentalItems";
     public final String URL_RENTAL = "/resources/fxml/RentalItem.fxml";
+	@FXML
+	public BorderPane root;
+
 	public Main() {
 		mainInstance = this;
 	}
@@ -56,7 +60,8 @@ public class Main extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Main.primaryStage = primaryStage;
-		primaryStage.setScene(new Scene(loadFXML(URL_HOME).load()));
+		root = loadFXML(MAIN_LAYOUT).load();
+		primaryStage.setScene(new Scene(root));
 		primaryStage.getIcons().add(MAIN_ICON);
 		primaryStage.setTitle("Video Rental Store Application");
 		primaryStage.setResizable(true);
@@ -97,17 +102,26 @@ public class Main extends Application{
 		return loader;
 	}
 
+	//	public void changeScene(final String value) {
+//		try {
+//			Parent root = loadFXML(listUI.get(value)).load();
+//			Scene scene = new Scene(root);
+//			primaryStage.setScene(scene);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//
+//	}
 	public void changeScene(final String value) {
 		try {
-			Parent root = loadFXML(listUI.get(value)).load();
-			Scene scene = new Scene(root);
-			primaryStage.setScene(scene);
+			Parent part = loadFXML(listUI.get(value)).load();
+			root.setCenter(part);
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 	}
-
 	public void newWindow(String mapName, String titlename) {
 		try {
 
