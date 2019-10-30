@@ -10,5 +10,11 @@ public class ItemDAO extends GeneralCRUD<Item>{
         return q.getResultList();
     }
 
+    public Item getByID(String id){
+        Query q = em.createNativeQuery("SELECT * FROM Item WHERE Item.ItemID =:id",Item.class);
+        q.setParameter("id",id);
+        return (Item) q.getResultList();
+    }
+
 
 }

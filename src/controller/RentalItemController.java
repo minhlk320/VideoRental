@@ -247,7 +247,7 @@ public class RentalItemController implements Initializable {
     private Item findItem(String itemID) {
         Title title = new Title("WRECK IT RAPTH", "A cartoon movie has been announced in 2018", new File("D:\\XDPM\\misc\\Images\\wreckIt.jpg"));
         Rate rate = new Rate("a", 123, 123, 123);
-        Item item = new Item(title, 0, rate);
+        Item item = new Item(title,Item.RENTED, rate);
         item.setItemID("123");
         return item;
     }

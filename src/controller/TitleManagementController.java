@@ -132,11 +132,9 @@ public class TitleManagementController implements Initializable {
 			Title getCurrentTitle(Title title) {
 				String titleName = txtTitle.getText();
 				String des = txtDescription.getText();
-
 				title.setImage(image);
 				title.setDescription(des);
 				title.setTitleName(titleName);
-
 				return title;
 			}
 

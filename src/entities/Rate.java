@@ -88,8 +88,7 @@ public class Rate implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "ItemClass [itemClassID=" + itemClassID + ", itemClassName=" + itemClassName + ", rentalRate="
-				+ rentalRate + ", rentalPeriod=" + rentalPeriod + ", lateRate=" + lateRate + "]";
+		return itemClassName;
 	}
 	
 
