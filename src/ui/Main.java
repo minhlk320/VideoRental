@@ -35,7 +35,8 @@ public class Main extends Application{
 	public final String URL_TITLE_MANAGEMENT = "/resources/fxml/TitleManagement.fxml";
 	public final String URL_ITEM_MANAGEMENT = "/resources/fxml/ItemManagement.fxml";
 	public final String TITLE_LOADING = "Loading";
-
+    public final String SCENE_RENTAL_ITEMS = "RentalItems";
+    public final String URL_RENTAL = "/resources/fxml/RentalItem.fxml";
 	public Main() {
 		mainInstance = this;
 	}
@@ -82,6 +83,7 @@ public class Main extends Application{
 		listUI.put(SCENE_CUSTOMER_MANAGEMENT,URL_CUSTOMER_MANAGEMENT);
 		listUI.put(SCENE_TITLE_MANAGEMENT, URL_TITLE_MANAGEMENT);
 		listUI.put(SCENE_ITEM_MANAGEMENT, URL_ITEM_MANAGEMENT);
+        listUI.put(SCENE_RENTAL_ITEMS, URL_RENTAL);
 	}
 
 	public FXMLLoader loadFXML(String url) {

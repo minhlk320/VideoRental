@@ -1,26 +1,12 @@
 package ui;
 
+import daos.*;
+import entities.*;
+
 import java.io.File;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
-
-import daos.CustomerDAO;
-import daos.ItemClassDAO;
-import daos.ItemDAO;
-import daos.RentalDAO;
-import daos.TitleDAO;
-import entities.Customer;
-import entities.Item;
-import entities.Rate;
-import entities.Rental;
-import entities.RentalDetail;
-import entities.Title;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.util.Duration;
 
 public class Test {
 
@@ -81,7 +67,7 @@ public static void createTitle() {
 	Title title8 = new Title("SILENT HILL", "An honor movie", new File("D:\\XDPM\\misc\\Images\\silenthill.jpg"));
 	Title title9 = new Title("WRECK IT RAPTH", "A cartoon movie has been announced in 2018", new File("D:\\XDPM\\misc\\Images\\wreckIt.jpg"));
 	List<Title> titles = Arrays.asList(title1,title2,title3,title4,title5,title6,title7,title8,title9);
-	titles.forEach(x->System.out.println(new TitleDAO().save(x)));
+    titles.forEach(x -> System.out.println(new TitleDAO().save(x)));
 }
 }
 

@@ -76,6 +76,9 @@ public class HomeController implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		Main main = Main.getInstance();
+        btnRentalItems.setOnAction(e -> {
+            main.changeScene(main.SCENE_RENTAL_ITEMS);
+        });
 		btnTitle.setOnAction(e->{
 			main.changeScene(main.SCENE_TITLE_MANAGEMENT);
 		});
