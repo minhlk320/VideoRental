@@ -8,7 +8,6 @@ import entities.Rate;
 import entities.Title;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -100,7 +99,7 @@ public class RentalItemController implements Initializable {
             Item item = findItem(itemID);
             if (item != null) {
                 addToTable(item);
-                updateAmountDue();
+                updateTotal();
             }
         });
         btn_Done.setOnAction(e -> {
@@ -113,13 +112,9 @@ public class RentalItemController implements Initializable {
             }
         });
         colNo.setCellValueFactory(
-                new Callback<TableColumn.CellDataFeatures<Item, Item>, ObservableValue<Item>>() {
-                    @SuppressWarnings("rawtypes")
-                    @Override
-                    public ObservableValue<Item> call(TableColumn.CellDataFeatures<Item, Item> param) {
-                        // TODO Auto-generated method stub
-                        return new ReadOnlyObjectWrapper(param.getValue());
-                    }
+                param -> {
+                    // TODO Auto-generated method stub
+                    return new ReadOnlyObjectWrapper(param.getValue());
                 });
         colNo.setCellFactory(new Callback<TableColumn<Item, Item>, TableCell<Item, Item>>() {
 
@@ -215,10 +210,31 @@ public class RentalItemController implements Initializable {
         //Check list Empty or Customer not entered
     }
 
-
-    private void updateAmountDue() {
-        //Update Amount Due
+    private double getRentalTotal() {
+        double rental_Total = 0;
+        for (Item item : listItems) {
+            rental_Total += item.getItemClass().getRentalRate();
+        }
+        return rental_Total;
     }
+
+    private double getLateCharge() {
+        return 0f;
+    }
+
+    private double getAmountDue() {
+        if (getLateCharge() == 0) {
+            return getRentalTotal();
+        }
+        return getRentalTotal() + getLateCharge();
+    }
+
+    public void updateTotal() {
+        text_RentalTotal.setText(String.format("%2.2f", getRentalTotal()));
+        text_LateCharge.setText(String.format("%2.2f", getLateCharge()));
+        text_AmountDue.setText(String.format("%2.2f", getAmountDue()));
+    }
+
 
     private void addToTable(Item item) {
         //Add Item to TableView
