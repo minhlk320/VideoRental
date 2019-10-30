@@ -1,43 +1,38 @@
 package ui;
 
-import daos.*;
-import entities.*;
-
 import java.io.File;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
+import daos.CustomerDAO;
+import daos.ItemClassDAO;
+import daos.ItemDAO;
+import daos.RentalDAO;
+import daos.TitleDAO;
+import entities.Customer;
+import entities.Item;
+import entities.Rate;
+import entities.Rental;
+import entities.RentalDetail;
+import entities.Title;
+
 public class Test {
 
 	public static void main(String[] args) {
-//		Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
-//	        LocalTime currentTime = LocalTime.now();
-//	        LocalDate currentDate = LocalDate.now();
-//	        int second = currentTime.getSecond();
-//	        int hour = currentTime.getHour();
-//	        int minute = currentTime.getMinute();
-//	        int day = currentDate.getDayOfMonth();
-//	        String month = currentDate.getMonth().toString().toLowerCase();
-//	        		month = month.substring(0,1).toUpperCase() + month.substring(1,2);
-//	        String time = hour<10?("0"+hour):hour+":";
-//	        		time += minute<10?("0"+minute):minute+":";
-//	        		time += second<10?("0"+second):second+"";
-//
-//		String date = month +" " + day  ;
-//		System.out.println(time);
-//	}),
-//			new KeyFrame(Duration.seconds(1))
-//			);
-//	    clock.setCycleCount(Animation.INDEFINITE);
-//	    clock.play();
-		createTitle();
+
+//		createTitle();
+//		System.out.println(new RentalDAO().getLatestRentalByItemID("ITMNo000003"));
+
+//		RentalAndReturnManagement rentalAndReturnManagement = new RentalAndReturnManagement();
+//		rentalAndReturnManagement.Return("ITMNo000004");
+
 	}
 public static void createDataBase() {
 	Rate itemClass = new Rate(Rate.MOVIE, 2.0, 7, 1.5);
 	Title title = new Title("AVATAR", "Movie has the best profit in history", new File("D:\\XDPM\\misc\\Images\\avatar.jpg"));
 	Item item = new Item(title, Item.ON_SHELF, itemClass);
-	Customer customer = new Customer("Minh", "Truong", "DN", "0987654321");
+	Customer customer = new Customer("Minh", "Truong", "DN", "0987654321",LocalDate.now(),true);
 	Rental rental = new Rental(LocalDate.now());
 	rental.setCustomer(customer);
 	RentalDetail detail = new RentalDetail(rental, item, 6.0);
@@ -57,6 +52,7 @@ public static void createDataBase() {
 	
 }
 public static void createTitle() {
+	Title title = new Title("AVATAR", "Movie has the best profit in history", new File("D:\\XDPM\\misc\\Images\\avatar.jpg"));
 	Title title1 = new Title("AQUAMAN", "A movie from DCU has been announced in 2018", new File("D:\\XDPM\\misc\\Images\\aquaman.jpg"));
 	Title title2 = new Title("BLADE RUNNER", "Announced on 2016", new File("D:\\XDPM\\misc\\Images\\bladeRunner.jpg"));
 	Title title3= new Title("END GAME", "A movie from MCU has been announced in 2018", new File("D:\\XDPM\\misc\\Images\\endgame.jpg"));
@@ -66,8 +62,8 @@ public static void createTitle() {
 	Title title7 = new Title("REPLICAS", "A scientic fiction movie", new File("D:\\XDPM\\misc\\Images\\replicas.jpg"));
 	Title title8 = new Title("SILENT HILL", "An honor movie", new File("D:\\XDPM\\misc\\Images\\silenthill.jpg"));
 	Title title9 = new Title("WRECK IT RAPTH", "A cartoon movie has been announced in 2018", new File("D:\\XDPM\\misc\\Images\\wreckIt.jpg"));
-	List<Title> titles = Arrays.asList(title1,title2,title3,title4,title5,title6,title7,title8,title9);
-    titles.forEach(x -> System.out.println(new TitleDAO().save(x)));
+	List<Title> titles = Arrays.asList(title,title1,title2,title3,title4,title5,title6,title7,title8,title9);
+	titles.forEach(x->System.out.println(new TitleDAO().save(x)));
 }
 }
 

@@ -16,13 +16,14 @@ public class LateCharge implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	static final int UNPAID = 0, PAID = 1;
 	@Id
 	@GenericGenerator(name = "sequence_pr_id", strategy = "generators.MyGenerator")
 	@GeneratedValue(generator = "sequence_pr_id")
 	private String lateChargeID;
 	private LocalDate returnDate;
-	private int status;
+	private LocalDate dueOn;
+	private LocalDate purchaseDate;
+	private double totalAmount;
 	@ManyToOne
 	@JoinColumn(name = "ItemID")
 	private Item item;
@@ -34,12 +35,14 @@ public class LateCharge implements Serializable {
 		super();
 	}
 	
-	public LateCharge(LocalDate returnDate, int status, Item item, Customer customer) {
+	public LateCharge(LocalDate returnDate,LocalDate dueOn, Item item, Customer customer, double totalAmount) {
 		super();
 		this.returnDate = returnDate;
-		this.status = status;
+		this.dueOn = dueOn;
+		this.totalAmount = totalAmount;
 		this.item = item;
 		this.customer = customer;
+		this.purchaseDate =null;
 	}
 
 	public String getLateChargeID() {
@@ -54,26 +57,20 @@ public class LateCharge implements Serializable {
 	public void setReturnDate(LocalDate returnDate) {
 		this.returnDate = returnDate;
 	}
-	public int getStatus() {
-		return status;
-	}
-	public void setStatus(int status) {
-		this.status = status;
-	}
-	public Item getItem() {
-		return item;
-	}
-	public void setItem(Item item) {
-		this.item = item;
-	}
-	
+	public Item getItem() {	return item;}
+	public void setItem(Item item) {this.item = item;	}
+	public LocalDate getDueOn() { return dueOn;	}
+	public void setDueOn(LocalDate dueOn) {	this.dueOn = dueOn;	}
+	public double getTotalAmount() {return totalAmount;	}
+	public void setTotalAmount(double totalAmount) {this.totalAmount = totalAmount;	}
 	public Customer getCustomer() {
 		return customer;
 	}
-
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
+	public LocalDate getPurchaseDate() {return purchaseDate;}
+	public void setPurchaseDate(LocalDate purchaseDate) {this.purchaseDate = purchaseDate;}
 
 	@Override
 	public int hashCode() {
@@ -101,11 +98,14 @@ public class LateCharge implements Serializable {
 
 	@Override
 	public String toString() {
-		return "LateCharge [lateChargeID=" + lateChargeID + ", returnDate=" + returnDate + ", status=" + status
-				+ ", item=" + item + ", customer=" + customer + "]";
+		return "LateCharge{" +
+				"lateChargeID='" + lateChargeID + '\'' +
+				", returnDate=" + returnDate +
+				", dueOn=" + dueOn +
+				", purchaseDate=" + purchaseDate +
+				", totalAmount=" + totalAmount +
+				", item=" + item +
+				", customer=" + customer +
+				'}';
 	}
-	
-	
-	
-
 }

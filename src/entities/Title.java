@@ -1,17 +1,17 @@
 package entities;
 
-import java.io.File;
-import java.io.Serializable;
+import java.io.*;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import javafx.scene.image.Image;
 import org.hibernate.annotations.GenericGenerator;
 @Entity
 public class Title implements Serializable{
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -21,17 +21,18 @@ public class Title implements Serializable{
 	private String titleID;
 	private String titleName;
 	private String description;
-	private File image;
-	
+	@Column(name="Image", unique = false, length = 800000)
+	private byte[] image;
+
 	public Title() {
 		super();
 	}
 
-	public Title(String titleName, String description, File image) {
+	public Title(String titleName, String description, File fimage) {
 		super();
 		this.titleName = titleName;
 		this.description = description;
-		this.image = image;
+		setImage(fimage);
 	}
 
 	public String getDesciption() {
@@ -42,12 +43,22 @@ public class Title implements Serializable{
 		this.description = description;
 	}
 
-	public File getImage() {
-		return image;
+	public Image getImage() {
+		return new Image(new ByteArrayInputStream(image));
 	}
 
-	public void setImage(File imange) {
-		this.image = imange;
+	public void setImage(File fimage) {
+		byte[] bFile = new byte[(int)fimage.length()];
+		try {
+			@SuppressWarnings("resource")
+			FileInputStream fileInputStream = new FileInputStream(fimage);
+			fileInputStream.read(bFile);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		this.image = bFile;
 	}
 
 	public String getTitleName() {
@@ -56,8 +67,8 @@ public class Title implements Serializable{
 	public void setTitleName(String titleName) {
 		this.titleName = titleName;
 	}
-	
-	
+
+
 	public String getTitleID() {
 		return titleID;
 	}
@@ -92,7 +103,7 @@ public class Title implements Serializable{
 	public String toString() {
 		return "Title [titleID=" + titleID + ", titleName=" + titleName + ", description=" + description + "]";
 	}
-	
-	
+
+
 
 }
