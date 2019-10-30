@@ -4,20 +4,31 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import entities.Customer;
 import entities.Item;
+import entities.Rate;
+import entities.Title;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
+import javafx.util.Callback;
 import ui.Main;
 
+import java.io.File;
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class RentalItemController implements Initializable {
+
+
     private Main main;
     @FXML
     private JFXButton btnLogin;
@@ -34,7 +45,17 @@ public class RentalItemController implements Initializable {
     @FXML
     private JFXTextField tf_itemID;
     @FXML
-    private TableView tableItemList;
+    private TableView<Item> tableItemList;
+    @FXML
+    private TableColumn<Item, String> colItemID;
+    @FXML
+    private TableColumn<Item, String> colTitle;
+    @FXML
+    private TableColumn<Item, String> colPrice;
+    @FXML
+    private TableColumn<Item, Item> colNo;
+    @FXML
+    private TableColumn<Item, Item> colDeleteButton;
     @FXML
     private Text text_RentalTotal;
     @FXML
@@ -46,10 +67,12 @@ public class RentalItemController implements Initializable {
     @FXML
     private Button btn_Cancel;
     @FXML
+    private Button btnResetTable;
+    @FXML
     private Button btn_EnterCustomerID;
     @FXML
     private Button btn_EnterItemID;
-
+    private ArrayList<Item> listItems;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -60,7 +83,7 @@ public class RentalItemController implements Initializable {
                 tf_CustomerID.requestFocus();
                 return;
             }
-            Customer customer = findCustomer();
+            Customer customer = findCustomer(customerID);
             if (customer != null) {
                 text_CustomerName.setText(customer.getFirstName() + customer.getLastName());
                 text_CustomerPhone.setText(customer.getPhoneNumber());
@@ -74,7 +97,7 @@ public class RentalItemController implements Initializable {
                 tf_itemID.requestFocus();
                 return;
             }
-            Item item = findItem();
+            Item item = findItem(itemID);
             if (item != null) {
                 addToTable(item);
                 updateAmountDue();
@@ -89,6 +112,71 @@ public class RentalItemController implements Initializable {
                 main.changeScene(main.SCENE_HOME);
             }
         });
+        colNo.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<Item, Item>, ObservableValue<Item>>() {
+                    @SuppressWarnings("rawtypes")
+                    @Override
+                    public ObservableValue<Item> call(TableColumn.CellDataFeatures<Item, Item> param) {
+                        // TODO Auto-generated method stub
+                        return new ReadOnlyObjectWrapper(param.getValue());
+                    }
+                });
+        colNo.setCellFactory(new Callback<TableColumn<Item, Item>, TableCell<Item, Item>>() {
+
+            @Override
+            public TableCell<Item, Item> call(TableColumn<Item, Item> param) {
+                // TODO Auto-generated method stub
+                return new TableCell<Item, Item>() {
+                    @Override
+                    protected void updateItem(Item arg0, boolean arg1) {
+                        // TODO Auto-generated method stub
+                        super.updateItem(arg0, arg1);
+                        if (this.getTableRow() != null && arg0 != null) {
+                            setText(this.getTableRow().getIndex() + 1 + "");
+                        } else {
+                            setText("");
+                        }
+                    }
+                };
+            }
+        });
+        colDeleteButton.setSortable(false);
+        colDeleteButton.setCellValueFactory(
+                param -> new ReadOnlyObjectWrapper<>(param.getValue())
+        );
+        colDeleteButton.setCellFactory(param -> new TableCell<Item, Item>() {
+            private final Button deleteButton = new Button("X");
+
+            @Override
+            protected void updateItem(Item item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (item == null) {
+                    setGraphic(null);
+                    return;
+                }
+
+                setGraphic(deleteButton);
+                deleteButton.setOnAction(
+                        event -> {
+                            listItems.remove(item);
+                            getTableView().getItems().remove(item);
+                        }
+                );
+            }
+        });
+        listItems = new ArrayList<>();
+        ObservableList<Item> items = FXCollections.observableArrayList(listItems);
+        colNo.setSortable(false);
+        colItemID.setCellValueFactory(new PropertyValueFactory<>("itemID"));
+        colTitle.setCellValueFactory(celldata -> new SimpleStringProperty(celldata.getValue().getTitle().getTitleName()));
+        colPrice.setCellValueFactory(celldata -> new SimpleStringProperty(String.format("%2.2f", celldata.getValue().getItemClass().getRentalRate())));
+        tableItemList.setItems(items);
+        btnResetTable.setOnAction(e -> {
+            listItems.clear();
+            tableItemList.getItems().clear();
+        });
+
     }
 
     private boolean requestConfirmExit() {
@@ -133,13 +221,22 @@ public class RentalItemController implements Initializable {
     }
 
     private void addToTable(Item item) {
+        //Add Item to TableView
+        //System.out.println(item);
+        listItems.add(item);
+        tableItemList.getItems().setAll(listItems);
+        tableItemList.refresh();
     }
 
-    private Item findItem() {
-        return null;
+    private Item findItem(String itemID) {
+        Title title = new Title("WRECK IT RAPTH", "A cartoon movie has been announced in 2018", new File("D:\\XDPM\\misc\\Images\\wreckIt.jpg"));
+        Rate rate = new Rate("a", 123, 123, 123);
+        Item item = new Item(title, 0, rate);
+        item.setItemID("123");
+        return item;
     }
 
-    private Customer findCustomer() {
-        return null;
+    private Customer findCustomer(String customerID) {
+        return new Customer("Tran", "Gia Bao", "49 Le Loi", "0123456789", LocalDate.now(), true);
     }
 }

@@ -21,7 +21,7 @@
                             <children>
                                 <AnchorPane>
                                     <children>
-                                        <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                        <VBox spacing="12.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                                               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <children>
                                                 <Label text="List Late charge"/>
@@ -31,12 +31,13 @@
                                                         <TableColumn fx:id="colCustomerID" prefWidth="-1.0"
                                                                      resizable="false" text="Customer ID"/>
                                                         <TableColumn fx:id="colReturnDate" maxWidth="400.0"
-                                                                     prefWidth="210.0" text="Return Date"/>
+                                                                     prefWidth="130.0" text="Return Date"/>
                                                         <TableColumn fx:id="colDays" maxWidth="300.0" minWidth="0.0"
-                                                                     prefWidth="132.0" text="Days"/>
-                                                        <TableColumn fx:id="colLateCharge" maxWidth="300.0"
-                                                                     minWidth="0.0" prefWidth="159.0"
+                                                                     prefWidth="63.0" text="Days"/>
+                                                        <TableColumn fx:id="colLateCharge" maxWidth="325.0"
+                                                                     minWidth="0.0" prefWidth="308.0"
                                                                      text="Late Charge"/>
+                                                        <TableColumn fx:id="colCheck" prefWidth="75.0" text="Paid"/>
                                                     </columns>
                                                 </TableView>
                                             </children>

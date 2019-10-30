@@ -121,6 +121,7 @@ public class Main extends Application{
 			stage.setScene(scene);
 			stage.initModality(Modality.WINDOW_MODAL);
 			stage.initStyle(StageStyle.DECORATED);
+			stage.initOwner(primaryStage);
 			stage.show();
 
 		} catch (final IOException e) {
