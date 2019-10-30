@@ -1,11 +1,13 @@
 package entities;
 
 import java.io.*;
+import java.util.Arrays;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.image.Image;
 import org.hibernate.annotations.GenericGenerator;
 @Entity
@@ -99,11 +101,9 @@ public class Title implements Serializable{
 		return true;
 	}
 
+
 	@Override
 	public String toString() {
-		return "Title [titleID=" + titleID + ", titleName=" + titleName + ", description=" + description + "]";
+		return titleName;
 	}
-
-
-
 }

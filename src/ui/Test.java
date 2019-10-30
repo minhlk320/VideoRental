@@ -21,7 +21,7 @@ public class Test {
 
 	public static void main(String[] args) {
 
-//		createTitle();
+		//createTitle();
 //		System.out.println(new RentalDAO().getLatestRentalByItemID("ITMNo000003"));
 
 //		RentalAndReturnManagement rentalAndReturnManagement = new RentalAndReturnManagement();

@@ -16,10 +16,10 @@ public class Item implements Serializable{
 	/**
 	 * 
 	 */
-	public static final int ON_HOLD = 1;
-	public static final int ON_SHELF = 2;
-	public static final int RENTED = 3;
-	public static final int ON_DUE = 4;
+	public static final String ON_HOLD = "ON_HOLD";
+	public static final String ON_SHELF = "ON_SHELF";
+	public static final String RENTED = "RENTED";
+	public static final String LOST_DAMAGE = "LOST_DAMAGE";
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GenericGenerator(name = "sequence_pr_id", strategy = "generators.MyGenerator")
@@ -29,12 +29,12 @@ public class Item implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "TitleID")
 	private Title title;
-	private int status;
+	private String status;
 	@ManyToOne
 	@JoinColumn(name = "ItemClassID")
 	private Rate itemClass;
 	
-	public Item(Title title, int status, Rate itemClass) {
+	public Item(Title title, String status, Rate itemClass) {
 		super();
 		this.title = title;
 		this.status = status;
@@ -49,10 +49,10 @@ public class Item implements Serializable{
 	public void setTitle(Title title) {
 		this.title = title;
 	}
-	public int getStatus() {
+	public String getStatus() {
 		return status;
 	}
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 	public String getItemID() {
@@ -92,11 +92,15 @@ public class Item implements Serializable{
 			return false;
 		return true;
 	}
+
+
 	@Override
 	public String toString() {
-		return "Item [itemID=" + itemID + ", title=" + title + ", status=" + status + "]";
+		return "Item{" +
+				"itemID='" + itemID + '\'' +
+				", title=" + title +
+				", status=" + status +
+				", itemClass=" + itemClass +
+				'}';
 	}
-	
-	
-
 }

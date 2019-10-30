@@ -14,5 +14,14 @@ C:/Users/Minh/IdeaProjects/VideoRental/bin/META-INF/persistence.xml</remarks>
         <property name="applicationName" value="DataGrip" />
       </driver-properties>
     </data-source>
+    <data-source source="LOCAL" name="Microsoft SQL Server - @localhost" uuid="e46de667-e9b5-4396-9bd8-52fff8dbef00">
+      <driver-ref>sqlserver.ms</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
+      <jdbc-url>jdbc:sqlserver://localhost</jdbc-url>
+      <driver-properties>
+        <property name="applicationName" value="DataGrip" />
+      </driver-properties>
+    </data-source>
   </component>
 </project>
