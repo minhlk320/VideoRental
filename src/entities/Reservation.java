@@ -31,6 +31,17 @@ public class Reservation implements Serializable {
 	@JoinColumn(name = "ItemID")
 	private Item item;
 	private String comment;
+
+	public Reservation(LocalDate reservationDate, Customer customer, Title title, String comment) {
+		this.reservationDate = reservationDate;
+		this.customer = customer;
+		this.title = title;
+		this.comment = comment;
+	}
+
+	public Reservation() {
+	}
+
 	public LocalDate getReservationDate() {
 		return reservationDate;
 	}

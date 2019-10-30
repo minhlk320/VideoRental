@@ -195,9 +195,6 @@ public class TitleManagementController implements Initializable {
 		colDescription.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getDesciption()));
 		colNumOfCopies.setCellValueFactory((celldata->new SimpleStringProperty("0")));
 		table.setItems(tkList);
-
-
-
 	}
 
 	private void reloadTable(){

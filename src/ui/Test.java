@@ -24,8 +24,8 @@ public class Test {
 		//createTitle();
 //		System.out.println(new RentalDAO().getLatestRentalByItemID("ITMNo000003"));
 
-//		RentalAndReturnManagement rentalAndReturnManagement = new RentalAndReturnManagement();
-//		rentalAndReturnManagement.Return("ITMNo000004");
+		RentalAndReturnManagement rentalAndReturnManagement = new RentalAndReturnManagement();
+		rentalAndReturnManagement.Return("ITMNo000004");
 
 	}
 public static void createDataBase() {
