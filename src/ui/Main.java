@@ -157,4 +157,8 @@ public class Main extends Application{
 		primaryStage.hide();
 
 	}
+
+	public void closeCenter() {
+		root.setCenter(null);
+	}
 }

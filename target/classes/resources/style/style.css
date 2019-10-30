@@ -97,14 +97,14 @@
 .tab-pane:top .tab-header-area .tab-header-background{
     -fx-padding: 5 22 5 22;
     -fx-background-radius: 0;
-    -fx-background-color: transparent;
+    -fx-background-color: #070d59;
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
     -fx-font-size: 11pt;
-    -fx-text-fill: white;
+    -fx-text-fill: #ceddef;
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
 }
 .tab-pane{
-    -fx-border-color: transparent;
+    -fx-border-color: #5893d4;
     -fx-border-width: 2;
     -fx-background-radius: 0;
 }
@@ -113,7 +113,11 @@
 }
 .tab-pane>*.tab-header-area>*.tab-header-background 
 {
-   -fx-background-color: -fx-outer-border, -fx-text-box-border, transparent;
+    -fx-background-color: -fx-outer-border, -fx-text-box-border, #1f3c88;
+}
+
+.tab-debt {
+    -fx-background-color: #1f3c88;
 }
 .tab{
     -fx-padding: 5 22 5 22;
@@ -127,7 +131,7 @@
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
 }
 .tab:selected {
-    -fx-background-color:  #005c8a;
+    -fx-background-color: #1f3c88;
 }
 #tab-text{
     -fx-text-fill: white;

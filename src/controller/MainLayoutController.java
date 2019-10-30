@@ -9,6 +9,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MainLayoutController implements Initializable {
+
+    @FXML
+    private Button btnClose;
     private Main main;
     @FXML
     private Button btnRentalItems;
@@ -32,6 +35,23 @@ public class MainLayoutController implements Initializable {
         main = Main.getInstance();
         btnRentalItems.setOnAction(e -> {
             main.changeScene(main.SCENE_RENTAL_ITEMS);
+            btnClose.setVisible(true);
+        });
+        btnClose.setOnAction(e -> {
+            main.closeCenter();
+            btnClose.setVisible(false);
+        });
+        btnTitle.setOnAction(e -> {
+            main.changeScene(main.SCENE_TITLE_MANAGEMENT);
+            btnClose.setVisible(true);
+        });
+        btnCustomer.setOnAction(e -> {
+            main.changeScene(main.SCENE_CUSTOMER_MANAGEMENT);
+            btnClose.setVisible(true);
+        });
+        btnItems.setOnAction(e -> {
+            main.changeScene(main.SCENE_ITEM_MANAGEMENT);
+            btnClose.setVisible(true);
         });
     }
 }
