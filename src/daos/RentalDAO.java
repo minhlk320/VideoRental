@@ -1,8 +1,11 @@
 package daos;
 
 import entities.Rental;
-
+import entities.RentalDetail;
 import javax.persistence.Query;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RentalDAO extends GeneralCRUD<Rental> {
     public  Rental getLatestRentalByItemID(String id){
@@ -15,6 +18,17 @@ public class RentalDAO extends GeneralCRUD<Rental> {
         q.setParameter("itemID",itemID);
         return (String) q.getSingleResult();
     }
-
-
+    public List<Rental> getAllOverDue(){
+        List<Rental> rentalList = getAll(Rental.class);
+        List<Rental> overDueList = new ArrayList<>();
+        for(Rental rt : rentalList )
+            for(RentalDetail detail : rt.getItems()){
+                LocalDate rentedDate = rt.getDate();
+                LocalDate currentDate = LocalDate.now();
+                if(currentDate.isAfter(rentedDate.plusDays(detail.getRentalPeriod())))
+                   if(!overDueList.contains(rt))
+                       overDueList.add(rt);
+            }
+        return overDueList;
+    }
 }
