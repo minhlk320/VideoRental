@@ -27,6 +27,7 @@ public class RentalAndReturnManagement {
         Rental rental = new Rental(LocalDate.now());
         List<RentalDetail> rentalDetailList = new ArrayList<>();
         itemList.forEach(x->{
+            x.setStatus(Item.RENTED);
             rentalDetailList.add(new RentalDetail(rental, x, x.getItemClass().getRentalRate()));
         });
         rental.setCustomer(customer);
@@ -45,6 +46,7 @@ public class RentalAndReturnManagement {
      */
     public boolean Return(String id){
         Item item = itemDAO.getById(Item.class,id);
+        if(item.equals(null))return false;
         Rental lastestRental = rentalDAO.getLatestRentalByItemID(id);
         Customer customer = lastestRental.getCustomer();
         RentalDetail rentalDetailofItem = null;

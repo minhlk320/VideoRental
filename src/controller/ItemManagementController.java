@@ -210,7 +210,7 @@ public class ItemManagementController implements Initializable{
     }
 
     private void ShowTitleName(){
-	    ObservableList<Title> listTitle = FXCollections.observableArrayList(new TitleDAO().getALL());
+	    ObservableList<Title> listTitle = FXCollections.observableArrayList(new TitleDAO().getAll(Title.class));
 	    for(int i=0; i<listTitle.size(); i++){
 	        cbTitle.setItems(listTitle);
             cbTitle.getSelectionModel().select(-1);
@@ -225,7 +225,7 @@ public class ItemManagementController implements Initializable{
     }
 
     private void ShowItemClass(){
-        ObservableList<Rate> listRate = FXCollections.observableArrayList(new RateDAO().getALL());
+        ObservableList<Rate> listRate = FXCollections.observableArrayList(new RateDAO().getAll(Rate.class));
         cbItemClass.setItems(listRate);
         cbItemClass.getSelectionModel().select(-1);
     }

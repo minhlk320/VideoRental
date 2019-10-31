@@ -1,5 +1,8 @@
 package entities;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import java.io.Serializable;
 
 import javax.persistence.Entity;
@@ -22,6 +25,7 @@ public class RentalDetail implements Serializable{
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "ItemID", referencedColumnName = "ItemID")
+	@Cascade(value = { CascadeType.SAVE_UPDATE })
 	private Item item;
 	private double unitPrice;
 	private int rentalPeriod;

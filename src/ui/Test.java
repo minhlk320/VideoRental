@@ -12,13 +12,11 @@ public class Test {
 
 	public static void main(String[] args) {
 
-//		createTitle();
-//		System.out.println(new RentalDAO().getLatestRentalByItemID("ITMNo000003"));
+		createTitle();
+//		System.out.println(new RentalDAO().getLatestRentalByItemID("000003"));
 
 //		RentalAndReturnManagement rentalAndReturnManagement = new RentalAndReturnManagement();
-//		rentalAndReturnManagement.Return("ITMNo000004");
-
-		System.out.println(new RentalDAO().getAllOverDue());
+//		rentalAndReturnManagement.Return("000003");
 
 	}
 public static void createDataBase() {

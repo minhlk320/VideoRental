@@ -6,15 +6,15 @@ import entities.Rate;
 import javax.persistence.Query;
 import java.util.List;
 
-public class RateDAO extends GeneralCRUD<Item>{
-    public List<Rate> getALL(){
-        Query q = em.createNativeQuery("SELECT * FROM Rate", Rate.class);
-        return q.getResultList();
-    }
-
+public class RateDAO extends GeneralCRUD<Rate>{
     public Rate getByName(String name) {
-        Query q = em.createNativeQuery("SELECT * FROM Rate WHERE Rate.itemClassName =:titlename", Rate.class);
-        q.setParameter("titlename",name);
-        return (Rate) q.getSingleResult();
+        Query q = em.createNativeQuery("SELECT * FROM Rate WHERE Rate.itemClassName =:name", Rate.class);
+        q.setParameter("name",name);
+        try {
+            return (Rate) q.getSingleResult();
+
+        }catch (Exception e){
+            return null;
+        }
     }
 }

@@ -10,7 +10,11 @@ public class LateChargeDAO extends GeneralCRUD<LateCharge> {
     public List<LateCharge> getLateChargeByCustomerID(String id){
         Query q = em.createNativeQuery("SELECT * FROM LateCharge WHERE CustomerID =:customerID",LateCharge.class);
         q.setParameter("customerID",id);
-        return  q.getResultList();
+        try {
+            return q.getResultList();
+        }catch (Exception e){
+            return null;
+        }
     }
 
 }
