@@ -30,15 +30,11 @@ public class Item implements Serializable{
 	@JoinColumn(name = "TitleID")
 	private Title title;
 	private String status;
-	@ManyToOne
-	@JoinColumn(name = "ItemClassID")
-	private Rate itemClass;
 	
-	public Item(Title title, String status, Rate itemClass) {
+	public Item(Title title, String status) {
 		super();
 		this.title = title;
 		this.status = status;
-		this.itemClass = itemClass;
 	}
 	public Item() {
 		super();
@@ -63,12 +59,6 @@ public class Item implements Serializable{
 	}
 	
 	
-	public Rate getItemClass() {
-		return itemClass;
-	}
-	public void setItemClass(Rate itemClass) {
-		this.itemClass = itemClass;
-	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -100,7 +90,6 @@ public class Item implements Serializable{
 				"itemID='" + itemID + '\'' +
 				", title=" + title +
 				", status=" + status +
-				", itemClass=" + itemClass +
 				'}';
 	}
 }

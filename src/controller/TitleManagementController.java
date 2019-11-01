@@ -2,7 +2,9 @@ package controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
+import daos.RateDAO;
 import daos.TitleDAO;
+import entities.Rate;
 import entities.Title;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -12,6 +14,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -67,7 +70,13 @@ public class TitleManagementController implements Initializable {
 	private JFXButton btnDelete;
 
 	@FXML
+	private ComboBox<Rate> cbItemClass;
+
+	@FXML
 	private TableView<Title> table;
+
+	@FXML
+	private TableColumn<Title, String> colItemClass;
 
 	@FXML
 	private TableColumn<Title, String> colTitleID;
@@ -91,6 +100,7 @@ public class TitleManagementController implements Initializable {
 		lbTitle.setText("");
 		lbDescription.setText("");
 		loadTable(listTitles);
+		ShowItemClass();
 
 		btnBack.setOnAction(e->{
 			main.changeScene(main.SCENE_HOME);
@@ -103,13 +113,13 @@ public class TitleManagementController implements Initializable {
 			imageView.setImage(null);
 			if (!listTitles.isEmpty()) {
 				String id_last = listTitles.get(listTitles.size() - 1).getTitleID();
-				String prefix = id_last.substring(0, 5);
-				int id = Integer.valueOf((id_last.substring(5, id_last.length())));
-				String new_id = prefix + String.format("%06d", id + 1);
+				int id = Integer.valueOf((id_last));
+				String new_id = String.format("%06d", id + 1);
 				txtTitleID.setText(new_id);
 			} else {
-				txtTitleID.setText("TTLNo000001");
+				txtTitleID.setText("000001");
 			}
+			cbItemClass.getSelectionModel().select(-1);
 		});
 
 
@@ -132,9 +142,11 @@ public class TitleManagementController implements Initializable {
 			Title getCurrentTitle(Title title) {
 				String titleName = txtTitle.getText();
 				String des = txtDescription.getText();
+				Rate rate = cbItemClass.getValue();
 				title.setImage(image);
 				title.setDescription(des);
 				title.setTitleName(titleName);
+				title.setItemClass(rate);
 				return title;
 			}
 
@@ -179,6 +191,7 @@ public class TitleManagementController implements Initializable {
 				txtTitleID.setText(table.getSelectionModel().getSelectedItem().getTitleID());
 				txtTitle.setText(table.getSelectionModel().getSelectedItem().getTitleName());
 				txtDescription.setText(table.getSelectionModel().getSelectedItem().getDesciption());
+				cbItemClass.setValue(table.getSelectionModel().getSelectedItem().getItemClass());
 				imageView.setImage(table.getSelectionModel().getSelectedItem().getImage());
 			}
 		});
@@ -192,6 +205,7 @@ public class TitleManagementController implements Initializable {
 		colTitle.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getTitleName()));
 		colDescription.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getDesciption()));
 		colNumOfCopies.setCellValueFactory((celldata->new SimpleStringProperty("0")));
+		colItemClass.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getItemClass().getItemClassName()));
 		table.setItems(tkList);
 	}
 
@@ -200,6 +214,11 @@ public class TitleManagementController implements Initializable {
 		table.getColumns().addAll(colTitleID,colTitle,colNumOfCopies,colDescription);
 		listTitles = new TitleDAO().getAll(Title.class);
 		loadTable(listTitles);
+	}
+	private void ShowItemClass(){
+		ObservableList<Rate> listRate = FXCollections.observableArrayList(new RateDAO().getAll(Rate.class));
+		cbItemClass.setItems(listRate);
+		cbItemClass.getSelectionModel().select(-1);
 	}
 
 	private void configuringDirectoryChooser(DirectoryChooser directoryChooser) {

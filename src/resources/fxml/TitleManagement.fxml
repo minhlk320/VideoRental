@@ -1,97 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea"
-            fx:controller="controller.TitleManagementController">
+
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TitleManagementController">
    <children>
-      <HBox alignment="CENTER" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0"
-            AnchorPane.topAnchor="12.0">
+      <HBox alignment="CENTER" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="12.0">
          <children>
             <VBox layoutX="10.0" layoutY="10.0" HBox.hgrow="ALWAYS">
                <children>
-                  <TextField fx:id="txtTitleID" editable="false" focusTraversable="false" layoutX="10.0" layoutY="10.0"
-                             promptText="No." style="-fx-background-color: #4f81bc;">
+                  <TextField fx:id="txtTitleID" editable="false" focusTraversable="false" layoutX="10.0" layoutY="10.0" promptText="No." style="-fx-background-color: #4f81bc;">
                      <VBox.margin>
-                        <Insets top="20.0"/>
+                        <Insets top="20.0" />
                      </VBox.margin>
                   </TextField>
                   <BorderPane>
                      <center>
-                        <ImageView fx:id="imageView" fitHeight="180.0" fitWidth="120.0" pickOnBounds="true"
-                                   BorderPane.alignment="CENTER">
+                        <ImageView fx:id="imageView" fitHeight="180.0" fitWidth="120.0" pickOnBounds="true" BorderPane.alignment="CENTER">
                            <image>
-                              <Image url="@../img/default_poster.jpg"/>
+                              <Image url="@../img/default_poster.jpg" />
                            </image>
                            <effect>
-                              <DropShadow/>
+                              <DropShadow />
                            </effect>
                         </ImageView>
                      </center>
                      <bottom>
-                        <JFXButton fx:id="btnChoose" contentDisplay="TOP" focusTraversable="false" prefHeight="30.0"
-                                   prefWidth="98.0" text="Choose" BorderPane.alignment="CENTER">
+                        <JFXButton fx:id="btnChoose" contentDisplay="TOP" focusTraversable="false" prefHeight="30.0" prefWidth="98.0" text="Choose" BorderPane.alignment="CENTER">
                            <BorderPane.margin>
-                              <Insets top="12.0"/>
+                              <Insets top="12.0" />
                            </BorderPane.margin>
                         </JFXButton>
                      </bottom>
                      <VBox.margin>
-                        <Insets top="12.0"/>
+                        <Insets top="12.0" />
                      </VBox.margin>
                   </BorderPane>
-                  <TextField fx:id="txtTitle" focusTraversable="false" promptText="Title"
-                             style="-fx-background-color: #4f81bc;">
+                  <TextField fx:id="txtTitle" focusTraversable="false" promptText="Title" style="-fx-background-color: #4f81bc;">
                      <VBox.margin>
-                        <Insets top="24.0"/>
+                        <Insets top="24.0" />
                      </VBox.margin>
                   </TextField>
-                  <Text fx:id="lbTitle" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="txtTitle"/>
-                  <JFXTextArea fx:id="txtDescription" promptText="Description" style="-fx-background-color: #4f81bc;"
-                               wrapText="true"/>
+                  <Text fx:id="lbTitle" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="txtTitle" />
+                  <ComboBox fx:id="cbItemClass" prefHeight="25.0" prefWidth="463.0" style="-fx-background-color: #4f81bc;" />
+                  <Text fx:id="lbItemID" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Item Class :" />
+                  <JFXTextArea fx:id="txtDescription" promptText="Description" style="-fx-background-color: #4f81bc;" wrapText="true" />
                               <Text fx:id="lbDescription" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="txtLname" />
                   <AnchorPane>
                      <children>
-                        <HBox alignment="BOTTOM_CENTER" layoutY="7.0" AnchorPane.bottomAnchor="0.0"
-                              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="7.0">
+                        <HBox alignment="BOTTOM_CENTER" layoutY="7.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="7.0">
                            <children>
                               <JFXButton fx:id="btnBack" contentDisplay="TOP" focusTraversable="false" text="Back">
                                  <graphic>
-                                    <FontAwesomeIcon fill="WHITE" glyphName="ARROW_LEFT"/>
+                                    <FontAwesomeIcon fill="WHITE" glyphName="ARROW_LEFT" />
                                  </graphic>
                                  <HBox.margin>
-                                    <Insets right="12.0"/>
+                                    <Insets right="12.0" />
                                  </HBox.margin>
                               </JFXButton>
                               <JFXButton fx:id="btnNew" contentDisplay="TOP" focusTraversable="false" text="New">
                                  <graphic>
-                                    <FontAwesomeIcon fill="WHITE" glyphName="PLUS"/>
+                                    <FontAwesomeIcon fill="WHITE" glyphName="PLUS" />
                                  </graphic>
                                  <HBox.margin>
-                                    <Insets right="12.0"/>
+                                    <Insets right="12.0" />
                                  </HBox.margin>
                               </JFXButton>
                               <JFXButton fx:id="btnSave" contentDisplay="TOP" focusTraversable="false" text="Save">
                                  <graphic>
-                                    <FontAwesomeIcon fill="WHITE" glyphName="SAVE"/>
+                                    <FontAwesomeIcon fill="WHITE" glyphName="SAVE" />
                                  </graphic>
                                  <HBox.margin>
-                                    <Insets right="12.0"/>
+                                    <Insets right="12.0" />
                                  </HBox.margin>
                               </JFXButton>
                               <JFXButton fx:id="btnDelete" contentDisplay="TOP" focusTraversable="false" text="Delete">
                                  <graphic>
-                                    <FontAwesomeIcon fill="WHITE" glyphName="TRASH"/>
+                                    <FontAwesomeIcon fill="WHITE" glyphName="TRASH" />
                                  </graphic>
                                  <HBox.margin>
-                                    <Insets right="12.0"/>
+                                    <Insets right="12.0" />
                                  </HBox.margin>
                               </JFXButton>
                            </children>
@@ -102,25 +105,23 @@
             </VBox>
             <AnchorPane HBox.hgrow="ALWAYS">
                <children>
-                  <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                        AnchorPane.topAnchor="0.0">
+                  <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Label text="List of Titles"/>
+                        <Label text="List of Titles" />
                         <TableView fx:id="table" stylesheets="@../style/style.css" VBox.vgrow="ALWAYS">
                            <columns>
-                              <TableColumn fx:id="colTitleID" prefWidth="129.0" resizable="false" text="No."/>
-                              <TableColumn fx:id="colTitle" maxWidth="400.0" prefWidth="210.0" text="Title"/>
-                              <TableColumn fx:id="colNumOfCopies" maxWidth="300.0" minWidth="0.0" prefWidth="183.0"
-                                           text="Number of copies"/>
-                              <TableColumn fx:id="colDescription" maxWidth="300.0" minWidth="0.0" prefWidth="247.0"
-                                           text="Description"/>
+                              <TableColumn fx:id="colTitleID" prefWidth="129.0" resizable="false" text="No." />
+                              <TableColumn fx:id="colTitle" maxWidth="400.0" prefWidth="210.0" text="Title" />
+                              <TableColumn fx:id="colNumOfCopies" maxWidth="300.0" minWidth="0.0" prefWidth="183.0" text="Number of copies" />
+                              <TableColumn fx:id="colItemClass" maxWidth="300.0" minWidth="0.0" prefWidth="169.0" text="Item Class" />
+                              <TableColumn fx:id="colDescription" maxWidth="300.0" minWidth="0.0" prefWidth="247.0" text="Description" />
                            </columns>
                         </TableView>
                      </children>
                   </VBox>
                </children>
                <HBox.margin>
-                  <Insets left="24.0"/>
+                  <Insets left="24.0" />
                </HBox.margin>
             </AnchorPane>
          </children>

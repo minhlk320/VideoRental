@@ -23,17 +23,19 @@ public class RentalAndReturnManagement {
      * @return true/false
      * @description This function return a true value if a rental transaction was created successfully else return false
      */
-    public boolean Rental(Customer customer, List<Item> itemList){
+    public boolean rental(Customer customer, List<Item> itemList){
         Rental rental = new Rental(LocalDate.now());
         List<RentalDetail> rentalDetailList = new ArrayList<>();
         itemList.forEach(x->{
             x.setStatus(Item.RENTED);
-            rentalDetailList.add(new RentalDetail(rental, x, x.getItemClass().getRentalRate()));
+            rentalDetailList.add(new RentalDetail(rental, x, x.getTitle().getItemClass().getRentalRate(),x.getTitle().getItemClass().getRentalPeriod(),x.getTitle().getItemClass().getLateRate()));
         });
         rental.setCustomer(customer);
         rental.setItems(rentalDetailList);
-        if(rentalDAO.save(rental))
+        if(rentalDAO.save(rental)){
+            itemList.forEach(x->new ItemDAO().update(x));
             return true;
+        }
         return false;
     }
 
@@ -95,10 +97,20 @@ public class RentalAndReturnManagement {
         if( lateChargeDAO.save(lateCharge))
             System.out.println("Late charge added!");
     }
-    public  void recordLateChargePayment(LateCharge lateCharge){
+    public  void recordLateChargePayment(LateCharge lateCharge) {
         lateCharge.setPurchaseDate(LocalDate.now());
         lateChargeDAO.update(lateCharge);
     }
+    public double getTotalLatechargeList(List<LateCharge> list){
+        if(list.equals(null))
+            return 0l;
+        double total = 0;
+       for(LateCharge x : list){
+           total+=x.getTotalAmount();
+       }
+        return total;
+    }
+
 
 
 

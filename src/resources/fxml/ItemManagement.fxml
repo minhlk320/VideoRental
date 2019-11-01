@@ -2,96 +2,85 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea"
-            fx:controller="controller.ItemManagementController">
+
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ItemManagementController">
    <children>
-      <HBox alignment="CENTER" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0"
-            AnchorPane.topAnchor="12.0">
+      <HBox alignment="CENTER" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="12.0">
          <children>
             <AnchorPane>
                <children>
                   <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <TextField fx:id="txtItemID" editable="false" focusTraversable="false" layoutX="10.0"
-                                   layoutY="10.0" prefWidth="283.0" promptText="ItemID"
-                                   style="-fx-background-color: #4f81bc;">
+                        <TextField fx:id="txtItemID" editable="false" focusTraversable="false" layoutX="10.0" layoutY="10.0" prefWidth="283.0" promptText="ItemID" style="-fx-background-color: #4f81bc;">
                            <VBox.margin>
-                              <Insets top="20.0"/>
+                              <Insets top="20.0" />
                            </VBox.margin>
                         </TextField>
-                        <Text fx:id="lbItemID" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="txtItemID"/>
+                        <Text fx:id="lbItemID" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="txtItemID" />
                         <Text fx:id="lbItemID" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Title Name : ">
                            <VBox.margin>
-                              <Insets top="24.0"/>
+                              <Insets top="24.0" />
                            </VBox.margin>
                         </Text>
-                        <ComboBox fx:id="cbTitle" prefHeight="25.0" prefWidth="247.0"
-                                  style="-fx-background-color: #4f81bc;">
+                        <ComboBox fx:id="cbTitle" prefHeight="25.0" prefWidth="247.0" style="-fx-background-color: #4f81bc;">
                            <VBox.margin>
-                              <Insets/>
+                              <Insets />
                            </VBox.margin>
                         </ComboBox>
                         <Text fx:id="lbItemID" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Status :">
                            <VBox.margin>
-                              <Insets top="24.0"/>
+                              <Insets top="24.0" />
                            </VBox.margin>
                         </Text>
-                        <ComboBox fx:id="cbStatus" prefHeight="25.0" prefWidth="212.0"
-                                  style="-fx-background-color: #4f81bc;">
+                        <ComboBox fx:id="cbStatus" prefHeight="25.0" prefWidth="212.0" style="-fx-background-color: #4f81bc;">
                            <VBox.margin>
-                              <Insets/>
-                           </VBox.margin>
-                        </ComboBox>
-                        <Text fx:id="lbItemID" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Item Class :">
-                           <VBox.margin>
-                              <Insets top="24.0"/>
-                           </VBox.margin>
-                        </Text>
-                        <ComboBox fx:id="cbItemClass" prefHeight="25.0" prefWidth="213.0"
-                                  style="-fx-background-color: #4f81bc;">
-                           <VBox.margin>
-                              <Insets/>
+                              <Insets />
                            </VBox.margin>
                         </ComboBox>
                      </children>
                   </VBox>
-                  <HBox alignment="BOTTOM_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                        AnchorPane.rightAnchor="0.0">
+                  <HBox alignment="BOTTOM_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                      <children>
                         <JFXButton fx:id="btnBack" contentDisplay="TOP" focusTraversable="false" text="Back">
                            <graphic>
-                              <FontAwesomeIcon fill="WHITE" glyphName="ARROW_LEFT"/>
+                              <FontAwesomeIcon fill="WHITE" glyphName="ARROW_LEFT" />
                            </graphic>
                            <HBox.margin>
-                              <Insets right="12.0"/>
+                              <Insets right="12.0" />
                            </HBox.margin>
                         </JFXButton>
                         <JFXButton fx:id="btnNew" contentDisplay="TOP" focusTraversable="false" text="New">
                            <graphic>
-                              <FontAwesomeIcon fill="WHITE" glyphName="PLUS"/>
+                              <FontAwesomeIcon fill="WHITE" glyphName="PLUS" />
                            </graphic>
                            <HBox.margin>
-                              <Insets right="12.0"/>
+                              <Insets right="12.0" />
                            </HBox.margin>
                         </JFXButton>
                         <JFXButton fx:id="btnSave" contentDisplay="TOP" focusTraversable="false" text="Save">
                            <graphic>
-                              <FontAwesomeIcon fill="WHITE" glyphName="SAVE"/>
+                              <FontAwesomeIcon fill="WHITE" glyphName="SAVE" />
                            </graphic>
                            <HBox.margin>
-                              <Insets right="12.0"/>
+                              <Insets right="12.0" />
                            </HBox.margin>
                         </JFXButton>
                         <JFXButton fx:id="btnDelete" contentDisplay="TOP" focusTraversable="false" text="Delete">
                            <graphic>
-                              <FontAwesomeIcon fill="WHITE" glyphName="TRASH"/>
+                              <FontAwesomeIcon fill="WHITE" glyphName="TRASH" />
                            </graphic>
                            <HBox.margin>
-                              <Insets right="12.0"/>
+                              <Insets right="12.0" />
                            </HBox.margin>
                         </JFXButton>
                      </children>
@@ -100,26 +89,21 @@
             </AnchorPane>
             <AnchorPane>
                <children>
-                  <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                        AnchorPane.topAnchor="0.0">
+                  <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Label text="List of DVD/DISK"/>
+                        <Label text="List of DVD/DISK" />
                         <TableView fx:id="table" stylesheets="@../style/style.css">
                            <columns>
-                              <TableColumn fx:id="colItemID" prefWidth="129.0" resizable="false" text="No."/>
-                              <TableColumn fx:id="colTitle" maxWidth="300.0" minWidth="0.0" prefWidth="259.0"
-                                           text="Title"/>
-                              <TableColumn fx:id="colStatus" maxWidth="300.0" minWidth="0.0" prefWidth="197.0"
-                                           text="Status"/>
-                              <TableColumn fx:id="colItemClass" maxWidth="300.0" minWidth="0.0" prefWidth="169.0"
-                                           text="Item Class"/>
+                              <TableColumn fx:id="colItemID" prefWidth="129.0" resizable="false" text="No." />
+                              <TableColumn fx:id="colTitle" maxWidth="300.0" minWidth="0.0" prefWidth="259.0" text="Title" />
+                              <TableColumn fx:id="colStatus" maxWidth="300.0" minWidth="0.0" prefWidth="197.0" text="Status" />
                            </columns>
                         </TableView>
                      </children>
                   </VBox>
                </children>
                <HBox.margin>
-                  <Insets left="24.0"/>
+                  <Insets left="24.0" />
                </HBox.margin>
             </AnchorPane>
          </children>

@@ -34,11 +34,12 @@ public class RentalDetail implements Serializable{
 		super();
 	}
 
-	public RentalDetail(Rental rental, Item item, double unitPrice) {
-		super();
+	public RentalDetail(Rental rental, Item item, double unitPrice, int rentalPeriod, double lateRate) {
 		this.rental = rental;
 		this.item = item;
 		this.unitPrice = unitPrice;
+		this.rentalPeriod = rentalPeriod;
+		this.lateRate = lateRate;
 	}
 
 	public Rental getRental() {

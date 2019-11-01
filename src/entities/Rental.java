@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.GenericGenerator;
 @Entity
 public class Rental implements Serializable{
@@ -31,7 +32,7 @@ public class Rental implements Serializable{
 	@Column(name="RentalDate")
 	private LocalDate rentalDate;
 	@OneToMany(mappedBy = "rental")
-	@Cascade(value = { org.hibernate.annotations.CascadeType.ALL })
+	@Cascade(value = { CascadeType.ALL })
 	private List<RentalDetail> rentalDetails;
 	
 	public Rental() {
@@ -64,6 +65,13 @@ public class Rental implements Serializable{
 	}
 	public void setItems(List<RentalDetail> items) {
 		this.rentalDetails = items;
+	}
+	public double getTotal(){
+		double total = 0;
+		for (RentalDetail x : rentalDetails){
+			total+=x.getUnitPrice();
+		}
+		return  total;
 	}
 	@Override
 	public int hashCode() {

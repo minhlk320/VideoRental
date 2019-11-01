@@ -2,10 +2,7 @@ package entities;
 
 import java.io.*;
 import java.util.Arrays;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.image.Image;
@@ -25,18 +22,22 @@ public class Title implements Serializable{
 	private String description;
 	@Column(name="Image", unique = false, length = 800000)
 	private byte[] image;
+	@ManyToOne
+	@JoinColumn(name = "ItemClassID")
+	private Rate itemClass;
 
 	public Title() {
 		super();
 	}
 
-	public Title(String titleName, String description, File fimage) {
+	public Title(String titleName, String description, File fimage,Rate itemClass) {
 		super();
 		this.titleName = titleName;
 		this.description = description;
+		this.itemClass = itemClass;
 		setImage(fimage);
 	}
-
+	
 	public String getDesciption() {
 		return description;
 	}
@@ -47,6 +48,14 @@ public class Title implements Serializable{
 
 	public Image getImage() {
 		return new Image(new ByteArrayInputStream(image));
+	}
+
+	public Rate getItemClass() {
+		return itemClass;
+	}
+
+	public void setItemClass(Rate itemClass) {
+		this.itemClass = itemClass;
 	}
 
 	public void setImage(File fimage) {

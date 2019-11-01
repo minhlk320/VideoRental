@@ -165,7 +165,7 @@ public class RentalItemController implements Initializable {
         colNo.setSortable(false);
         colItemID.setCellValueFactory(new PropertyValueFactory<>("itemID"));
         colTitle.setCellValueFactory(celldata -> new SimpleStringProperty(celldata.getValue().getTitle().getTitleName()));
-        colPrice.setCellValueFactory(celldata -> new SimpleStringProperty(String.format("%2.2f", celldata.getValue().getItemClass().getRentalRate())));
+        colPrice.setCellValueFactory(celldata -> new SimpleStringProperty(String.format("%2.2f", celldata.getValue().getTitle().getItemClass().getRentalRate())));
         tableItemList.setItems(items);
         btnResetTable.setOnAction(e -> {
             listItems.clear();
@@ -213,7 +213,7 @@ public class RentalItemController implements Initializable {
     private double getRentalTotal() {
         double rental_Total = 0;
         for (Item item : listItems) {
-            rental_Total += item.getItemClass().getRentalRate();
+            rental_Total += item.getTitle().getItemClass().getRentalRate();
         }
         return rental_Total;
     }
@@ -246,9 +246,10 @@ public class RentalItemController implements Initializable {
 
     private Item findItem(String itemID) {
         //Find Item from Database
-        Title title = new Title("WRECK IT RAPTH", "A cartoon movie has been announced in 2018", new File("D:\\XDPM\\misc\\Images\\wreckIt.jpg"));
+
         Rate rate = new Rate("a", 123, 123, 123);
-        Item item = new Item(title,Item.RENTED, rate);
+        Title title = new Title("WRECK IT RAPTH", "A cartoon movie has been announced in 2018", new File("D:\\XDPM\\misc\\Images\\wreckIt.jpg"),rate);
+        Item item = new Item(title,Item.RENTED);
         item.setItemID("123");
         return item;
     }

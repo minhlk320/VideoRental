@@ -41,9 +41,6 @@ public class ItemManagementController implements Initializable{
     private ComboBox<String> cbStatus;
 
     @FXML
-    private ComboBox<Rate> cbItemClass;
-
-    @FXML
     private JFXButton btnBack;
 
     @FXML
@@ -68,9 +65,6 @@ public class ItemManagementController implements Initializable{
     private TableColumn<Item, String> colStatus;
 
     @FXML
-    private TableColumn<Item, String> colItemClass;
-
-    @FXML
     private Label lbSale;
 
     @FXML
@@ -89,7 +83,6 @@ public class ItemManagementController implements Initializable{
 	    listItem = new ItemDAO().getAll(Item.class);
 	    loadTable(listItem);
 	    ShowTitleName();
-	    ShowItemClass();
 	    ShowStatus();
 
 
@@ -103,14 +96,12 @@ public class ItemManagementController implements Initializable{
                 cbStatus.setDisable(true);
                 if (!listItem.isEmpty()) {
                     String id_last = listItem.get(listItem.size() - 1).getItemID();
-                    String prefix = id_last.substring(0, 5);
-                    int id = Integer.valueOf((id_last.substring(5, id_last.length())));
-                    String new_id = prefix + String.format("%06d", id + 1);
+                    int id = Integer.valueOf((id_last));
+                    String new_id = String.format("%06d", id + 1);
                     txtItemID.setText(new_id);
                 } else
-                    txtItemID.setText("ITMNo000001");
+                    txtItemID.setText("000001");
                 cbTitle.getSelectionModel().select(-1);
-                cbItemClass.getSelectionModel().select(-1);
                 cbStatus.getSelectionModel().select(-1);
 
             }
@@ -139,11 +130,8 @@ public class ItemManagementController implements Initializable{
             Item getCurrentItem(Item item) {
                 Title title = cbTitle.getSelectionModel().getSelectedItem();
                 String status = cbStatus.getSelectionModel().getSelectedItem()==null?(Item.ON_SHELF):(cbStatus.getSelectionModel().getSelectedItem().toString());
-                Rate itemClass = cbItemClass.getSelectionModel().getSelectedItem();
-
                 item.setTitle(title);
                 item.setStatus(status);
-                item.setItemClass(itemClass);
 
                 return item;
             }
@@ -175,7 +163,7 @@ public class ItemManagementController implements Initializable{
                     cbTitle.setValue(item.getTitle());
                     cbStatus.setDisable(false);
                     cbStatus.getSelectionModel().select(getIndexForStatus(item.getStatus()));
-                    cbItemClass.setValue(item.getItemClass());
+
                 }
             }
             private int getIndexForStatus(String s){
@@ -196,7 +184,6 @@ public class ItemManagementController implements Initializable{
                 colItemID.setSortable(false);
                 colItemID.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getItemID()));
                 colTitle.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getTitle().getTitleName()));
-                colItemClass.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getItemClass().getItemClassName()));
                 colStatus.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getStatus()));
         }
         table.setItems(tkList);
@@ -204,7 +191,7 @@ public class ItemManagementController implements Initializable{
 
     private void reloadTable(){
         table.getColumns().clear();
-        table.getColumns().addAll(colItemID,colTitle,colStatus,colItemClass);
+        table.getColumns().addAll(colItemID,colTitle,colStatus);
         listItem = new ItemDAO().getAll(Item.class);
         loadTable(listItem);
     }
@@ -224,11 +211,7 @@ public class ItemManagementController implements Initializable{
 
     }
 
-    private void ShowItemClass(){
-        ObservableList<Rate> listRate = FXCollections.observableArrayList(new RateDAO().getAll(Rate.class));
-        cbItemClass.setItems(listRate);
-        cbItemClass.getSelectionModel().select(-1);
-    }
+
 
 
 
