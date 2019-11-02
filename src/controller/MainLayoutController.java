@@ -1,5 +1,6 @@
 package controller;
 
+import entities.Customer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -9,10 +10,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MainLayoutController implements Initializable {
-
+    private Main main;
+    private Customer currentCustomer;
     @FXML
     private Button btnClose;
-    private Main main;
+
     @FXML
     private Button btnRentalItems;
     @FXML
@@ -53,5 +55,13 @@ public class MainLayoutController implements Initializable {
             main.changeScene(main.SCENE_ITEM_MANAGEMENT);
             btnClose.setVisible(true);
         });
+    }
+
+    public Customer getCurrentCustomer() {
+        return currentCustomer;
+    }
+
+    public void setCurrentCustomer(Customer customer) {
+        currentCustomer = customer;
     }
 }

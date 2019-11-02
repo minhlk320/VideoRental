@@ -100,21 +100,10 @@
             </VBox>
             <VBox alignment="BOTTOM_LEFT" spacing="24.0" HBox.hgrow="ALWAYS">
                <children>
-                  <Label text="Total">
-                     <tooltip>
-                        <Tooltip text="Empty Tooltip"/>
-                     </tooltip>
-                  </Label>
                   <HBox spacing="12.0">
                      <children>
                         <Label prefWidth="120.0" text="Rental Total"/>
                         <Text fx:id="text_RentalTotal" strokeType="OUTSIDE" strokeWidth="0.0" text="00000000"/>
-                     </children>
-                  </HBox>
-                  <HBox spacing="12.0">
-                     <children>
-                        <Label prefWidth="120.0" text="Late Charge"/>
-                        <Text fx:id="text_LateCharge" strokeType="OUTSIDE" strokeWidth="0.0" text="00000000"/>
                      </children>
                   </HBox>
                   <HBox spacing="12.0">
