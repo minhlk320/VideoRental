@@ -66,7 +66,7 @@ public class RentalAndReturnManagement {
             Duration diff = Duration.between(dueOn.atStartOfDay(), currentDate.atStartOfDay());
             int numOfOverDueDay = (int) diff.toDays();
             double totalAmout = numOfOverDueDay * rentalDetailofItem.getLateRate();
-            addLateCharge(item,customer,totalAmout,dueOn);
+            lateChargeDAO.addLateCharge(item,customer,totalAmout,dueOn);
         }
         checkReservation(item);
         return true;
@@ -92,24 +92,9 @@ public class RentalAndReturnManagement {
      * @param customer
      * @description add late charge to customer along with the late return item
      */
-    private void addLateCharge(Item item, Customer customer, double totalAmount, LocalDate dueOn){
-        LateCharge lateCharge = new LateCharge(LocalDate.now(),dueOn,item.getTitle(),customer,totalAmount);
-        if( lateChargeDAO.save(lateCharge))
-            System.out.println("Late charge added!");
-    }
-    public  void recordLateChargePayment(LateCharge lateCharge) {
-        lateCharge.setPurchaseDate(LocalDate.now());
-        lateChargeDAO.update(lateCharge);
-    }
-    public double getTotalLatechargeList(List<LateCharge> list){
-        if(list.equals(null))
-            return 0l;
-        double total = 0;
-       for(LateCharge x : list){
-           total+=x.getTotalAmount();
-       }
-        return total;
-    }
+
+
+
 
 
 

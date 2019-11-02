@@ -18,14 +18,14 @@ public class Test {
 //		RentalAndReturnManagement rentalAndReturnManagement = new RentalAndReturnManagement();
 //		rentalAndReturnManagement.Return("000002");
 
-        Customer customer = new CustomerDAO().getById(Customer.class,"000006");
-
-
-		Item it1 =  new ItemDAO().getById(Item.class,"000002");
-		Item it2 =  new ItemDAO().getById(Item.class,"000001");
-
-       RentalAndReturnManagement rentalAndReturnManagement = new RentalAndReturnManagement();
-       rentalAndReturnManagement.rental(customer,Arrays.asList(it1,it2));
+//        Customer customer = new CustomerDAO().getById(Customer.class,"000006");
+//
+//
+//		Item it1 =  new ItemDAO().getById(Item.class,"000002");
+//		Item it2 =  new ItemDAO().getById(Item.class,"000001");
+//
+//       RentalAndReturnManagement rentalAndReturnManagement = new RentalAndReturnManagement();
+//       rentalAndReturnManagement.rental(customer,Arrays.asList(it1,it2));
 	}
 public static void createDataBase() {
 	Rate itemClass = new Rate(Rate.MOVIE, 2.0, 7, 1.5);
