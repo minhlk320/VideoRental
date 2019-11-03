@@ -57,7 +57,7 @@ public class ReturnItemController implements Initializable {
         if(item==null)
             showMessage("Entered ID not found, please check again!","Message",null);
         else if(!item.getStatus().equalsIgnoreCase(Item.RENTED))
-            showMessage("Entered ID can not be return due to entered item'status is : " + item.getStatus(),"Message",null);
+            showMessage("Entered ID can not be return due to entered item's status is : " + item.getStatus(),"Message",null);
         else{
             Return(item.getItemID());
             if(late)
@@ -91,7 +91,10 @@ public class ReturnItemController implements Initializable {
             lateChargeDAO.addLateCharge(item, customer, totalAmout, dueOn);
             late = true;
         }
-        reservationDAO.checkReservation(item);
+        Reservation reservation = reservationDAO.checkReservation(item);
+        if(reservation!=null)
+            showMessage("The newly returned Item has been placed ON_HOLD to :  " + reservation.getCustomer().getFirstName() +" " +reservation.getCustomer().getLastName()+"\n"
+                    + "Phone: " +reservation.getCustomer().getPhoneNumber(),"Message",null);
         return true;
     }
 
