@@ -25,7 +25,7 @@ public class MyPreloader extends Preloader {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
 
         this.preloaderStage = primaryStage;
         preloaderStage.setScene(scene);

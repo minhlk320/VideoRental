@@ -6,19 +6,19 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea"
-            fx:controller="controller.RentalItemController">
+            fx:controller="controller.ReturnItemController">
     <children>
-        <HBox spacing="32.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="4.0"
-              AnchorPane.topAnchor="4.0">
+        <HBox spacing="32.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
+              AnchorPane.topAnchor="10.0">
             <children>
                 <VBox HBox.hgrow="ALWAYS">
                     <children>
                         <Label text="Item Id"/>
                         <HBox spacing="12.0">
                             <children>
-                                <JFXTextField fx:id="tf_itemID" prefWidth="219.0" unFocusColor="WHITE"
+                                <JFXTextField fx:id="tfItemID" prefWidth="219.0" unFocusColor="WHITE"
                                               HBox.hgrow="ALWAYS"/>
-                                <Button fx:id="btn_EnterItemID" mnemonicParsing="false" text="Enter"/>
+                                <Button fx:id="btnEnterItemID" mnemonicParsing="false" text="Enter"/>
                             </children>
                         </HBox>
                         <VBox>
@@ -48,27 +48,16 @@
                 </VBox>
                 <VBox alignment="BOTTOM_LEFT" spacing="24.0" HBox.hgrow="ALWAYS">
                     <children>
-                        <Label text="Total">
-                            <tooltip>
-                                <Tooltip text="Empty Tooltip"/>
-                            </tooltip>
-                        </Label>
-                        <HBox spacing="12.0">
-                            <children>
-                                <Label prefWidth="120.0" text="Total DVD/CD"/>
-                                <Text fx:id="text_RentalTotal" strokeType="OUTSIDE" strokeWidth="0.0" text="00000000"/>
-                            </children>
-                        </HBox>
                         <HBox spacing="12.0">
                             <children>
                                 <Label prefWidth="120.0" text="Total Disk"/>
-                                <Text fx:id="text_LateCharge" strokeType="OUTSIDE" strokeWidth="0.0" text="00000000"/>
+                                <Text fx:id="textTotalDisk" strokeType="OUTSIDE" strokeWidth="0.0" text="00000000"/>
                             </children>
                         </HBox>
                         <ToolBar>
                             <items>
-                                <Button fx:id="btn_Done" mnemonicParsing="false" text="Done"/>
-                                <Button fx:id="btn_Cancel" mnemonicParsing="false" text="Cancel"/>
+                                <Button fx:id="btnDone" mnemonicParsing="false" text="Done"/>
+                                <Button fx:id="btnCancel" mnemonicParsing="false" text="Cancel"/>
                             </items>
                         </ToolBar>
                     </children>

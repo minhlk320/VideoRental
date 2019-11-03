@@ -16,8 +16,8 @@
                   <Label text="Customer ID"/>
                   <HBox spacing="12.0">
                      <children>
-                        <JFXTextField fx:id="tf_CustomerID" unFocusColor="WHITE" HBox.hgrow="ALWAYS"/>
-                        <Button fx:id="btn_EnterCustomerID" mnemonicParsing="false" text="Enter"/>
+                        <JFXTextField fx:id="jfxTextField" unFocusColor="WHITE" HBox.hgrow="ALWAYS"/>
+                        <Button fx:id="btnEnterCustomerID" mnemonicParsing="false" text="Enter"/>
                      </children>
                   </HBox>
                   <Label text="Customer Info">
@@ -31,26 +31,26 @@
                         <HBox alignment="CENTER_LEFT" spacing="12.0">
                            <children>
                               <Label prefWidth="120.0" text="Name"/>
-                              <Text fx:id="text_CustomerName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"/>
+                              <Text fx:id="textCustomerName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"/>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" spacing="12.0">
                            <children>
                               <Label prefWidth="120.0" text="Address"/>
-                              <Text fx:id="text_CustomerAddress" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+                              <Text fx:id="textCustomerAddress" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
                                     wrappingWidth="60.0"/>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" spacing="12.0">
                            <children>
                               <Label prefWidth="120.0" text="Phone Number"/>
-                              <Text fx:id="text_CustomerPhone" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"/>
+                              <Text fx:id="textCustomerPhone" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"/>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" spacing="12.0">
                            <children>
                               <Label prefWidth="120.0" text="Joined Date"/>
-                              <Text fx:id="text_CustomerJoinedDate" fill="WHITE" strokeType="OUTSIDE"
+                              <Text fx:id="textCustomerJoinedDate" fill="WHITE" strokeType="OUTSIDE"
                                     strokeWidth="0.0"/>
                            </children>
                         </HBox>
@@ -69,8 +69,8 @@
                   <Label text="Item Id"/>
                   <HBox spacing="12.0">
                      <children>
-                        <JFXTextField fx:id="tf_itemID" prefWidth="219.0" unFocusColor="WHITE" HBox.hgrow="ALWAYS"/>
-                        <Button fx:id="btn_EnterItemID" mnemonicParsing="false" text="Enter"/>
+                        <JFXTextField fx:id="tfitemID" prefWidth="219.0" unFocusColor="WHITE" HBox.hgrow="ALWAYS"/>
+                        <Button fx:id="btnEnterItemID" mnemonicParsing="false" text="Enter"/>
                      </children>
                   </HBox>
                   <VBox>
@@ -103,7 +103,7 @@
                   <HBox spacing="12.0">
                      <children>
                         <Label prefWidth="120.0" text="Rental Total"/>
-                        <Text fx:id="text_RentalTotal" strokeType="OUTSIDE" strokeWidth="0.0" text="00000000"/>
+                        <Text fx:id="textRentalTotal" strokeType="OUTSIDE" strokeWidth="0.0" text="00000000"/>
                      </children>
                   </HBox>
                   <HBox spacing="12.0">
@@ -114,8 +114,8 @@
                   </HBox>
                   <ToolBar>
                      <items>
-                        <Button fx:id="btn_Done" mnemonicParsing="false" text="Done"/>
-                        <Button fx:id="btn_Cancel" mnemonicParsing="false" text="Cancel"/>
+                        <Button fx:id="btnDone" mnemonicParsing="false" text="Done"/>
+                        <Button fx:id="btnCancel" mnemonicParsing="false" text="Cancel"/>
                      </items>
                   </ToolBar>
                </children>
