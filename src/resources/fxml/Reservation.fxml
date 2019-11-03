@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReservationController">
+   <children>
+      <HBox spacing="32.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="4.0">
+         <children>
+            <VBox HBox.hgrow="ALWAYS">
+               <children>
+                  <Label text="Customer ID" />
+                  <HBox spacing="12.0">
+                     <children>
+                        <JFXTextField fx:id="tf_CustomerID" unFocusColor="WHITE" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="btn_EnterCustomerID" mnemonicParsing="false" text="Enter" />
+                     </children>
+                  </HBox>
+                  <Label text="Customer Info">
+                     <padding>
+                        <Insets top="12.0" />
+                     </padding>
+                  </Label>
+                  <VBox alignment="TOP_CENTER" prefHeight="212.0" prefWidth="214.0" spacing="4.0" style="-fx-border-color: white;">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" spacing="12.0">
+                           <children>
+                              <Label prefWidth="120.0" text="Name" />
+                              <Text fx:id="text_CustomerName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="12.0">
+                           <children>
+                              <Label prefWidth="120.0" text="Address" />
+                              <Text fx:id="text_CustomerAddress" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="60.0" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="12.0">
+                           <children>
+                              <Label prefWidth="120.0" text="Phone Number" />
+                              <Text fx:id="text_CustomerPhone" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="12.0">
+                           <children>
+                              <Label prefWidth="120.0" text="Joined Date" />
+                              <Text fx:id="text_CustomerJoinedDate" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" />
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+                     </padding>
+                  </VBox>
+               </children>
+               <HBox.margin>
+                  <Insets left="24.0" />
+               </HBox.margin>
+            </VBox>
+            <VBox HBox.hgrow="ALWAYS">
+               <children>
+                  <Label text="Search for title" />
+                  <HBox spacing="12.0">
+                     <children>
+                        <JFXTextField fx:id="tf_titleName" prefWidth="219.0" promptText="Enter title's name" unFocusColor="WHITE" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="btn_EnterTitleID" mnemonicParsing="false" text="Enter" />
+                     </children>
+                  </HBox>
+                  <VBox>
+                     <children>
+                        <Label text="Choose a title to reserve">
+                           <VBox.margin>
+                              <Insets top="12.0" />
+                           </VBox.margin>
+                        </Label>
+                        <ComboBox fx:id="cb_title" prefHeight="25.0" prefWidth="471.0" />
+                        <Label layoutX="10.0" layoutY="22.0" text="Title Info" />
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <ImageView fx:id="img_Title" fitHeight="150.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/default_poster.jpg" />
+                                 </image>
+                                 <effect>
+                                    <DropShadow />
+                                 </effect>
+                              </ImageView>
+                              <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <HBox>
+                                       <children>
+                                          <Label prefWidth="80.0" text="Title's Name">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                          </Label>
+                                          <Label fx:id="txt_TitleName" text="name of title" />
+                                       </children>
+                                    </HBox>
+                                    <HBox layoutX="10.0" layoutY="10.0">
+                                       <children>
+                                          <Label prefWidth="80.0" text="Type">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                          </Label>
+                                          <Label fx:id="txt_TitleType" text="type of title" />
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets top="4.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox layoutX="10.0" layoutY="27.0" prefHeight="59.0" prefWidth="364.0">
+                                       <children>
+                                          <Label prefWidth="80.0" text="Description">
+                                             <HBox.margin>
+                                                <Insets top="4.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                          <JFXTextArea fx:id="txtArea_Description" editable="false" prefHeight="80.0" prefWidth="287.0" promptText="Desciption for title" wrapText="true" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                        <ToolBar>
+                           <items>
+                              <Button fx:id="btnReset" mnemonicParsing="false" text="Reset" />
+                           </items>
+                        </ToolBar>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+            <VBox alignment="BOTTOM_LEFT" spacing="24.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Label prefHeight="17.0" prefWidth="59.0" text="Comment" />
+                  <JFXTextArea fx:id="txtAreaComment" prefHeight="185.0" prefWidth="0.0" promptText="Add some note" wrapText="true" />
+                  <ToolBar>
+                     <items>
+                        <Button fx:id="btn_Done" mnemonicParsing="false" text="Done" />
+                        <Button fx:id="btn_Cancel" mnemonicParsing="false" text="Cancel" />
+                     </items>
+                  </ToolBar>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

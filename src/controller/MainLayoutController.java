@@ -53,5 +53,9 @@ public class MainLayoutController implements Initializable {
             main.changeScene(main.SCENE_ITEM_MANAGEMENT);
             btnClose.setVisible(true);
         });
+        btnMakeReservation.setOnAction(e->{
+            main.changeScene(main.SCENE_RESERVATION);
+            btnClose.setVisible(true);
+        });
     }
 }

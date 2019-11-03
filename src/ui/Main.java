@@ -20,6 +20,7 @@ import javafx.stage.StageStyle;
 import java.io.IOException;
 import java.util.HashMap;
 public class Main extends Application{
+	public static  final String URL_DEFAULT_POSTER = "src/resources/img/default_poster.jpg";
 	public static final String SCENE_LATE_CHARGE_INFO = "LateChargeInfo";
 	public static final String URL_LATE_CHARGE_INFO = "/resources/fxml/LateChargeInfo.fxml";
 	public static final String TITLE_LATE_CHARGE_INFO = "Late Charge List";
@@ -42,6 +43,8 @@ public class Main extends Application{
 	public final String URL_ITEM_MANAGEMENT = "/resources/fxml/ItemManagement.fxml";
     public final String SCENE_RENTAL_ITEMS = "RentalItems";
     public final String URL_RENTAL = "/resources/fxml/RentalItem.fxml";
+	public final String SCENE_RESERVATION = "Reservation";
+	public final String URL_RESERVATION = "/resources/fxml/Reservation.fxml";
 	@FXML
 	public BorderPane root;
 
@@ -94,6 +97,8 @@ public class Main extends Application{
 		listUI.put(SCENE_ITEM_MANAGEMENT, URL_ITEM_MANAGEMENT);
         listUI.put(SCENE_RENTAL_ITEMS, URL_RENTAL);
 		listUI.put(SCENE_LATE_CHARGE_INFO, URL_LATE_CHARGE_INFO);
+		listUI.put(SCENE_RESERVATION, URL_RESERVATION);
+
 	}
 
 	public FXMLLoader loadFXML(String url) {
