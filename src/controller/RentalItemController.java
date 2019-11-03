@@ -205,6 +205,15 @@ public class RentalItemController implements Initializable {
     }
 
     private void requestConfirm() {
+        //Validate
+        if (currentCustomer == null) {
+            tf_CustomerID.requestFocus();
+            return;
+        }
+        if (listItems.isEmpty()) {
+            tf_itemID.requestFocus();
+            return;
+        }
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirm");
         alert.setHeaderText("Confirm rental transaction");
@@ -218,9 +227,10 @@ public class RentalItemController implements Initializable {
         LateChargeDAO lateChargeDAO = new LateChargeDAO();
         List<LateCharge> lateCharge = lateChargeDAO.getLateChargeByCustomerID(currentCustomer.getCustomerID());
         if (!lateCharge.isEmpty()) {
-            alert.getButtonTypes().add(payLateCharge);
-            alert.setContentText(String.format("Customer owes fee %s", currentCustomer.getCustomerID()));
+
         }
+        alert.getButtonTypes().add(payLateCharge);
+        alert.setContentText(String.format("Customer owes fee %s", currentCustomer.getCustomerID()));
         //Show alert
         Optional<ButtonType> option = alert.showAndWait();
         if (option.get() == null) {
@@ -228,21 +238,15 @@ public class RentalItemController implements Initializable {
             return;
         }
         if (option.get() == makePayement) {
-            if (listItems.isEmpty()) {
-                tf_itemID.requestFocus();
-                return;
-            }
-            if (currentCustomer != null) {
-                saveRentalDetail(currentCustomer, listItems);
-                currentCustomer = null;
-                clearForm();
-                updateCustomerInfo();
-            }
-            tf_CustomerID.requestFocus();
+            saveRentalDetail(currentCustomer, listItems);
+            currentCustomer = null;
+            clearForm();
+            updateCustomerInfo();
 
         }
         if (option.get() == payLateCharge) {
-            main.newWindow(main.SCENE_LATE_CHARGE_INFO, main.SCENE_LATE_CHARGE_INFO);
+            System.out.println(currentCustomer);
+            main.displayLateCharge(currentCustomer);
             return;
         }
         if (option.get() == cancel) {

@@ -1,8 +1,10 @@
 package ui;
 
 import com.sun.javafx.application.LauncherImpl;
+import controller.LateChargeInfoController;
 import controller.MainLayoutController;
 import daos.MyEntityManagerFactory;
+import entities.Customer;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.application.Preloader;
@@ -135,6 +137,40 @@ public class Main extends Application {
         return loadFXML(MAIN_LAYOUT).getController();
     }
 
+    public void displayLateCharge(Customer customer) {
+        try {
+            Stage stage = new Stage();
+            FXMLLoader loader = loadFXML(listUI.get(SCENE_LATE_CHARGE_INFO));
+            loader.setControllerFactory((Class<?> controllerType) -> {
+                if (controllerType == LateChargeInfoController.class) {
+                    LateChargeInfoController controller = new LateChargeInfoController();
+                    controller.setCurrentCustomer(customer);
+                    return controller;
+                } else {
+                    try {
+                        return controllerType.newInstance();
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            stage.setTitle(TITLE_LATE_CHARGE_INFO);
+            scene.setFill(Color.TRANSPARENT);
+            stage.setResizable(true);
+            stage.getIcons().add(MAIN_ICON);
+            stage.setScene(scene);
+            stage.initStyle(StageStyle.DECORATED);
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(primaryStage);
+            stage.show();
+
+        } catch (final IOException e) {
+            e.printStackTrace();
+        }
+
+    }
     public void newWindow(String mapName, String titlename) {
         try {
             Stage stage = new Stage();

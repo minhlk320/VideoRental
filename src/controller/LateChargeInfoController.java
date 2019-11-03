@@ -14,9 +14,12 @@ public class LateChargeInfoController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         main = Main.getInstance();
-        currentCustomer = main.getMainController().getCurrentCustomer();
         if (currentCustomer != null) {
             System.out.println("Hello " + currentCustomer.getCustomerID());
         }
+    }
+
+    public void setCurrentCustomer(Customer currentCustomer) {
+        this.currentCustomer = currentCustomer;
     }
 }
