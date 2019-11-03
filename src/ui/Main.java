@@ -44,8 +44,10 @@ public class Main extends Application{
     public final String SCENE_RENTAL_ITEMS = "RentalItems";
     public final String URL_RENTAL = "/resources/fxml/RentalItem.fxml";
 	public final String SCENE_RESERVATION = "Reservation";
+    public final String SCENE_RESERVATION_MANAGEMENT = "ReservationManagement";
 	public final String SCENE_RETURN_ITEM = "ReturnItem";
 	public final String URL_RESERVATION = "/resources/fxml/Reservation.fxml";
+    public final String URL_RESERVATION_MANAGEMENT = "/resources/fxml/ReservationList.fxml";
 	public final String URL_RETURN_ITEM = "/resources/fxml/ReturnItem.fxml";
 	@FXML
 	public BorderPane root;
@@ -101,6 +103,7 @@ public class Main extends Application{
 		listUI.put(SCENE_LATE_CHARGE_INFO, URL_LATE_CHARGE_INFO);
 		listUI.put(SCENE_RESERVATION, URL_RESERVATION);
 		listUI.put(SCENE_RETURN_ITEM, URL_RETURN_ITEM);
+		listUI.put(SCENE_RESERVATION_MANAGEMENT, URL_RESERVATION_MANAGEMENT);
 
 
 	}

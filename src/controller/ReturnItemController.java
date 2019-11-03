@@ -10,8 +10,8 @@ import entities.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.input.KeyCode;
 import ui.Main;
-
 import java.net.URL;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -21,6 +21,7 @@ import java.util.ResourceBundle;
 public class ReturnItemController implements Initializable {
 
     private Main main;
+
     @FXML
     private JFXTextField tf_ItemID;
 
@@ -37,6 +38,11 @@ public class ReturnItemController implements Initializable {
         main = Main.getInstance();
         btnEnter.setOnAction(e->{
             doReturn();
+        });
+        tf_ItemID.setOnKeyReleased(e->{
+            if (e.getCode() == KeyCode.ENTER) {
+                doReturn();
+            }
         });
     }
     private void showMessage(String message, String title, String header){
@@ -56,11 +62,11 @@ public class ReturnItemController implements Initializable {
             Return(item.getItemID());
             if(late)
                 showMessage("This item has been returned lately (Todo call function 5c to record if chose yes)","Message",null);
-
+            else
+                showMessage("Returned : " + item.getItemID(),"Message",null);
         }
-
-
     }
+
     public boolean Return(String id){
         Item item = itemDAO.getById(Item.class,id);
         if(item.equals(null))return false;
@@ -73,6 +79,7 @@ public class ReturnItemController implements Initializable {
                 rentalDetailofItem = rentalDetailList.get(i);
             }
         }
+
         LocalDate rentedDate = lastestRental.getDate();
         LocalDate currentDate = LocalDate.now();
 
@@ -84,21 +91,9 @@ public class ReturnItemController implements Initializable {
             lateChargeDAO.addLateCharge(item, customer, totalAmout, dueOn);
             late = true;
         }
-        checkReservation(item);
+        reservationDAO.checkReservation(item);
         return true;
     }
-    private void checkReservation(Item item){
-        Title titleOfItem = item.getTitle();
-        Reservation eldestReservation = reservationDAO.getEldestReservationByTitleID(titleOfItem.getTitleID());
-        if(eldestReservation!=null){
-            item.setStatus(Item.ON_HOLD);
-            eldestReservation.setItem(item);
-            itemDAO.update(item);
-            reservationDAO.update(eldestReservation);
-        }
-        else{
-            item.setStatus(Item.ON_SHELF);
-            itemDAO.update(item);
-        }
-    }
+
+
 }
