@@ -87,7 +87,7 @@ public class RentalItemController implements Initializable {
         btnEnterCustomerID.setOnAction(e -> {
             inputCustomer();
         });
-        tfCustomerID.setOnKeyTyped(e -> {
+        tfCustomerID.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.ENTER) {
                 inputCustomer();
             }
@@ -95,7 +95,7 @@ public class RentalItemController implements Initializable {
         btnEnterItemID.setOnAction(e -> {
             inputItem();
         });
-        tfitemID.setOnKeyTyped(e -> {
+        tfitemID.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.ENTER) {
                 inputItem();
             }
@@ -111,9 +111,17 @@ public class RentalItemController implements Initializable {
         initTable();
     }
 
+    private void showMessage(String message, String title, String header) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
     private void inputCustomer() {
         String customerID = tfCustomerID.getText();
         if (customerID.isEmpty()) {
+            showMessage("Textfield empty!", "Alert", "Customer ID");
             tfCustomerID.requestFocus();
             return;
         }
@@ -127,6 +135,7 @@ public class RentalItemController implements Initializable {
     private void inputItem() {
         String itemID = tfitemID.getText();
         if (itemID.isEmpty()) {
+            showMessage("Textfield empty!", "Alert", "Item ID");
             tfitemID.requestFocus();
             return;
         }
@@ -224,10 +233,12 @@ public class RentalItemController implements Initializable {
     private void requestConfirm() {
         //Validate
         if (currentCustomer == null) {
+            showMessage("Customer unavailable!", "Alert", "Customer");
             tfCustomerID.requestFocus();
             return;
         }
         if (listItems.isEmpty()) {
+            showMessage("List must not empty", "Alert", "List Item");
             tfitemID.requestFocus();
             return;
         }
@@ -244,9 +255,9 @@ public class RentalItemController implements Initializable {
         List<LateCharge> lateCharge = lateChargeDAO.getLateChargeByCustomerID(currentCustomer.getCustomerID());
         if (!lateCharge.isEmpty()) {
             //Check Late Charge
+            alert.getButtonTypes().add(payLateCharge);
+            alert.setContentText(String.format("Customer owes fee %s", currentCustomer.getCustomerID()));
         }
-        alert.getButtonTypes().add(payLateCharge);
-        alert.setContentText(String.format("Customer owes fee %s", currentCustomer.getCustomerID()));
         //Show alert
         Optional<ButtonType> option = alert.showAndWait();
         if (option.get() == makePayement) {
