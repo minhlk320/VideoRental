@@ -2,7 +2,6 @@ package controller;
 
 import com.jfoenix.controls.JFXButton;
 import daos.ReservationDAO;
-import entities.Item;
 import entities.Reservation;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -63,10 +62,11 @@ public class ReservationManagementController implements Initializable {
     @FXML
     private TableColumn<Reservation, String> colComment;
     private Main main;
-    private ReservationDAO reservationDAO = new ReservationDAO();
+    private ReservationDAO reservationDAO;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         main = Main.getInstance();
+        reservationDAO = main.getReservationDAO();
         List<Reservation> reservationList = reservationDAO.getAll(Reservation.class);
         loadTable(reservationList);
         tf_customerID.setOnKeyReleased(e->{
@@ -124,10 +124,10 @@ public class ReservationManagementController implements Initializable {
         alert.showAndWait();
     }
     private void loadTable(List<Reservation> list) {
-        if (list.isEmpty()){
-            showMessage("Reservation not found, please try again!", "Message",null);
-            return;
-        }
+//        if (list.isEmpty()){
+//            showMessage("Reservation not found, please try again!", "Message",null);
+//            return;
+//        }
 
         ObservableList<Reservation> tkList = FXCollections.observableArrayList(list);
         for(int i = 0; i<tkList.size(); i++){

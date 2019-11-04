@@ -2,20 +2,15 @@
 
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ToolBar?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
-
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReservationController">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171"
+            fx:controller="controller.ReservationController">
    <children>
       <HBox spacing="32.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="4.0">
          <children>
@@ -25,7 +20,7 @@
                   <HBox spacing="12.0">
                      <children>
                         <JFXTextField fx:id="tf_CustomerID" unFocusColor="WHITE" HBox.hgrow="ALWAYS" />
-                        <Button fx:id="btn_EnterCustomerID" mnemonicParsing="false" text="Enter" />
+                        <Button fx:id="btnEnterCustomerID" mnemonicParsing="false" text="Enter"/>
                      </children>
                   </HBox>
                   <Label text="Customer Info">
@@ -38,25 +33,26 @@
                         <HBox alignment="CENTER_LEFT" spacing="12.0">
                            <children>
                               <Label prefWidth="120.0" text="Name" />
-                              <Text fx:id="text_CustomerName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" />
+                              <Text fx:id="textCustomerName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"/>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" spacing="12.0">
                            <children>
                               <Label prefWidth="120.0" text="Address" />
-                              <Text fx:id="text_CustomerAddress" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="60.0" />
+                              <Text fx:id="textCustomerAddress" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+                                    wrappingWidth="60.0"/>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" spacing="12.0">
                            <children>
                               <Label prefWidth="120.0" text="Phone Number" />
-                              <Text fx:id="text_CustomerPhone" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" />
+                              <Text fx:id="textCustomerPhone" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"/>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" spacing="12.0">
                            <children>
                               <Label prefWidth="120.0" text="Joined Date" />
-                              <Text fx:id="text_CustomerJoinedDate" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" />
+                              <Text fx:id="textCustomerJoinedDate" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"/>
                            </children>
                         </HBox>
                      </children>
@@ -74,8 +70,9 @@
                   <Label text="Search for title" />
                   <HBox spacing="12.0">
                      <children>
-                        <JFXTextField fx:id="tf_titleName" prefWidth="219.0" promptText="Enter title's name" unFocusColor="WHITE" HBox.hgrow="ALWAYS" />
-                        <Button fx:id="btn_EnterTitleID" mnemonicParsing="false" text="Enter" />
+                        <JFXTextField fx:id="tfTitleName" prefWidth="219.0" promptText="Enter title's name"
+                                      unFocusColor="WHITE" HBox.hgrow="ALWAYS"/>
+                        <Button fx:id="btnEnterTitleID" mnemonicParsing="false" text="Enter"/>
                      </children>
                   </HBox>
                   <VBox>
@@ -85,11 +82,12 @@
                               <Insets top="12.0" />
                            </VBox.margin>
                         </Label>
-                        <ComboBox fx:id="cb_title" prefHeight="25.0" prefWidth="471.0" />
+                        <ComboBox fx:id="cbTitle" prefHeight="25.0" prefWidth="471.0"/>
                         <Label layoutX="10.0" layoutY="22.0" text="Title Info" />
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <ImageView fx:id="img_Title" fitHeight="150.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="imgTitle" fitHeight="150.0" fitWidth="130.0" pickOnBounds="true"
+                                         preserveRatio="true">
                                  <image>
                                     <Image url="@../img/default_poster.jpg" />
                                  </image>
@@ -106,7 +104,7 @@
                                                 <Insets />
                                              </HBox.margin>
                                           </Label>
-                                          <Label fx:id="txt_TitleName" text="name of title" />
+                                          <Label fx:id="txtTitleName" text="name of title"/>
                                        </children>
                                     </HBox>
                                     <HBox layoutX="10.0" layoutY="10.0">
@@ -116,7 +114,7 @@
                                                 <Insets />
                                              </HBox.margin>
                                           </Label>
-                                          <Label fx:id="txt_TitleType" text="type of title" />
+                                          <Label fx:id="txtTitleType" text="type of title"/>
                                        </children>
                                        <VBox.margin>
                                           <Insets top="4.0" />
@@ -129,7 +127,9 @@
                                                 <Insets top="4.0" />
                                              </HBox.margin>
                                           </Label>
-                                          <JFXTextArea fx:id="txtArea_Description" editable="false" prefHeight="80.0" prefWidth="287.0" promptText="Desciption for title" wrapText="true" />
+                                          <JFXTextArea fx:id="txtAreaDescription" editable="false" prefHeight="80.0"
+                                                       prefWidth="287.0" promptText="Desciption for title"
+                                                       wrapText="true"/>
                                        </children>
                                     </HBox>
                                  </children>

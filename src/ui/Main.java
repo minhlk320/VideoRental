@@ -23,27 +23,27 @@ import java.io.IOException;
 import java.util.HashMap;
 public class Main extends Application{
 	private static Stage primaryStage;
-	private static HashMap<String, String> listUI = new HashMap<>();
+	private static HashMap<String, Parent> listUI = new HashMap<>();
 	private static Main mainInstance;
-	public final String URL_DEFAULT_POSTER = "src/resources/img/default_poster.jpg";
-	public final String SCENE_LATE_CHARGE_INFO = "LateChargeInfo";
-	public final String URL_LATE_CHARGE_INFO = "/resources/fxml/LateChargeInfo.fxml";
 	public final String TITLE_LATE_CHARGE_INFO = "Late Charge List";
-	public final String MAIN_LAYOUT = "/resources/fxml/MainLayout.fxml";
 	public final String SCENE_HOME = "Home";
 	public final String SCENE_CUSTOMER_MANAGEMENT = "CustomerManagement";
 	public final String SCENE_TITLE_MANAGEMENT = "TitleManagement";
 	public final String SCENE_LOADING = "Loading";
 	public final String SCENE_ITEM_MANAGEMENT = "ItemManagement";
+	public final String SCENE_RENTAL_ITEMS = "RentalItems";
+	public final String SCENE_RESERVATION = "Reservation";
+	public final String SCENE_RESERVATION_MANAGEMENT = "ReservationManagement";
+	public final String SCENE_RETURN_ITEM = "ReturnItem";
+	public final String SCENE_LATE_CHARGE_INFO = "LateChargeInfo";
+	public final String URL_LATE_CHARGE_INFO = "/resources/fxml/LateChargeInfo.fxml";
+	public final String URL_MAIN_LAYOUT = "/resources/fxml/MainLayout.fxml";
+	public final String URL_DEFAULT_POSTER = "src/resources/img/default_poster.jpg";
 	public final String URL_HOME = "/resources/fxml/Home.fxml";
 	public final String URL_CUSTOMER_MANAGEMENT = "/resources/fxml/CustomerManagement.fxml";
 	public final String URL_TITLE_MANAGEMENT = "/resources/fxml/TitleManagement.fxml";
 	public final String URL_ITEM_MANAGEMENT = "/resources/fxml/ItemManagement.fxml";
-	public final String SCENE_RENTAL_ITEMS = "RentalItems";
 	public final String URL_RENTAL = "/resources/fxml/RentalItem.fxml";
-	public final String SCENE_RESERVATION = "Reservation";
-	public final String SCENE_RESERVATION_MANAGEMENT = "ReservationManagement";
-	public final String SCENE_RETURN_ITEM = "ReturnItem";
 	public final String URL_RESERVATION = "/resources/fxml/Reservation.fxml";
 	public final String URL_RESERVATION_MANAGEMENT = "/resources/fxml/ReservationList.fxml";
 	public final String URL_RETURN_ITEM = "/resources/fxml/ReturnItem.fxml";
@@ -58,6 +58,7 @@ public class Main extends Application{
 	private RentalDAO rentalDAO;
 	private TitleDAO titleDAO;
 	private LateChargeDAO lateChargeDAO;
+	private ReservationDAO reservationDAO;
 
 	public Main() {
 		mainInstance = this;
@@ -74,7 +75,7 @@ public class Main extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Main.primaryStage = primaryStage;
-		root = loadFXML(MAIN_LAYOUT).load();
+		root = loadFXML(URL_MAIN_LAYOUT).load();
 		primaryStage.setScene(new Scene(root));
 		primaryStage.getIcons().add(MAIN_ICON);
 		primaryStage.setTitle("Video Rental Store Application");
@@ -94,13 +95,13 @@ public class Main extends Application{
 	public void init() {
 		try {
 			int step = 1;
-			initLayout();
+			initDAO();
 			updateProgress(step);
 			step++;
 			MyEntityManagerFactory.getInstance();
 			updateProgress(step);
 			step++;
-			initDAO();
+			initLayout();
 			updateProgress(step);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -119,6 +120,11 @@ public class Main extends Application{
 		rentalDAO = new RentalDAO();
 		titleDAO = new TitleDAO();
 		lateChargeDAO = new LateChargeDAO();
+		reservationDAO = new ReservationDAO();
+	}
+
+	public ReservationDAO getReservationDAO() {
+		return reservationDAO;
 	}
 
 	public CustomerDAO getCustomerDAO() {
@@ -140,13 +146,17 @@ public class Main extends Application{
 	public LateChargeDAO getLateChargeDAO() {
 		return lateChargeDAO;
 	}
-	public void initLayout() {
-		listUI.put(SCENE_HOME, URL_HOME);
-		listUI.put(SCENE_CUSTOMER_MANAGEMENT,URL_CUSTOMER_MANAGEMENT);
-		listUI.put(SCENE_TITLE_MANAGEMENT, URL_TITLE_MANAGEMENT);
-		listUI.put(SCENE_ITEM_MANAGEMENT, URL_ITEM_MANAGEMENT);
-        listUI.put(SCENE_RENTAL_ITEMS, URL_RENTAL);
-		listUI.put(SCENE_LATE_CHARGE_INFO, URL_LATE_CHARGE_INFO);
+
+	public void initLayout() throws IOException {
+		listUI.put(SCENE_HOME, loadFXML(URL_HOME).load());
+		listUI.put(SCENE_CUSTOMER_MANAGEMENT, loadFXML(URL_CUSTOMER_MANAGEMENT).load());
+		listUI.put(SCENE_TITLE_MANAGEMENT, loadFXML(URL_TITLE_MANAGEMENT).load());
+		listUI.put(SCENE_ITEM_MANAGEMENT, loadFXML(URL_ITEM_MANAGEMENT).load());
+		listUI.put(SCENE_RENTAL_ITEMS, loadFXML(URL_RENTAL).load());
+		listUI.put(SCENE_LATE_CHARGE_INFO, loadFXML(URL_LATE_CHARGE_INFO).load());
+		listUI.put(SCENE_RESERVATION, loadFXML(URL_RESERVATION).load());
+		listUI.put(SCENE_RETURN_ITEM, loadFXML(URL_RETURN_ITEM).load());
+		listUI.put(SCENE_RESERVATION_MANAGEMENT, loadFXML(URL_RESERVATION_MANAGEMENT).load());
 	}
 
 	public FXMLLoader loadFXML(String url) {
@@ -155,20 +165,14 @@ public class Main extends Application{
 		return loader;
 	}
 	public void changeScene(final String value) {
-		try {
-			Parent part = loadFXML(listUI.get(value)).load();
-			root.setCenter(part);
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
+		Parent part = listUI.get(value);
+		root.setCenter(part);
 	}
 
 	public void displayLateCharge(Customer customer) {
 		try {
 			Stage stage = new Stage();
-			FXMLLoader loader = loadFXML(listUI.get(SCENE_LATE_CHARGE_INFO));
+			FXMLLoader loader = loadFXML(URL_LATE_CHARGE_INFO).load();
 			loader.setControllerFactory((Class<?> controllerType) -> {
 				if (controllerType == LateChargeInfoController.class) {
 					LateChargeInfoController controller = new LateChargeInfoController();
@@ -200,24 +204,18 @@ public class Main extends Application{
 
 	}
 	public void newWindow(String mapName, String titlename) {
-		try {
-
-			Stage stage = new Stage();
-			Parent root = loadFXML(listUI.get(mapName)).load();
-			Scene scene = new Scene(root);
-			scene.setFill(Color.TRANSPARENT);
-			stage.getIcons().add(MAIN_ICON);
-			stage.setResizable(true);
-			stage.setTitle(titlename);
-			stage.setScene(scene);
-			stage.initModality(Modality.WINDOW_MODAL);
-			stage.initStyle(StageStyle.DECORATED);
-			stage.initOwner(primaryStage);
-			stage.show();
-
-		} catch (final IOException e) {
-			e.printStackTrace();
-		}
+		Stage stage = new Stage();
+		Parent root = listUI.get(mapName);
+		Scene scene = new Scene(root);
+		scene.setFill(Color.TRANSPARENT);
+		stage.getIcons().add(MAIN_ICON);
+		stage.setResizable(true);
+		stage.setTitle(titlename);
+		stage.setScene(scene);
+		stage.initModality(Modality.WINDOW_MODAL);
+		stage.initStyle(StageStyle.DECORATED);
+		stage.initOwner(primaryStage);
+		stage.show();
 
 	}
 
