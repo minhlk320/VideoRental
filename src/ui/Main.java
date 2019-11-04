@@ -76,6 +76,7 @@ public class Main extends Application{
 	public void start(Stage primaryStage) throws Exception {
 		Main.primaryStage = primaryStage;
 		root = loadFXML(URL_MAIN_LAYOUT).load();
+		root.setCenter(loadFXML(URL_ITEM_MANAGEMENT).load());
 		primaryStage.setScene(new Scene(root));
 		primaryStage.getIcons().add(MAIN_ICON);
 		primaryStage.setTitle("Video Rental Store Application");
@@ -95,10 +96,10 @@ public class Main extends Application{
 	public void init() {
 		try {
 			int step = 1;
-			initDAO();
+			MyEntityManagerFactory.getInstance();
 			updateProgress(step);
 			step++;
-			MyEntityManagerFactory.getInstance();
+			initDAO();
 			updateProgress(step);
 			step++;
 			initLayout();

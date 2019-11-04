@@ -1,6 +1,5 @@
 package controller;
 
-import com.jfoenix.controls.JFXButton;
 import daos.ReservationDAO;
 import entities.Reservation;
 import javafx.beans.property.SimpleStringProperty;
@@ -27,19 +26,16 @@ public class ReservationManagementController implements Initializable {
     private TextField tf_customerID;
 
     @FXML
-    private JFXButton btnEnter;
+    private Button btnEnter;
 
     @FXML
-    private JFXButton btnBack;
+    private Button btnNew;
 
     @FXML
-    private JFXButton btnNew;
+    private Button btnCancelReservation;
 
     @FXML
-    private JFXButton btnCancelReservation;
-
-    @FXML
-    private JFXButton btnRecall;
+    private Button btnRecall;
 
     @FXML
     private TableView<Reservation> table;

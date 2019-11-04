@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="back" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainLayoutController">
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="back" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/8.0.172-ea" fx:controller="controller.MainLayoutController">
     <bottom>
         <VBox prefHeight="23.0" prefWidth="576.0">
             <children>
@@ -38,105 +31,59 @@
                         <Font name="System Bold" size="27.0" />
                     </font>
                 </Label>
-                <TabPane tabClosingPolicy="UNAVAILABLE">
+                <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
-                        <Tab text="Transaction">
+                        <Tab fx:id="item" text="Item">
                             <content>
                                 <AnchorPane styleClass="tab-debt">
                                     <children>
                                         <HBox alignment="CENTER_LEFT" spacing="12.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <children>
-                                                <Button fx:id="btnRentalItems" minHeight="80.0" minWidth="160.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="140.0">
+                                                <Button fx:id="btnItems" minHeight="80.0" minWidth="160.0"
+                                                        mnemonicParsing="false" prefHeight="80.0" prefWidth="160.0">
                                                     <graphic>
                                                         <VBox alignment="CENTER">
                                                             <children>
-                                                                <FontAwesomeIcon fill="WHITE" glyphName="MONEY" size="3EM" />
-                                                                <Label text="Rental Items" wrapText="true" />
+                                                                <FontAwesomeIcon fill="WHITE" glyphName="INDENT"
+                                                                                 size="3EM"/>
+                                                                <Label text="Item" wrapText="true"/>
                                                             </children>
                                                         </VBox>
                                                     </graphic>
                                                 </Button>
-                                                <Button fx:id="btnReturnItems" layoutX="10.0" layoutY="10.0" minHeight="80.0" minWidth="160.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="140.0">
+                                                <Button fx:id="btnRentalItems" minHeight="80.0" minWidth="160.0"
+                                                        mnemonicParsing="false" prefHeight="80.0" prefWidth="140.0">
                                                     <graphic>
                                                         <VBox alignment="CENTER">
                                                             <children>
-                                                                <FontAwesomeIcon fill="WHITE" glyphName="REPLY" size="3EM" />
-                                                                <Label text="Return items" wrapText="true" />
+                                                                <FontAwesomeIcon fill="WHITE" glyphName="MONEY"
+                                                                                 size="3EM"/>
+                                                                <Label text="Rental Items" wrapText="true"/>
                                                             </children>
                                                         </VBox>
                                                     </graphic>
                                                 </Button>
-                                                <Button fx:id="btnMakeReservation" layoutX="161.0" layoutY="10.0" minHeight="80.0" minWidth="160.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="160.0">
+                                                <Button fx:id="btnReturnItems" layoutX="10.0" layoutY="10.0"
+                                                        minHeight="80.0" minWidth="160.0" mnemonicParsing="false"
+                                                        prefHeight="80.0" prefWidth="140.0">
                                                     <graphic>
                                                         <VBox alignment="CENTER">
                                                             <children>
-                                                                <FontAwesomeIcon fill="WHITE" glyphName="TH" size="3EM" />
-                                                                <Label text="Make Reservations" wrapText="true" />
+                                                                <FontAwesomeIcon fill="WHITE" glyphName="REPLY"
+                                                                                 size="3EM"/>
+                                                                <Label text="Return items" wrapText="true"/>
                                                             </children>
                                                         </VBox>
                                                     </graphic>
                                                 </Button>
-                                                <Button fx:id="btnReservationList" layoutX="312.0" layoutY="10.0" minHeight="80.0" minWidth="160.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="140.0">
+                                                <Button fx:id="btnTitle" minHeight="80.0" minWidth="160.0"
+                                                        mnemonicParsing="false" prefHeight="80.0" prefWidth="140.0">
                                                     <graphic>
                                                         <VBox alignment="CENTER">
                                                             <children>
-                                                                <FontAwesomeIcon fill="WHITE" glyphName="LIST" size="3EM" />
-                                                                <Label text="Reservation List" wrapText="true" />
-                                                            </children>
-                                                        </VBox>
-                                                    </graphic>
-                                                </Button>
-                                            </children>
-                                            <padding>
-                                                <Insets left="12.0" />
-                                            </padding>
-                                        </HBox>
-                                    </children>
-                                </AnchorPane>
-                            </content>
-                        </Tab>
-                        <Tab text="Managements">
-                            <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                    <children>
-                                        <HBox alignment="CENTER_LEFT" spacing="12.0" styleClass="tab-debt" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                            <children>
-                                                <Button fx:id="btnCustomer" minHeight="80.0" minWidth="160.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="140.0">
-                                                    <graphic>
-                                                        <VBox alignment="CENTER">
-                                                            <children>
-                                                                <FontAwesomeIcon fill="WHITE" glyphName="USERS" size="3EM" />
-                                                                <Label text="Customer" wrapText="true" />
-                                                            </children>
-                                                        </VBox>
-                                                    </graphic>
-                                                </Button>
-                                                <Button fx:id="btnTitle" layoutX="10.0" layoutY="10.0" minHeight="80.0" minWidth="160.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="140.0">
-                                                    <graphic>
-                                                        <VBox alignment="CENTER">
-                                                            <children>
-                                                                <FontAwesomeIcon fill="WHITE" glyphName="TITLE" size="3EM" />
-                                                                <Label text="Title" wrapText="true" />
-                                                            </children>
-                                                        </VBox>
-                                                    </graphic>
-                                                </Button>
-                                                <Button fx:id="btnItems" layoutX="161.0" layoutY="10.0" minHeight="80.0" minWidth="160.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="160.0">
-                                                    <graphic>
-                                                        <VBox alignment="CENTER">
-                                                            <children>
-                                                                <FontAwesomeIcon fill="WHITE" glyphName="INDENT" size="3EM" />
-                                                                <Label text="Item" wrapText="true" />
-                                                            </children>
-                                                        </VBox>
-                                                    </graphic>
-                                                </Button>
-                                                <Button fx:id="btnInventory" layoutX="312.0" layoutY="10.0" minHeight="80.0" minWidth="160.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="140.0">
-                                                    <graphic>
-                                                        <VBox alignment="CENTER">
-                                                            <children>
-                                                                <FontAwesomeIcon fill="WHITE" glyphName="LIST" size="3EM" />
-                                                                <Label text="Inventory" wrapText="true" />
+                                                                <FontAwesomeIcon fill="WHITE" glyphName="TITLE"
+                                                                                 size="3EM"/>
+                                                                <Label text="Title" wrapText="true"/>
                                                             </children>
                                                         </VBox>
                                                     </graphic>
@@ -150,48 +97,58 @@
                                 </AnchorPane>
                             </content>
                         </Tab>
-                        <Tab text="Miscellanous">
+                        <Tab fx:id="reservation" text="Reservation">
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                     <children>
                                         <HBox alignment="CENTER_LEFT" spacing="12.0" styleClass="tab-debt" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <children>
-                                                <Button minHeight="80.0" minWidth="160.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="140.0">
+                                                <Button fx:id="btnMakeReservation" minHeight="80.0" minWidth="160.0"
+                                                        mnemonicParsing="false" prefHeight="80.0" prefWidth="160.0">
                                                     <graphic>
                                                         <VBox alignment="CENTER">
                                                             <children>
-                                                                <FontAwesomeIcon fill="WHITE" glyphName="MONEY" size="3EM" />
-                                                                <Label text="Return items" wrapText="true" />
+                                                                <FontAwesomeIcon fill="WHITE" glyphName="TH"
+                                                                                 size="3EM"/>
+                                                                <Label text="Make Reservations" wrapText="true"/>
                                                             </children>
                                                         </VBox>
                                                     </graphic>
                                                 </Button>
-                                                <Button layoutX="10.0" layoutY="10.0" minHeight="80.0" minWidth="160.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="140.0">
-                                                    <graphic>
-                                                        <VBox alignment="CENTER">
-                                                            <children>
-                                                                <FontAwesomeIcon fill="WHITE" glyphName="REPLY" size="3EM" />
-                                                                <Label text="Return items" wrapText="true" />
-                                                            </children>
-                                                        </VBox>
-                                                    </graphic>
-                                                </Button>
-                                                <Button layoutX="161.0" layoutY="10.0" minHeight="80.0" minWidth="160.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="160.0">
-                                                    <graphic>
-                                                        <VBox alignment="CENTER">
-                                                            <children>
-                                                                <FontAwesomeIcon fill="WHITE" glyphName="INDENT" size="3EM" />
-                                                                <Label text="Make Reservations" wrapText="true" />
-                                                            </children>
-                                                        </VBox>
-                                                    </graphic>
-                                                </Button>
-                                                <Button layoutX="312.0" layoutY="10.0" minHeight="80.0" minWidth="160.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="140.0">
+                                                <Button fx:id="btnReservationList" minHeight="80.0" minWidth="160.0"
+                                                        mnemonicParsing="false" prefHeight="80.0" prefWidth="140.0">
                                                     <graphic>
                                                         <VBox alignment="CENTER">
                                                             <children>
                                                                 <FontAwesomeIcon fill="WHITE" glyphName="LIST" size="3EM" />
-                                                                <Label text="Reservation List" wrapText="true" />
+                                                                <Label text="Reservation List" wrapText="true"/>
+                                                            </children>
+                                                        </VBox>
+                                                    </graphic>
+                                                </Button>
+                                            </children>
+                                            <padding>
+                                                <Insets left="12.0" />
+                                            </padding>
+                                        </HBox>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                        <Tab fx:id="customer" text="Customer">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <children>
+                                        <HBox alignment="CENTER_LEFT" spacing="12.0" styleClass="tab-debt" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <children>
+                                                <Button fx:id="btnCustomer" minHeight="80.0" minWidth="160.0"
+                                                        mnemonicParsing="false" prefHeight="80.0" prefWidth="140.0">
+                                                    <graphic>
+                                                        <VBox alignment="CENTER">
+                                                            <children>
+                                                                <FontAwesomeIcon fill="WHITE" glyphName="USERS"
+                                                                                 size="3EM"/>
+                                                                <Label text="Customer" wrapText="true"/>
                                                             </children>
                                                         </VBox>
                                                     </graphic>

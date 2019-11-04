@@ -80,9 +80,6 @@ public class CustomerManagementController implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 	    Main main = Main.getInstance();
-	    btnBack.setOnAction(e->{
-            main.changeScene(main.SCENE_HOME);
-		});
 		
 	}
 

@@ -2,12 +2,9 @@ package controller;
 
 import com.jfoenix.controls.JFXButton;
 import daos.ItemDAO;
-import daos.RateDAO;
 import daos.TitleDAO;
 import entities.Item;
-import entities.Rate;
 import entities.Title;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,10 +12,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.text.Text;
 import ui.Main;
 
 import java.net.URL;
@@ -27,21 +25,15 @@ import java.util.ResourceBundle;
 
 public class ItemManagementController implements Initializable{
 
+
     @FXML
     private TextField txtItemID;
-
-    @FXML
-    private Text lbItemID;
-
     @FXML
     private ComboBox<Title> cbTitle;
 
 
     @FXML
     private ComboBox<String> cbStatus;
-
-    @FXML
-    private JFXButton btnBack;
 
     @FXML
     private JFXButton btnNew;
@@ -64,48 +56,29 @@ public class ItemManagementController implements Initializable{
     @FXML
     private TableColumn<Item, String> colStatus;
 
-    @FXML
-    private Label lbSale;
-
-    @FXML
-    private Label lbDate;
-
-    @FXML
-    private Label lbTime;
-
-    @FXML
-    private JFXButton btnLogin;
-
+    private Main main;
+    private ItemDAO itemDAO;
     private List<Item> listItem ;
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-	    Main main = Main.getInstance();
-	    listItem = new ItemDAO().getAll(Item.class);
+        main = Main.getInstance();
+        itemDAO = main.getItemDAO();
+        listItem = itemDAO.getAll(Item.class);
 	    loadTable(listItem);
 	    ShowTitleName();
 	    ShowStatus();
 
-
-		btnBack.setOnAction(e->{
-			main.changeScene(main.SCENE_HOME);
-		});
-
-        btnNew.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                cbStatus.setDisable(true);
-                if (!listItem.isEmpty()) {
-                    String id_last = listItem.get(listItem.size() - 1).getItemID();
-                    int id = Integer.valueOf((id_last));
-                    String new_id = String.format("%06d", id + 1);
-                    txtItemID.setText(new_id);
-                } else
-                    txtItemID.setText("000001");
-                cbTitle.getSelectionModel().select(-1);
-                cbStatus.getSelectionModel().select(-1);
-
-            }
-
+        btnNew.setOnAction(event -> {
+            cbStatus.setDisable(true);
+            if (!listItem.isEmpty()) {
+                String id_last = listItem.get(listItem.size() - 1).getItemID();
+                int id = Integer.valueOf((id_last));
+                String new_id = String.format("%06d", id + 1);
+                txtItemID.setText(new_id);
+            } else
+                txtItemID.setText("000001");
+            cbTitle.getSelectionModel().select(-1);
+            cbStatus.getSelectionModel().select(-1);
 
         });
 
@@ -113,7 +86,6 @@ public class ItemManagementController implements Initializable{
             @Override
             public void handle(ActionEvent event) {
                 Item item;
-                ItemDAO itemDAO = new ItemDAO();
                 String id = txtItemID.getText();
                 if(itemDAO.getById(Item.class,id)!= null){
                     item = itemDAO.getById(Item.class,id);
@@ -141,7 +113,6 @@ public class ItemManagementController implements Initializable{
         btnDelete.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-              ItemDAO itemDAO =new ItemDAO();
                Item item = table.getSelectionModel().getSelectedItem();
                 boolean x = itemDAO.delete(item);
                 if(x){
@@ -192,7 +163,7 @@ public class ItemManagementController implements Initializable{
     private void reloadTable(){
         table.getColumns().clear();
         table.getColumns().addAll(colItemID,colTitle,colStatus);
-        listItem = new ItemDAO().getAll(Item.class);
+        listItem = itemDAO.getAll(Item.class);
         loadTable(listItem);
     }
 
@@ -207,13 +178,6 @@ public class ItemManagementController implements Initializable{
     private void ShowStatus(){
         ObservableList listItem = FXCollections.observableArrayList(new String[]{Item.ON_HOLD, Item.ON_SHELF, Item.RENTED,Item.LOST_DAMAGE});
         cbStatus.setItems(listItem);
-            cbStatus.getSelectionModel().select(-1);
-
+        cbStatus.getSelectionModel().select(-1);
     }
-
-
-
-
-
-
 }

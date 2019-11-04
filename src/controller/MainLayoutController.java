@@ -3,16 +3,29 @@ package controller;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import ui.Main;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MainLayoutController implements Initializable {
+
+    private final int TAB_ITEM = 0;
+    private final int TAB_RESERVATION = 1;
+    private final int TAB_CUSTOMER = 2;
     private Main main;
     @FXML
+    private TabPane tabPane;
+    @FXML
+    private Tab reservation;
+    @FXML
+    private Tab customer;
+    @FXML
+    private Tab item;
+    @FXML
     private Button btnClose;
-
     @FXML
     private Button btnRentalItems;
     @FXML
@@ -27,11 +40,10 @@ public class MainLayoutController implements Initializable {
     private Button btnTitle;
     @FXML
     private Button btnItems;
-    @FXML
-    private Button btnInventory;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         main = Main.getInstance();
         btnRentalItems.setOnAction(e -> {
             main.changeScene(main.SCENE_RENTAL_ITEMS);
@@ -65,7 +77,19 @@ public class MainLayoutController implements Initializable {
             main.changeScene(main.SCENE_RESERVATION_MANAGEMENT);
             btnClose.setVisible(true);
         });
-
+        tabPane.getSelectionModel().selectedIndexProperty().addListener((ov, oldValue, newValue) -> {
+            switch ((int) newValue) {
+                case TAB_ITEM:
+                    main.changeScene(main.SCENE_ITEM_MANAGEMENT);
+                    break;
+                case TAB_RESERVATION:
+                    main.changeScene(main.SCENE_RESERVATION_MANAGEMENT);
+                    break;
+                case TAB_CUSTOMER:
+                    main.changeScene(main.SCENE_CUSTOMER_MANAGEMENT);
+                    break;
+            }
+        });
     }
 
 }
