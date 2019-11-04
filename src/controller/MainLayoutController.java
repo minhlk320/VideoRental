@@ -38,7 +38,7 @@ public class MainLayoutController implements Initializable {
             btnClose.setVisible(true);
         });
         btnReturnItems.setOnAction(e -> {
-            main.changeScene(main.SCENE_RETURN_ITEMS);
+            main.changeScene(main.SCENE_RETURN_ITEM);
             btnClose.setVisible(true);
         });
         btnClose.setOnAction(e -> {

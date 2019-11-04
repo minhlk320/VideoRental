@@ -88,7 +88,7 @@ public class ReservationController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         main = Main.getInstance();
-        titleDAO = new TitleDAO();
+        titleDAO = main.getTitleDAO();
         btn_EnterCustomerID.setOnAction(e -> {
            searchForCustomer();
         });
@@ -120,7 +120,7 @@ public class ReservationController implements Initializable {
             cb_title.getItems().clear();
             txtArea_Description.setText(null);
             try {
-                img_Title.setImage(new Image(new FileInputStream(new File(Main.URL_DEFAULT_POSTER))));
+                img_Title.setImage(new Image(new FileInputStream(new File(main.URL_DEFAULT_POSTER))));
             } catch (FileNotFoundException ex) {
                 ex.printStackTrace();
             }
@@ -148,8 +148,6 @@ public class ReservationController implements Initializable {
                    }
             }
         });
-
-
     }
     private boolean requestConfirmExit() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

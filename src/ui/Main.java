@@ -1,7 +1,7 @@
 package ui;
 
 import com.sun.javafx.application.LauncherImpl;
-import daos.MyEntityManagerFactory;
+import daos.*;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.application.Preloader;
@@ -20,17 +20,14 @@ import javafx.stage.StageStyle;
 import java.io.IOException;
 import java.util.HashMap;
 public class Main extends Application{
-	public static final String SCENE_LATE_CHARGE_INFO = "LateChargeInfo";
-	public static final String URL_LATE_CHARGE_INFO = "/resources/fxml/LateChargeInfo.fxml";
-	public static final String TITLE_LATE_CHARGE_INFO = "Late Charge List";
-	public static final String MAIN_LAYOUT = "/resources/fxml/MainLayout.fxml";
-	private static final double MIN_HEIGHT = 720;
-	private static final double MIN_WIDTH = 1280;
-	private static final int COUNT_LIMIT = 10;
-	public static Image MAIN_ICON = new Image("/resources/img/icon.png");
 	private static Stage primaryStage;
 	private static HashMap<String, String> listUI = new HashMap<>();
 	private static Main mainInstance;
+	public final String URL_DEFAULT_POSTER = "src/resources/img/default_poster.jpg";
+	public final String SCENE_LATE_CHARGE_INFO = "LateChargeInfo";
+	public final String URL_LATE_CHARGE_INFO = "/resources/fxml/LateChargeInfo.fxml";
+	public final String TITLE_LATE_CHARGE_INFO = "Late Charge List";
+	public final String MAIN_LAYOUT = "/resources/fxml/MainLayout.fxml";
 	public final String SCENE_HOME = "Home";
 	public final String SCENE_CUSTOMER_MANAGEMENT = "CustomerManagement";
 	public final String SCENE_TITLE_MANAGEMENT = "TitleManagement";
@@ -40,10 +37,25 @@ public class Main extends Application{
 	public final String URL_CUSTOMER_MANAGEMENT = "/resources/fxml/CustomerManagement.fxml";
 	public final String URL_TITLE_MANAGEMENT = "/resources/fxml/TitleManagement.fxml";
 	public final String URL_ITEM_MANAGEMENT = "/resources/fxml/ItemManagement.fxml";
-    public final String SCENE_RENTAL_ITEMS = "RentalItems";
-    public final String URL_RENTAL = "/resources/fxml/RentalItem.fxml";
+	public final String SCENE_RENTAL_ITEMS = "RentalItems";
+	public final String URL_RENTAL = "/resources/fxml/RentalItem.fxml";
+	public final String SCENE_RESERVATION = "Reservation";
+	public final String SCENE_RESERVATION_MANAGEMENT = "ReservationManagement";
+	public final String SCENE_RETURN_ITEM = "ReturnItem";
+	public final String URL_RESERVATION = "/resources/fxml/Reservation.fxml";
+	public final String URL_RESERVATION_MANAGEMENT = "/resources/fxml/ReservationList.fxml";
+	public final String URL_RETURN_ITEM = "/resources/fxml/ReturnItem.fxml";
+	private final double MIN_HEIGHT = 720;
+	private final double MIN_WIDTH = 1280;
+	private final int TOTAL_PROGRESS = 3;
+	public Image MAIN_ICON = new Image("/resources/img/icon.png");
 	@FXML
 	public BorderPane root;
+	private ItemDAO itemDAO;
+	private CustomerDAO customerDAO;
+	private RentalDAO rentalDAO;
+	private TitleDAO titleDAO;
+	private LateChargeDAO lateChargeDAO;
 
 	public Main() {
 		mainInstance = this;
@@ -77,16 +89,55 @@ public class Main extends Application{
 	}
 
 	@Override
-	public void init() throws Exception {
-		initLayout();
-		MyEntityManagerFactory.getInstance();
-		for (int i = 1; i <= COUNT_LIMIT; i++) {
-			double progress = (double) i / 10;
-			LauncherImpl.notifyPreloader(this, new Preloader.ProgressNotification(progress));
-			Thread.sleep(100);
+	public void init() {
+		try {
+			int step = 1;
+			initLayout();
+			updateProgress(step);
+			step++;
+			MyEntityManagerFactory.getInstance();
+			updateProgress(step);
+			step++;
+			initDAO();
+			updateProgress(step);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
+	private void updateProgress(int step) throws Exception {
+		double progress = (double) (TOTAL_PROGRESS - (TOTAL_PROGRESS - step)) / TOTAL_PROGRESS;
+		LauncherImpl.notifyPreloader(this, new Preloader.ProgressNotification(progress));
+		Thread.sleep(500);
+	}
+
+	public void initDAO() {
+		itemDAO = new ItemDAO();
+		customerDAO = new CustomerDAO();
+		rentalDAO = new RentalDAO();
+		titleDAO = new TitleDAO();
+		lateChargeDAO = new LateChargeDAO();
+	}
+
+	public CustomerDAO getCustomerDAO() {
+		return customerDAO;
+	}
+
+	public ItemDAO getItemDAO() {
+		return itemDAO;
+	}
+
+	public RentalDAO getRentalDAO() {
+		return rentalDAO;
+	}
+
+	public TitleDAO getTitleDAO() {
+		return titleDAO;
+	}
+
+	public LateChargeDAO getLateChargeDAO() {
+		return lateChargeDAO;
+	}
 	public void initLayout() {
 		listUI.put(SCENE_HOME, URL_HOME);
 		listUI.put(SCENE_CUSTOMER_MANAGEMENT,URL_CUSTOMER_MANAGEMENT);
@@ -101,17 +152,6 @@ public class Main extends Application{
 		loader.setLocation(Main.class.getResource(url));
 		return loader;
 	}
-
-	//	public void changeScene(final String value) {
-//		try {
-//			Parent root = loadFXML(listUI.get(value)).load();
-//			Scene scene = new Scene(root);
-//			primaryStage.setScene(scene);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//
-//	}
 	public void changeScene(final String value) {
 		try {
 			Parent part = loadFXML(listUI.get(value)).load();
