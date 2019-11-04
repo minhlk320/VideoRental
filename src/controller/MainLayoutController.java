@@ -14,7 +14,9 @@ public class MainLayoutController implements Initializable {
 
     private final int TAB_ITEM = 0;
     private final int TAB_RESERVATION = 1;
-    private final int TAB_CUSTOMER = 2;
+    private final int TAB_TITLE = 2;
+    private final int TAB_CUSTOMER = 3;
+
     private Main main;
     @FXML
     private TabPane tabPane;
@@ -25,7 +27,7 @@ public class MainLayoutController implements Initializable {
     @FXML
     private Tab item;
     @FXML
-    private Button btnClose;
+    private Tab title;
     @FXML
     private Button btnRentalItems;
     @FXML
@@ -46,36 +48,16 @@ public class MainLayoutController implements Initializable {
 
         main = Main.getInstance();
         btnRentalItems.setOnAction(e -> {
-            main.changeScene(main.SCENE_RENTAL_ITEMS);
-            btnClose.setVisible(true);
+            main.displayRental();
         });
         btnReturnItems.setOnAction(e -> {
-            main.changeScene(main.SCENE_RETURN_ITEM);
-            btnClose.setVisible(true);
-        });
-        btnClose.setOnAction(e -> {
-            main.closeCenter();
-            btnClose.setVisible(false);
-        });
-        btnTitle.setOnAction(e -> {
-            main.changeScene(main.SCENE_TITLE_MANAGEMENT);
-            btnClose.setVisible(true);
+            main.displayReturn();
         });
         btnCustomer.setOnAction(e -> {
             main.changeScene(main.SCENE_CUSTOMER_MANAGEMENT);
-            btnClose.setVisible(true);
-        });
-        btnItems.setOnAction(e -> {
-            main.changeScene(main.SCENE_ITEM_MANAGEMENT);
-            btnClose.setVisible(true);
         });
         btnMakeReservation.setOnAction(e->{
             main.changeScene(main.SCENE_RESERVATION);
-            btnClose.setVisible(true);
-        });
-        btnReservationList.setOnAction(e->{
-            main.changeScene(main.SCENE_RESERVATION_MANAGEMENT);
-            btnClose.setVisible(true);
         });
         tabPane.getSelectionModel().selectedIndexProperty().addListener((ov, oldValue, newValue) -> {
             switch ((int) newValue) {
@@ -87,6 +69,9 @@ public class MainLayoutController implements Initializable {
                     break;
                 case TAB_CUSTOMER:
                     main.changeScene(main.SCENE_CUSTOMER_MANAGEMENT);
+                    break;
+                case TAB_TITLE:
+                    main.changeScene(main.SCENE_TITLE_MANAGEMENT);
                     break;
             }
         });

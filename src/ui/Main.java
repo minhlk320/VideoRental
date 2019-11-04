@@ -25,6 +25,7 @@ public class Main extends Application{
 	private static Stage primaryStage;
 	private static HashMap<String, Parent> listUI = new HashMap<>();
 	private static Main mainInstance;
+	public final String TITLE_RETURN_ITEM = "Return Item";
 	public final String TITLE_LATE_CHARGE_INFO = "Late Charge List";
 	public final String SCENE_HOME = "Home";
 	public final String SCENE_CUSTOMER_MANAGEMENT = "CustomerManagement";
@@ -47,6 +48,7 @@ public class Main extends Application{
 	public final String URL_RESERVATION = "/resources/fxml/Reservation.fxml";
 	public final String URL_RESERVATION_MANAGEMENT = "/resources/fxml/ReservationList.fxml";
 	public final String URL_RETURN_ITEM = "/resources/fxml/ReturnItem.fxml";
+	public final String TITLE_RENTAL_ITEM = "Rental Item";
 	private final double MIN_HEIGHT = 720;
 	private final double MIN_WIDTH = 1280;
 	private final int TOTAL_PROGRESS = 3;
@@ -153,10 +155,8 @@ public class Main extends Application{
 		listUI.put(SCENE_CUSTOMER_MANAGEMENT, loadFXML(URL_CUSTOMER_MANAGEMENT).load());
 		listUI.put(SCENE_TITLE_MANAGEMENT, loadFXML(URL_TITLE_MANAGEMENT).load());
 		listUI.put(SCENE_ITEM_MANAGEMENT, loadFXML(URL_ITEM_MANAGEMENT).load());
-		listUI.put(SCENE_RENTAL_ITEMS, loadFXML(URL_RENTAL).load());
 		listUI.put(SCENE_LATE_CHARGE_INFO, loadFXML(URL_LATE_CHARGE_INFO).load());
 		listUI.put(SCENE_RESERVATION, loadFXML(URL_RESERVATION).load());
-		listUI.put(SCENE_RETURN_ITEM, loadFXML(URL_RETURN_ITEM).load());
 		listUI.put(SCENE_RESERVATION_MANAGEMENT, loadFXML(URL_RESERVATION_MANAGEMENT).load());
 	}
 
@@ -204,25 +204,55 @@ public class Main extends Application{
 		}
 
 	}
-	public void newWindow(String mapName, String titlename) {
-		Stage stage = new Stage();
-		Parent root = listUI.get(mapName);
-		Scene scene = new Scene(root);
-		scene.setFill(Color.TRANSPARENT);
-		stage.getIcons().add(MAIN_ICON);
-		stage.setResizable(true);
-		stage.setTitle(titlename);
-		stage.setScene(scene);
-		stage.initModality(Modality.WINDOW_MODAL);
-		stage.initStyle(StageStyle.DECORATED);
-		stage.initOwner(primaryStage);
-		stage.show();
+
+	public void displayRental() {
+		try {
+			Stage stage = new Stage();
+			FXMLLoader loader = loadFXML(URL_RENTAL);
+			Parent root = loader.load();
+			root.getStylesheets().setAll(this.root.getStylesheets());
+			root.getStyleClass().setAll(this.root.getStyleClass());
+			Scene scene = new Scene(root);
+			stage.setTitle(TITLE_RENTAL_ITEM);
+			scene.setFill(Color.TRANSPARENT);
+			stage.setResizable(true);
+			stage.getIcons().add(MAIN_ICON);
+			stage.setScene(scene);
+			stage.initStyle(StageStyle.DECORATED);
+			stage.initModality(Modality.WINDOW_MODAL);
+			stage.initOwner(primaryStage);
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 
+	public void displayReturn() {
+		try {
+			Stage stage = new Stage();
+			FXMLLoader loader = loadFXML(URL_RETURN_ITEM);
+			Parent root = loader.load();
+			root.getStylesheets().setAll(this.root.getStylesheets());
+			root.getStyleClass().setAll(this.root.getStyleClass());
+			Scene scene = new Scene(root);
+			stage.setTitle(TITLE_RETURN_ITEM);
+			scene.setFill(Color.TRANSPARENT);
+			stage.setResizable(true);
+			stage.getIcons().add(MAIN_ICON);
+			stage.setScene(scene);
+			stage.initStyle(StageStyle.DECORATED);
+			stage.initModality(Modality.WINDOW_MODAL);
+			stage.initOwner(primaryStage);
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	public void closeWindow(final Object btn) {
 		final Stage stage = (Stage) ((Node) btn).getScene().getWindow();
 		stage.close();
+		stage.setScene(null);
 	}
 
 	public void enableWindow() {
@@ -237,4 +267,5 @@ public class Main extends Application{
 	public void closeCenter() {
 		root.setCenter(null);
 	}
+
 }

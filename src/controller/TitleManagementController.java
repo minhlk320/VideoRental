@@ -58,9 +58,6 @@ public class TitleManagementController implements Initializable {
 	private Text lbDescription;
 
 	@FXML
-	private JFXButton btnBack;
-
-	@FXML
 	private JFXButton btnNew;
 
 	@FXML
@@ -89,23 +86,19 @@ public class TitleManagementController implements Initializable {
 
 	@FXML
 	private TableColumn<Title, String> colDescription;
-
+	private TitleDAO titleDAO;
 	private List<Title> listTitles;
 	private String url_image;
 	private File image;
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		Main main = Main.getInstance();
-		listTitles = new TitleDAO().getAll(Title.class);
+		titleDAO = main.getTitleDAO();
+		listTitles = titleDAO.getAll(Title.class);
 		lbTitle.setText("");
 		lbDescription.setText("");
 		loadTable(listTitles);
 		ShowItemClass();
-
-		btnBack.setOnAction(e->{
-			main.changeScene(main.SCENE_HOME);
-		});
-
 
 		btnNew.setOnAction(e->{
 			txtTitle.clear();
@@ -127,14 +120,13 @@ public class TitleManagementController implements Initializable {
 			@Override
 			public void handle(ActionEvent event) {
 				Title title;
-				TitleDAO titileDAO = new TitleDAO();
 				String id = txtTitleID.getText();
-				if(titileDAO.getById(Title.class,id)!= null){
-					title = titileDAO.getById(Title.class,id);
-					titileDAO.update(getCurrentTitle(title));
+				if (titleDAO.getById(Title.class, id) != null) {
+					title = titleDAO.getById(Title.class, id);
+					titleDAO.update(getCurrentTitle(title));
 				}else{
 					title = new Title();
-					titileDAO.save(getCurrentTitle(title));
+					titleDAO.save(getCurrentTitle(title));
 				}
 				reloadTable();
 
@@ -174,7 +166,6 @@ public class TitleManagementController implements Initializable {
 		btnDelete.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				TitleDAO titleDAO = new TitleDAO();
 				Title title = table.getSelectionModel().getSelectedItem();
 				boolean x = titleDAO.delete(title);
 				if(x){
@@ -212,7 +203,7 @@ public class TitleManagementController implements Initializable {
 	private void reloadTable(){
 		table.getColumns().clear();
 		table.getColumns().addAll(colTitleID,colTitle,colNumOfCopies,colDescription);
-		listTitles = new TitleDAO().getAll(Title.class);
+		listTitles = titleDAO.getAll(Title.class);
 		loadTable(listTitles);
 	}
 	private void ShowItemClass(){

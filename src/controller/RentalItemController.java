@@ -16,6 +16,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import ui.Main;
 
@@ -106,7 +107,8 @@ public class RentalItemController implements Initializable {
         });
         btnCancel.setOnAction(e -> {
             //no idea
-            main.closeCenter();
+            Stage stage = (Stage) ((Button) e.getSource()).getScene().getWindow();
+            stage.close();
         });
         initTable();
     }
