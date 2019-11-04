@@ -49,6 +49,7 @@ public class Main extends Application{
 	public final String URL_RESERVATION_MANAGEMENT = "/resources/fxml/ReservationList.fxml";
 	public final String URL_RETURN_ITEM = "/resources/fxml/ReturnItem.fxml";
 	public final String TITLE_RENTAL_ITEM = "Rental Item";
+	private final String TITLE_RESERVATION = "Make Reservation";
 	private final double MIN_HEIGHT = 720;
 	private final double MIN_WIDTH = 1280;
 	private final int TOTAL_PROGRESS = 3;
@@ -228,6 +229,28 @@ public class Main extends Application{
 
 	}
 
+	public void displayMakeReservation() {
+		try {
+			Stage stage = new Stage();
+			FXMLLoader loader = loadFXML(URL_RESERVATION);
+			Parent root = loader.load();
+			root.getStylesheets().setAll(this.root.getStylesheets());
+			root.getStyleClass().setAll(this.root.getStyleClass());
+			Scene scene = new Scene(root);
+			stage.setTitle(TITLE_RESERVATION);
+			scene.setFill(Color.TRANSPARENT);
+			stage.setResizable(true);
+			stage.getIcons().add(MAIN_ICON);
+			stage.setScene(scene);
+			stage.initStyle(StageStyle.DECORATED);
+			stage.initModality(Modality.WINDOW_MODAL);
+			stage.initOwner(primaryStage);
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void displayReturn() {
 		try {
 			Stage stage = new Stage();
@@ -267,5 +290,6 @@ public class Main extends Application{
 	public void closeCenter() {
 		root.setCenter(null);
 	}
+
 
 }

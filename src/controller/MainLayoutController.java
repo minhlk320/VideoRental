@@ -57,7 +57,7 @@ public class MainLayoutController implements Initializable {
             main.changeScene(main.SCENE_CUSTOMER_MANAGEMENT);
         });
         btnMakeReservation.setOnAction(e->{
-            main.changeScene(main.SCENE_RESERVATION);
+            main.displayMakeReservation();
         });
         tabPane.getSelectionModel().selectedIndexProperty().addListener((ov, oldValue, newValue) -> {
             switch ((int) newValue) {

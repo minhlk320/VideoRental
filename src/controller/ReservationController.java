@@ -18,6 +18,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import ui.Main;
 
 import java.io.File;
@@ -35,7 +36,7 @@ public class ReservationController implements Initializable {
     private TitleDAO titleDAO;
     private Customer customer;
     @FXML
-    private JFXTextField tf_CustomerID;
+    private JFXTextField tfCustomerID;
 
     @FXML
     private JFXTextArea txtAreaComment;
@@ -80,10 +81,10 @@ public class ReservationController implements Initializable {
     private Button btnReset;
 
     @FXML
-    private Button btn_Done;
+    private Button btnDone;
 
     @FXML
-    private Button btn_Cancel;
+    private Button btnCancel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -92,19 +93,20 @@ public class ReservationController implements Initializable {
         btnEnterCustomerID.setOnAction(e -> {
            searchForCustomer();
         });
-        tf_CustomerID.setOnKeyReleased(e->{
+        tfCustomerID.setOnKeyReleased(e -> {
             if (e.getCode() == KeyCode.ENTER) {
                 searchForCustomer();
             }
         });
-        btn_Done.setOnAction(e -> {
+        btnDone.setOnAction(e -> {
            if(confirmReservation()){
                //?
            }
         });
-        btn_Cancel.setOnAction(e -> {
+        btnCancel.setOnAction(e -> {
             if (requestConfirmExit()) {
-                main.changeScene(main.SCENE_HOME);
+                Stage stage = (Stage) ((Button) e.getSource()).getScene().getWindow();
+                stage.close();
             }
         });
         tfTitleName.setOnKeyTyped(e -> {
@@ -125,7 +127,7 @@ public class ReservationController implements Initializable {
                 ex.printStackTrace();
             }
         });
-        btn_Done.setOnAction(e->{
+        btnDone.setOnAction(e -> {
             Title title = cbTitle.getSelectionModel().getSelectedItem();
             if(customer==null)
                 showMessage("You haven't chosen a customer","Message",null);
@@ -144,7 +146,8 @@ public class ReservationController implements Initializable {
                        reservation.setComment(txtAreaComment.getText());
                        System.out.println(new ReservationDAO().save(reservation));
                        showMessage("Reservation has been added!","Message",null);
-                       main.changeScene(main.SCENE_RESERVATION);
+                       Stage stage = (Stage) ((Button) e.getSource()).getScene().getWindow();
+                       stage.close();
                    }
             }
         });
@@ -208,9 +211,9 @@ public class ReservationController implements Initializable {
         txtAreaDescription.setText(title.getDesciption());
     }
     private void searchForCustomer(){
-        String customerID = tf_CustomerID.getText();
+        String customerID = tfCustomerID.getText();
         if (customerID.isEmpty()) {
-            tf_CustomerID.requestFocus();
+            tfCustomerID.requestFocus();
             return;
         }
         Customer customer = new CustomerDAO().getById(Customer.class,customerID);

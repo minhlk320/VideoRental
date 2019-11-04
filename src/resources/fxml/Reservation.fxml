@@ -19,7 +19,7 @@
                   <Label text="Customer ID" />
                   <HBox spacing="12.0">
                      <children>
-                        <JFXTextField fx:id="tf_CustomerID" unFocusColor="WHITE" HBox.hgrow="ALWAYS" />
+                        <JFXTextField fx:id="tfCustomerID" unFocusColor="WHITE" HBox.hgrow="ALWAYS"/>
                         <Button fx:id="btnEnterCustomerID" mnemonicParsing="false" text="Enter"/>
                      </children>
                   </HBox>
@@ -151,8 +151,8 @@
                   <JFXTextArea fx:id="txtAreaComment" prefHeight="185.0" prefWidth="0.0" promptText="Add some note" wrapText="true" />
                   <ToolBar>
                      <items>
-                        <Button fx:id="btn_Done" mnemonicParsing="false" text="Done" />
-                        <Button fx:id="btn_Cancel" mnemonicParsing="false" text="Cancel" />
+                        <Button fx:id="btnDone" mnemonicParsing="false" text="Done"/>
+                        <Button fx:id="btnCancel" mnemonicParsing="false" text="Cancel"/>
                      </items>
                   </ToolBar>
                </children>
