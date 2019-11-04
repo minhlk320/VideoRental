@@ -16,7 +16,7 @@
                   <Label text="Customer ID"/>
                   <HBox spacing="12.0">
                      <children>
-                        <JFXTextField fx:id="jfxTextField" unFocusColor="WHITE" HBox.hgrow="ALWAYS"/>
+                        <JFXTextField fx:id="tfCustomerID" unFocusColor="WHITE" HBox.hgrow="ALWAYS"/>
                         <Button fx:id="btnEnterCustomerID" mnemonicParsing="false" text="Enter"/>
                      </children>
                   </HBox>

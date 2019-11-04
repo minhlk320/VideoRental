@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
 import ui.Main;
@@ -35,7 +36,7 @@ public class RentalItemController implements Initializable {
     private Customer currentCustomer;
     private LateChargeDAO lateChargeDAO;
     @FXML
-    private JFXTextField jfxTextField;
+    private JFXTextField tfCustomerID;
     @FXML
     private Text textCustomerName;
     @FXML
@@ -75,6 +76,7 @@ public class RentalItemController implements Initializable {
 
     private ArrayList<Item> listItems;
 
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         main = Main.getInstance();
@@ -83,27 +85,19 @@ public class RentalItemController implements Initializable {
         rentalDAO = main.getRentalDAO();
         lateChargeDAO = main.getLateChargeDAO();
         btnEnterCustomerID.setOnAction(e -> {
-            String customerID = jfxTextField.getText();
-            if (customerID.isEmpty()) {
-                jfxTextField.requestFocus();
-                return;
+            inputCustomer();
+        });
+        tfCustomerID.setOnKeyTyped(e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                inputCustomer();
             }
-            Customer customer = findCustomer(customerID);
-            if (customer != null) {
-                currentCustomer = customer;
-            }
-            updateCustomerInfo();
         });
         btnEnterItemID.setOnAction(e -> {
-            String itemID = tfitemID.getText();
-            if (itemID.isEmpty()) {
-                tfitemID.requestFocus();
-                return;
-            }
-            Item item = findItem(itemID);
-            if (item != null) {
-                addToTable(item);
-                updateTotal();
+            inputItem();
+        });
+        tfitemID.setOnKeyTyped(e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                inputItem();
             }
         });
 
@@ -117,6 +111,31 @@ public class RentalItemController implements Initializable {
         initTable();
     }
 
+    private void inputCustomer() {
+        String customerID = tfCustomerID.getText();
+        if (customerID.isEmpty()) {
+            tfCustomerID.requestFocus();
+            return;
+        }
+        Customer customer = findCustomer(customerID);
+        if (customer != null) {
+            currentCustomer = customer;
+        }
+        updateCustomerInfo();
+    }
+
+    private void inputItem() {
+        String itemID = tfitemID.getText();
+        if (itemID.isEmpty()) {
+            tfitemID.requestFocus();
+            return;
+        }
+        Item item = findItem(itemID);
+        if (item != null) {
+            addToTable(item);
+            updateTotal();
+        }
+    }
     private void updateCustomerInfo() {
         if (currentCustomer != null) {
             textCustomerName.setText(currentCustomer.getFirstName() + " " + currentCustomer.getLastName());
@@ -196,7 +215,7 @@ public class RentalItemController implements Initializable {
     }
 
     private void clearForm() {
-        jfxTextField.clear();
+        tfCustomerID.clear();
         tfitemID.clear();
         listItems.clear();
         tableItemList.getItems().clear();
@@ -205,7 +224,7 @@ public class RentalItemController implements Initializable {
     private void requestConfirm() {
         //Validate
         if (currentCustomer == null) {
-            jfxTextField.requestFocus();
+            tfCustomerID.requestFocus();
             return;
         }
         if (listItems.isEmpty()) {
