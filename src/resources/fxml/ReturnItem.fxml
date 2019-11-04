@@ -1,68 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Text?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea"
-            fx:controller="controller.ReturnItemController">
-    <children>
-        <HBox spacing="32.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
-              AnchorPane.topAnchor="10.0">
-            <children>
-                <VBox HBox.hgrow="ALWAYS">
-                    <children>
-                        <Label text="Item Id"/>
-                        <HBox spacing="12.0">
-                            <children>
-                                <JFXTextField fx:id="tfItemID" prefWidth="219.0" unFocusColor="WHITE"
-                                              HBox.hgrow="ALWAYS"/>
-                                <Button fx:id="btnEnterItemID" mnemonicParsing="false" text="Enter"/>
-                            </children>
-                        </HBox>
-                        <VBox>
-                            <children>
-                                <Label text="List of item">
-                                    <VBox.margin>
-                                        <Insets top="12.0"/>
-                                    </VBox.margin>
-                                </Label>
-                                <TableView fx:id="tableItemList">
-                                    <columns>
-                                        <TableColumn fx:id="colNo" prefWidth="40.0" text="No."/>
-                                        <TableColumn fx:id="colItemID" prefWidth="75.0" text="Item ID"/>
-                                        <TableColumn fx:id="colTitle" minWidth="200.0" prefWidth="75.0" text="Title"/>
-                                        <TableColumn fx:id="colPrice" prefWidth="75.0" text="Price"/>
-                                        <TableColumn fx:id="colDeleteButton" minWidth="30.0" prefWidth="75.0"/>
-                                    </columns>
-                                </TableView>
-                                <ToolBar>
-                                    <items>
-                                        <Button fx:id="btnResetTable" mnemonicParsing="false" text="Reset"/>
-                                    </items>
-                                </ToolBar>
-                            </children>
-                        </VBox>
-                    </children>
-                </VBox>
-                <VBox alignment="BOTTOM_LEFT" spacing="24.0" HBox.hgrow="ALWAYS">
-                    <children>
-                        <HBox spacing="12.0">
-                            <children>
-                                <Label prefWidth="120.0" text="Total Disk"/>
-                                <Text fx:id="textTotalDisk" strokeType="OUTSIDE" strokeWidth="0.0" text="00000000"/>
-                            </children>
-                        </HBox>
-                        <ToolBar>
-                            <items>
-                                <Button fx:id="btnDone" mnemonicParsing="false" text="Done"/>
-                                <Button fx:id="btnCancel" mnemonicParsing="false" text="Cancel"/>
-                            </items>
-                        </ToolBar>
-                    </children>
-                </VBox>
-            </children>
-        </HBox>
-    </children>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReturnItemController">
+   <children>
+      <HBox spacing="32.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="4.0">
+         <children>
+            <Label alignment="CENTER" text="ItemID" />
+            <JFXTextField fx:id="tf_ItemID" promptText="Enter Item ID" />
+            <JFXButton fx:id="btnEnter" text="Enter" />
+         </children>
+      </HBox>
+   </children>
 </AnchorPane>

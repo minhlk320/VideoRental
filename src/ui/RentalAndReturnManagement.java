@@ -45,45 +45,7 @@ public class RentalAndReturnManagement {
      * @description record the return of one Item and check the return is
      * late or not and add late charge to the item's customer
      */
-    public boolean Return(String id){
-        Item item = itemDAO.getById(Item.class,id);
-        if(item.equals(null))return false;
-        Rental lastestRental = rentalDAO.getLatestRentalByItemID(id);
-        Customer customer = lastestRental.getCustomer();
-        RentalDetail rentalDetailofItem = null;
-        List<RentalDetail> rentalDetailList = lastestRental.getItems();
-        for(int i = 0; i<rentalDetailList.size();i++){
-            if(rentalDetailList.get(i).getItem().equals(item)){
-                rentalDetailofItem = rentalDetailList.get(i);
-            }
-        }
-        LocalDate rentedDate = lastestRental.getDate();
-        LocalDate currentDate = LocalDate.now();
 
-        if(currentDate.isAfter(rentedDate.plusDays(rentalDetailofItem.getRentalPeriod()))){
-            LocalDate dueOn = rentedDate.plusDays(rentalDetailofItem.getRentalPeriod());
-            Duration diff = Duration.between(dueOn.atStartOfDay(), currentDate.atStartOfDay());
-            int numOfOverDueDay = (int) diff.toDays();
-            double totalAmout = numOfOverDueDay * rentalDetailofItem.getLateRate();
-            lateChargeDAO.addLateCharge(item,customer,totalAmout,dueOn);
-        }
-        checkReservation(item);
-        return true;
-    }
-    private void checkReservation(Item item){
-        Title titleOfItem = item.getTitle();
-        Reservation eldestReservation = reservationDAO.getEldestReservationByTitleID(titleOfItem.getTitleID());
-        if(eldestReservation!=null){
-            item.setStatus(Item.ON_HOLD);
-            eldestReservation.setItem(item);
-            itemDAO.update(item);
-            reservationDAO.update(eldestReservation);
-        }
-        else{
-            item.setStatus(Item.ON_SHELF);
-            itemDAO.update(item);
-        }
-    }
 
     /**
      *

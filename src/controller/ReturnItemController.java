@@ -1,151 +1,102 @@
 package controller;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import daos.ItemDAO;
-import entities.Item;
-import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import daos.LateChargeDAO;
+import daos.RentalDAO;
+import daos.ReservationDAO;
+import entities.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.text.Text;
-import javafx.util.Callback;
+import javafx.scene.control.Alert;
+import javafx.scene.input.KeyCode;
 import ui.Main;
-
 import java.net.URL;
-import java.util.ArrayList;
+import java.time.Duration;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class ReturnItemController implements Initializable {
-    private ItemDAO itemDAO;
-    private Main main;
-    private List<Item> listItems;
-    @FXML
-    private JFXTextField tfItemID;
-    @FXML
-    private Button btnEnterItemID;
-    @FXML
-    private TableView tableItemList;
-    @FXML
-    private TableColumn<Item, Item> colNo;
-    @FXML
-    private TableColumn<Item, String> colItemID;
-    @FXML
-    private TableColumn<Item, String> colTitle;
-    @FXML
-    private TableColumn<Item, String> colPrice;
-    @FXML
-    private TableColumn<Item, Item> colDeleteButton;
-    @FXML
-    private Button btnResetTable;
-    @FXML
-    private Text textTotalDisk;
-    @FXML
-    private Button btnDone;
-    @FXML
-    private Button btnCancel;
 
+    private Main main;
+
+    @FXML
+    private JFXTextField tf_ItemID;
+
+    @FXML
+    private JFXButton btnEnter;
+
+    private RentalDAO rentalDAO = new RentalDAO();
+    private ItemDAO itemDAO = new ItemDAO();
+    private LateChargeDAO lateChargeDAO = new LateChargeDAO();
+    private ReservationDAO reservationDAO = new ReservationDAO();
+    private boolean late = false;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         main = Main.getInstance();
-        listItems = new ArrayList<>();
-        itemDAO = new ItemDAO();
-        btnEnterItemID.setOnAction(e -> {
-            String itemID = tfItemID.getText();
-            if (itemID.isEmpty()) {
-                tfItemID.requestFocus();
-                return;
-            }
-
-            Item item = findItem(itemID);
-            addToTable(item);
-            tfItemID.clear();
+        btnEnter.setOnAction(e->{
+            doReturn();
         });
-        initTable();
+        tf_ItemID.setOnKeyReleased(e->{
+            if (e.getCode() == KeyCode.ENTER) {
+                doReturn();
+            }
+        });
     }
-
-    private void initTable() {
-        colNo.setCellValueFactory(
-                param -> {
-                    return new ReadOnlyObjectWrapper<>(param.getValue());
-                });
-        colNo.setCellFactory(new Callback<TableColumn<Item, Item>, TableCell<Item, Item>>() {
-            @Override
-            public TableCell<Item, Item> call(TableColumn<Item, Item> param) {
-                return new TableCell<Item, Item>() {
-                    @Override
-                    protected void updateItem(Item arg0, boolean arg1) {
-                        super.updateItem(arg0, arg1);
-                        if (this.getTableRow() != null && arg0 != null) {
-                            setText(this.getTableRow().getIndex() + 1 + "");
-                        } else {
-                            setText("");
-                        }
-                    }
-                };
-            }
-        });
-        colDeleteButton.setSortable(false);
-        colDeleteButton.setCellValueFactory(
-                param -> new ReadOnlyObjectWrapper<>(param.getValue())
-        );
-        colDeleteButton.setCellFactory(param -> new TableCell<Item, Item>() {
-            private final Button deleteButton = new Button("X");
-
-            @Override
-            protected void updateItem(Item item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (item == null) {
-                    setGraphic(null);
-                    return;
-                }
-
-                setGraphic(deleteButton);
-                deleteButton.setOnAction(
-                        event -> {
-                            listItems.remove(item);
-                            getTableView().getItems().remove(item);
-                        }
-                );
-            }
-        });
-        listItems = new ArrayList<>();
-        ObservableList<Item> items = FXCollections.observableArrayList(listItems);
-        colNo.setSortable(false);
-        colItemID.setCellValueFactory(new PropertyValueFactory<>("itemID"));
-        colTitle.setCellValueFactory(cdata -> new SimpleStringProperty(cdata.getValue().getTitle().getTitleName()));
-        colPrice.setCellValueFactory(cdata -> new SimpleStringProperty(String.format("%2.2f", cdata.getValue().getTitle().getItemClass().getRentalRate())));
-        tableItemList.setItems(items);
-        btnResetTable.setOnAction(e -> {
-            //
-            listItems.clear();
-            tableItemList.getItems().clear();
-        });
-
+    private void showMessage(String message, String title, String header){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
-
-    public void addToTable(Item item) {
-        if (item == null) return;
-        if (listItems.contains(item)) {
-            return;
+    private void doReturn(){
+        Item item = itemDAO.getById(Item.class,tf_ItemID.getText());
+        if(item==null)
+            showMessage("Entered ID not found, please check again!","Message",null);
+        else if(!item.getStatus().equalsIgnoreCase(Item.RENTED))
+            showMessage("Entered ID can not be return due to entered item's status is : " + item.getStatus(),"Message",null);
+        else{
+            Return(item.getItemID());
+            if(late)
+                showMessage("This item has been returned lately (Todo call function 5c to record if chose yes)","Message",null);
+            else
+                showMessage("Returned : " + item.getItemID(),"Message",null);
         }
-        tfItemID.clear();
-        listItems.add(item);
-        tableItemList.getItems().setAll(listItems);
-        tableItemList.refresh();
     }
 
-    private Item findItem(String itemID) {
-        //Find Item from Database
-        Item item = itemDAO.getById(Item.class, itemID);
-        return item;
+    public boolean Return(String id){
+        Item item = itemDAO.getById(Item.class,id);
+        if(item.equals(null))return false;
+        Rental lastestRental = rentalDAO.getLatestRentalByItemID(id);
+        Customer customer = lastestRental.getCustomer();
+        RentalDetail rentalDetailofItem = null;
+        List<RentalDetail> rentalDetailList = lastestRental.getItems();
+        for(int i = 0; i<rentalDetailList.size();i++){
+            if(rentalDetailList.get(i).getItem().equals(item)){
+                rentalDetailofItem = rentalDetailList.get(i);
+            }
+        }
+
+        LocalDate rentedDate = lastestRental.getDate();
+        LocalDate currentDate = LocalDate.now();
+
+        if(currentDate.isAfter(rentedDate.plusDays(rentalDetailofItem.getRentalPeriod()))){
+            LocalDate dueOn = rentedDate.plusDays(rentalDetailofItem.getRentalPeriod());
+            Duration diff = Duration.between(dueOn.atStartOfDay(), currentDate.atStartOfDay());
+            int numOfOverDueDay = (int) diff.toDays();
+            double totalAmout = numOfOverDueDay * rentalDetailofItem.getLateRate();
+            lateChargeDAO.addLateCharge(item, customer, totalAmout, dueOn);
+            late = true;
+        }
+        Reservation reservation = reservationDAO.checkReservation(item);
+        if(reservation!=null)
+            showMessage("The newly returned Item has been placed ON_HOLD to :  " + reservation.getCustomer().getFirstName() +" " +reservation.getCustomer().getLastName()+"\n"
+                    + "Phone: " +reservation.getCustomer().getPhoneNumber(),"Message",null);
+        return true;
     }
+
+
 }
