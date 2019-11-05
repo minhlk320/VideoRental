@@ -4,62 +4,94 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea"
-            fx:controller="controller.LateChargeInfoController">
+
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LateChargeInfoController">
     <children>
-        <HBox alignment="CENTER" spacing="12.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0"
-              AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+        <HBox alignment="CENTER" spacing="12.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
             <children>
                 <VBox spacing="12.0">
                     <children>
-                        <Label text="Customer ID"/>
+                        <Label text="Customer ID" />
                         <HBox>
                             <children>
-                                <JFXTextField fx:id="tfCustomerID" HBox.hgrow="ALWAYS"/>
-                                <Button fx:id="btnEnter" mnemonicParsing="false" text="Enter"/>
+                                <JFXTextField fx:id="tfCustomerID" HBox.hgrow="ALWAYS" />
+                                <Button fx:id="btnEnter" mnemonicParsing="false" text="Enter" />
                             </children>
                         </HBox>
-                        <Label text="List Late charge"/>
+                        <Label text="List Late charge" />
                         <TableView fx:id="table">
                             <columns>
-                                <TableColumn fx:id="colNo" resizable="false" text="No."/>
-                                <TableColumn fx:id="colReturnDate" maxWidth="400.0" prefWidth="130.0"
-                                             text="Return Date"/>
-                                <TableColumn fx:id="colDays" maxWidth="300.0" minWidth="0.0" prefWidth="63.0"
-                                             text="Days"/>
-                                <TableColumn fx:id="colLateCharge" maxWidth="325.0" minWidth="0.0" prefWidth="308.0"
-                                             text="Late Charge"/>
-                                <TableColumn fx:id="colCheck" prefWidth="75.0" text="Paid"/>
+                                <TableColumn fx:id="colNo" resizable="false" text="No." />
+                                <TableColumn fx:id="colReturnDate" maxWidth="400.0" prefWidth="130.0" text="Return Date" />
+                                <TableColumn fx:id="colDueOn" maxWidth="300.0" minWidth="0.0" prefWidth="112.0" text="Due On" />
+                        <TableColumn fx:id="colTitleName" maxWidth="300.0" minWidth="0.0" prefWidth="112.0" text="Title Name" />
+                                <TableColumn fx:id="colPurchaseDate" maxWidth="325.0" minWidth="0.0" prefWidth="107.0" text="Purchase Date" />
+                                <TableColumn fx:id="colTotalAmount" prefWidth="227.0" text="Total Amount" />
+                        <TableColumn fx:id="colCheckBox" prefWidth="30.0" />
                             </columns>
                         </TableView>
                     </children>
                 </VBox>
                 <VBox alignment="BOTTOM_LEFT" layoutX="10.0" layoutY="10.0">
                     <children>
-                        <Label text="Total Late charge"/>
-                        <Text fx:id="textTotalCharge" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
-                              text="0000000000"/>
+                  <Label layoutX="10.0" layoutY="430.0" text="Customer Infomation" />
+                  <VBox alignment="TOP_CENTER" prefHeight="212.0" prefWidth="214.0" spacing="4.0" style="-fx-border-color: white;">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" spacing="12.0">
+                           <children>
+                              <Label prefWidth="120.0" text="Name" />
+                              <Text fx:id="textCustomerName" strokeType="OUTSIDE" strokeWidth="0.0" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="12.0">
+                           <children>
+                              <Label prefWidth="120.0" text="Address" />
+                              <Text fx:id="textCustomerAddress" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="60.0" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="12.0">
+                           <children>
+                              <Label prefWidth="120.0" text="Phone Number" />
+                              <Text fx:id="textCustomerPhone" strokeType="OUTSIDE" strokeWidth="0.0" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="12.0">
+                           <children>
+                              <Label prefWidth="120.0" text="Joined Date" />
+                              <Text fx:id="textCustomerJoinedDate" strokeType="OUTSIDE" strokeWidth="0.0" />
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+                     </padding>
+                  </VBox>
+                        <Label text="Total Late charge" />
+                        <Text fx:id="textTotalCharge" strokeType="OUTSIDE" strokeWidth="0.0" text="0000000000" />
                         <HBox alignment="BOTTOM_CENTER">
                             <children>
-                                <JFXButton fx:id="btnPaid" contentDisplay="TOP" focusTraversable="false"
-                                           minWidth="120.0" text="Paid">
+                                <JFXButton fx:id="btnPaid" contentDisplay="TOP" focusTraversable="false" minWidth="120.0" text="Paid">
                                     <graphic>
-                                        <FontAwesomeIcon fill="WHITE" glyphName="MONEY"/>
+                                        <FontAwesomeIcon fill="WHITE" glyphName="MONEY" />
                                     </graphic>
                                     <HBox.margin>
-                                        <Insets right="12.0"/>
+                                        <Insets right="12.0" />
                                     </HBox.margin>
                                 </JFXButton>
-                                <JFXButton fx:id="btnCancel" contentDisplay="TOP" focusTraversable="false"
-                                           text="Cancel">
+                                <JFXButton fx:id="btnCancel" contentDisplay="TOP" focusTraversable="false" text="Cancel">
                                     <graphic>
-                                        <FontAwesomeIcon fill="WHITE" glyphName="QUIT"/>
+                                        <FontAwesomeIcon fill="WHITE" glyphName="QUIT" />
                                     </graphic>
                                     <HBox.margin>
-                                        <Insets right="12.0"/>
+                                        <Insets right="12.0" />
                                     </HBox.margin>
                                 </JFXButton>
                             </children>

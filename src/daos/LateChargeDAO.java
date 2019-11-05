@@ -10,7 +10,7 @@ import java.util.List;
 
 public class LateChargeDAO extends GeneralCRUD<LateCharge> {
     public List<LateCharge> getLateChargeByCustomerID(String id){
-        Query q = em.createNativeQuery("SELECT * FROM LateCharge WHERE CustomerID =:customerID",LateCharge.class);
+        Query q = em.createNativeQuery("SELECT * FROM LateCharge WHERE CustomerID =:customerID and purchaseDate is null",LateCharge.class);
         q.setParameter("customerID",id);
         try {
             return q.getResultList();
@@ -18,13 +18,9 @@ public class LateChargeDAO extends GeneralCRUD<LateCharge> {
             return null;
         }
     }
-
-    public double getTotalLatechargeListByCustomerID(String id) {
-        Query q = em.createNativeQuery("SELECT * FROM LateCharge WHERE CustomerID =:customerID", LateCharge.class);
-        q.setParameter("customerID", id);
+    public double getTotalLatechargePayment(List<LateCharge> list) {
         try {
             double total = 0;
-            List<LateCharge> list = q.getResultList();
             if (list.isEmpty()) return 0.0;
             for (LateCharge x : list) {
                 total += x.getTotalAmount();
