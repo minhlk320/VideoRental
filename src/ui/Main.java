@@ -174,7 +174,7 @@ public class Main extends Application{
 	public void displayLateCharge(Customer customer) {
 		try {
 			Stage stage = new Stage();
-			FXMLLoader loader = loadFXML(URL_LATE_CHARGE_INFO).load();
+			FXMLLoader loader = loadFXML(URL_LATE_CHARGE_INFO);
 			if (customer != null) {
 				loader.setControllerFactory((Class<?> controllerType) -> {
 					if (controllerType == LateChargeInfoController.class) {
