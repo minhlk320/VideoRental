@@ -2,12 +2,9 @@ package controller;
 
 import com.jfoenix.controls.JFXButton;
 import daos.ItemDAO;
-import daos.RateDAO;
 import daos.TitleDAO;
 import entities.Item;
-import entities.Rate;
 import entities.Title;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,9 +13,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.text.Text;
 import ui.Main;
 
 import java.net.URL;
@@ -73,12 +68,6 @@ public class ItemManagementController implements Initializable{
         loadTable(listItem);
         ShowTitleName();
         ShowStatus();
-
-
-        btnBack.setOnAction(e->{
-            main.changeScene(main.SCENE_HOME);
-        });
-
         btnNew.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {

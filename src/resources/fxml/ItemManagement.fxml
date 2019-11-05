@@ -14,20 +14,19 @@
          <children>
             <ToolBar orientation="VERTICAL">
                <items>
-                  <JFXButton fx:id="btnNew" contentDisplay="TOP" focusTraversable="false" minHeight="-Infinity"
-                             minWidth="-Infinity" prefWidth="120.0" text="New">
+                  <JFXButton fx:id="btnNew" contentDisplay="TOP" focusTraversable="false" prefWidth="120.0" text="New">
                      <graphic>
                         <FontAwesomeIcon fill="WHITE" glyphName="PLUS"/>
                      </graphic>
                   </JFXButton>
-                  <JFXButton fx:id="btnSave" contentDisplay="TOP" focusTraversable="false" minHeight="-Infinity"
-                             minWidth="-Infinity" prefWidth="120.0" text="Save">
+                  <JFXButton fx:id="btnSave" contentDisplay="TOP" focusTraversable="false" prefWidth="120.0"
+                             text="Save">
                      <graphic>
                         <FontAwesomeIcon fill="WHITE" glyphName="SAVE"/>
                      </graphic>
                   </JFXButton>
-                  <JFXButton fx:id="btnDelete" contentDisplay="TOP" focusTraversable="false" minHeight="-Infinity"
-                             minWidth="-Infinity" prefWidth="120.0" text="Delete">
+                  <JFXButton fx:id="btnDelete" contentDisplay="TOP" focusTraversable="false" prefWidth="120.0"
+                             text="Delete">
                      <graphic>
                         <FontAwesomeIcon fill="WHITE" glyphName="TRASH"/>
                      </graphic>

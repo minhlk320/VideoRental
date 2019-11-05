@@ -18,7 +18,7 @@
                         <Label text="Customer ID"/>
                         <HBox>
                             <children>
-                                <JFXTextField fx:id="btnCustomerID" HBox.hgrow="ALWAYS"/>
+                                <JFXTextField fx:id="tfCustomerID" HBox.hgrow="ALWAYS"/>
                                 <Button fx:id="btnEnter" mnemonicParsing="false" text="Enter"/>
                             </children>
                         </HBox>
@@ -40,7 +40,7 @@
                 <VBox alignment="BOTTOM_LEFT" layoutX="10.0" layoutY="10.0">
                     <children>
                         <Label text="Total Late charge"/>
-                        <Text fx:id="text_TotalCharge" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+                        <Text fx:id="textTotalCharge" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
                               text="0000000000"/>
                         <HBox alignment="BOTTOM_CENTER">
                             <children>

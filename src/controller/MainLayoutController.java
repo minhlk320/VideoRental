@@ -37,7 +37,7 @@ public class MainLayoutController implements Initializable {
     @FXML
     private Button btnReservationList;
     @FXML
-    private Button btnCustomer;
+    private Button btnPayLateCharge;
     @FXML
     private Button btnTitle;
     @FXML
@@ -53,8 +53,8 @@ public class MainLayoutController implements Initializable {
         btnReturnItems.setOnAction(e -> {
             main.displayReturn();
         });
-        btnCustomer.setOnAction(e -> {
-            main.changeScene(main.SCENE_CUSTOMER_MANAGEMENT);
+        btnPayLateCharge.setOnAction(e -> {
+            main.displayLateCharge(null);
         });
         btnMakeReservation.setOnAction(e->{
             main.displayMakeReservation();

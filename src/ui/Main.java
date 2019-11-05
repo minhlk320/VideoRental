@@ -175,19 +175,21 @@ public class Main extends Application{
 		try {
 			Stage stage = new Stage();
 			FXMLLoader loader = loadFXML(URL_LATE_CHARGE_INFO).load();
-			loader.setControllerFactory((Class<?> controllerType) -> {
-				if (controllerType == LateChargeInfoController.class) {
-					LateChargeInfoController controller = new LateChargeInfoController();
-					controller.setCurrentCustomer(customer);
-					return controller;
-				} else {
-					try {
-						return controllerType.newInstance();
-					} catch (Exception e) {
-						throw new RuntimeException(e);
+			if (customer != null) {
+				loader.setControllerFactory((Class<?> controllerType) -> {
+					if (controllerType == LateChargeInfoController.class) {
+						LateChargeInfoController controller = new LateChargeInfoController();
+						controller.setCurrentCustomer(customer);
+						return controller;
+					} else {
+						try {
+							return controllerType.newInstance();
+						} catch (Exception e) {
+							throw new RuntimeException(e);
+						}
 					}
-				}
-			});
+				});
+			}
 			Parent root = loader.load();
 			Scene scene = new Scene(root);
 			stage.setTitle(TITLE_LATE_CHARGE_INFO);

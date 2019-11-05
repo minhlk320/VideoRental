@@ -20,12 +20,6 @@
             </BorderPane.margin>
         </VBox>
     </bottom>
-    <center>
-        <AnchorPane BorderPane.alignment="CENTER">
-         <BorderPane.margin>
-            <Insets left="12.0" />
-         </BorderPane.margin></AnchorPane>
-    </center>
     <top>
         <VBox prefHeight="180.0" BorderPane.alignment="CENTER">
             <children>
@@ -139,14 +133,14 @@
                                     <children>
                                         <HBox alignment="CENTER_LEFT" spacing="12.0" styleClass="tab-debt" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <children>
-                                                <Button fx:id="btnCustomer" minHeight="80.0" minWidth="160.0"
+                                                <Button fx:id="btnPayLateCharge" minHeight="80.0" minWidth="160.0"
                                                         mnemonicParsing="false" prefHeight="80.0" prefWidth="140.0">
                                                     <graphic>
                                                         <VBox alignment="CENTER">
                                                             <children>
                                                                 <FontAwesomeIcon fill="WHITE" glyphName="USERS"
                                                                                  size="3EM"/>
-                                                                <Label text="Customer" wrapText="true"/>
+                                                                <Label text="Pay Late Charge" wrapText="true"/>
                                                             </children>
                                                         </VBox>
                                                     </graphic>
