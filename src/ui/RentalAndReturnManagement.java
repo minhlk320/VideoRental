@@ -8,7 +8,6 @@ import entities.*;
 
 import java.time.Duration;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class RentalAndReturnManagement {
@@ -23,21 +22,21 @@ public class RentalAndReturnManagement {
      * @return true/false
      * @description This function return a true value if a rental transaction was created successfully else return false
      */
-    public boolean rental(Customer customer, List<Item> itemList){
-        Rental rental = new Rental(LocalDate.now());
-        List<RentalDetail> rentalDetailList = new ArrayList<>();
-        itemList.forEach(x->{
-            x.setStatus(Item.RENTED);
-            rentalDetailList.add(new RentalDetail(rental, x, x.getTitle().getItemClass().getRentalRate(),x.getTitle().getItemClass().getRentalPeriod(),x.getTitle().getItemClass().getLateRate()));
-        });
-        rental.setCustomer(customer);
-        rental.setItems(rentalDetailList);
-        if(rentalDAO.save(rental)){
-            itemList.forEach(x->new ItemDAO().update(x));
-            return true;
-        }
-        return false;
-    }
+//    public boolean rental(Customer customer, List<Item> itemList){
+//        Rental rental = new Rental(LocalDate.now());
+//        List<RentalDetail> rentalDetailList = new ArrayList<>();
+//        itemList.forEach(x->{
+//            x.setStatus(Item.RENTED);
+//            rentalDetailList.add(new RentalDetail(rental, x, x.getTitle().getItemClass().getRentalRate(),x.getTitle().getItemClass().getRentalPeriod(),x.getTitle().getItemClass().getLateRate()));
+//        });
+//        rental.setCustomer(customer);
+//        rental.setItems(rentalDetailList);
+//        if(rentalDAO.save(rental)){
+//            itemList.forEach(x->new ItemDAO().update(x));
+//            return true;
+//        }
+//        return false;
+//    }
 
     /**
      *

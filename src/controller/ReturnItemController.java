@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.input.KeyCode;
 import ui.Main;
+
 import java.net.URL;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -28,14 +29,18 @@ public class ReturnItemController implements Initializable {
     @FXML
     private JFXButton btnEnter;
 
-    private RentalDAO rentalDAO = new RentalDAO();
-    private ItemDAO itemDAO = new ItemDAO();
-    private LateChargeDAO lateChargeDAO = new LateChargeDAO();
-    private ReservationDAO reservationDAO = new ReservationDAO();
+    private RentalDAO rentalDAO;
+    private ItemDAO itemDAO;
+    private LateChargeDAO lateChargeDAO;
+    private ReservationDAO reservationDAO;
     private boolean late = false;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         main = Main.getInstance();
+        rentalDAO = main.getRentalDAO();
+        itemDAO = main.getItemDAO();
+        lateChargeDAO = main.getLateChargeDAO();
+        reservationDAO = main.getReservationDAO();
         btnEnter.setOnAction(e->{
             doReturn();
         });

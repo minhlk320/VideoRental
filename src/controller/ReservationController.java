@@ -18,6 +18,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import ui.Main;
 
 import java.io.File;
@@ -35,98 +36,99 @@ public class ReservationController implements Initializable {
     private TitleDAO titleDAO;
     private Customer customer;
     @FXML
-    private JFXTextField tf_CustomerID;
+    private JFXTextField tfCustomerID;
 
     @FXML
     private JFXTextArea txtAreaComment;
 
     @FXML
-    private Button btn_EnterCustomerID;
+    private Button btnEnterCustomerID;
 
     @FXML
-    private Text text_CustomerName;
+    private Text textCustomerName;
 
     @FXML
-    private Text text_CustomerAddress;
+    private Text textCustomerAddress;
 
     @FXML
-    private Text text_CustomerPhone;
+    private Text textCustomerPhone;
 
     @FXML
-    private Text text_CustomerJoinedDate;
+    private Text textCustomerJoinedDate;
 
     @FXML
-    private JFXTextField tf_titleName;
+    private JFXTextField tfTitleName;
 
     @FXML
-    private Button btn_EnterTitleID;
+    private Button btnEnterTitleID;
 
     @FXML
-    private ComboBox<Title> cb_title;
+    private ComboBox<Title> cbTitle;
 
     @FXML
-    private ImageView img_Title;
+    private ImageView imgTitle;
 
     @FXML
-    private Label txt_TitleName;
+    private Label txtTitleName;
 
     @FXML
-    private Label txt_TitleType;
+    private Label txtTitleType;
 
     @FXML
-    private JFXTextArea txtArea_Description;
+    private JFXTextArea txtAreaDescription;
 
     @FXML
     private Button btnReset;
 
     @FXML
-    private Button btn_Done;
+    private Button btnDone;
 
     @FXML
-    private Button btn_Cancel;
+    private Button btnCancel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         main = Main.getInstance();
-        titleDAO = new TitleDAO();
-        btn_EnterCustomerID.setOnAction(e -> {
+        titleDAO = main.getTitleDAO();
+        btnEnterCustomerID.setOnAction(e -> {
            searchForCustomer();
         });
-        tf_CustomerID.setOnKeyReleased(e->{
+        tfCustomerID.setOnKeyReleased(e -> {
             if (e.getCode() == KeyCode.ENTER) {
                 searchForCustomer();
             }
         });
-        btn_Done.setOnAction(e -> {
+        btnDone.setOnAction(e -> {
            if(confirmReservation()){
-
+               //?
            }
         });
-        btn_Cancel.setOnAction(e -> {
+        btnCancel.setOnAction(e -> {
             if (requestConfirmExit()) {
-                main.changeScene(main.SCENE_HOME);
+                Stage stage = (Stage) ((Button) e.getSource()).getScene().getWindow();
+                stage.close();
             }
         });
-        tf_titleName.setOnKeyTyped(e->{
-           loadComboTitle(tf_titleName.getText().trim());
+        tfTitleName.setOnKeyTyped(e -> {
+            loadComboTitle(tfTitleName.getText().trim());
         });
-        cb_title.setOnAction(e->{
-            loadTitleInfo(cb_title.getSelectionModel().getSelectedItem());
+        cbTitle.setOnAction(e -> {
+            loadTitleInfo(cbTitle.getSelectionModel().getSelectedItem());
         });
         btnReset.setOnAction(e->{
-            tf_titleName.setText("");
-            txtArea_Description.setText(null);
-            txt_TitleType.setText(null);
-            cb_title.getItems().clear();
-            txtArea_Description.setText(null);
+            tfTitleName.setText("");
+            txtAreaDescription.setText(null);
+            txtTitleType.setText(null);
+            cbTitle.getItems().clear();
+            txtAreaDescription.setText(null);
             try {
-                img_Title.setImage(new Image(new FileInputStream(new File(Main.URL_DEFAULT_POSTER))));
+                imgTitle.setImage(new Image(new FileInputStream(new File(main.URL_DEFAULT_POSTER))));
             } catch (FileNotFoundException ex) {
                 ex.printStackTrace();
             }
         });
-        btn_Done.setOnAction(e->{
-            Title title = cb_title.getSelectionModel().getSelectedItem();
+        btnDone.setOnAction(e -> {
+            Title title = cbTitle.getSelectionModel().getSelectedItem();
             if(customer==null)
                 showMessage("You haven't chosen a customer","Message",null);
             else if(title==null)
@@ -144,12 +146,11 @@ public class ReservationController implements Initializable {
                        reservation.setComment(txtAreaComment.getText());
                        System.out.println(new ReservationDAO().save(reservation));
                        showMessage("Reservation has been added!","Message",null);
-                       main.changeScene(main.SCENE_RESERVATION);
+                       Stage stage = (Stage) ((Button) e.getSource()).getScene().getWindow();
+                       stage.close();
                    }
             }
         });
-
-
     }
     private boolean requestConfirmExit() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -195,39 +196,39 @@ public class ReservationController implements Initializable {
         if(titleList!=null){
             System.out.println(titleList);
             ObservableList<Title> list = FXCollections.observableArrayList(titleList);
-            cb_title.setItems(list);
-            cb_title.getSelectionModel().select(0);
-            loadTitleInfo(cb_title.getSelectionModel().getSelectedItem());
+            cbTitle.setItems(list);
+            cbTitle.getSelectionModel().select(0);
+            loadTitleInfo(cbTitle.getSelectionModel().getSelectedItem());
         }
 
     }
     private void loadTitleInfo(Title title){
         if(title==null)
             return;
-        img_Title.setImage(title.getImage());
-        txt_TitleName.setText(title.getTitleName());
-        txt_TitleType.setText(title.getItemClass().getItemClassName());
-        txtArea_Description.setText(title.getDesciption());
+        imgTitle.setImage(title.getImage());
+        txtTitleName.setText(title.getTitleName());
+        txtTitleType.setText(title.getItemClass().getItemClassName());
+        txtAreaDescription.setText(title.getDesciption());
     }
     private void searchForCustomer(){
-        String customerID = tf_CustomerID.getText();
+        String customerID = tfCustomerID.getText();
         if (customerID.isEmpty()) {
-            tf_CustomerID.requestFocus();
+            tfCustomerID.requestFocus();
             return;
         }
         Customer customer = new CustomerDAO().getById(Customer.class,customerID);
         if (customer != null) {
-            text_CustomerName.setText(customer.getFirstName() + " " + customer.getLastName());
-            text_CustomerPhone.setText(customer.getPhoneNumber());
-            text_CustomerAddress.setText(customer.getAddress());
-            text_CustomerJoinedDate.setText(customer.getJoinedDate().toString());
+            textCustomerName.setText(customer.getFirstName() + " " + customer.getLastName());
+            textCustomerPhone.setText(customer.getPhoneNumber());
+            textCustomerAddress.setText(customer.getAddress());
+            textCustomerJoinedDate.setText(customer.getJoinedDate().toString());
             this.customer = customer;
         }
         else{
-            text_CustomerName.setText(null);
-            text_CustomerPhone.setText(null);
-            text_CustomerAddress.setText(null);
-            text_CustomerJoinedDate.setText(null);
+            textCustomerName.setText(null);
+            textCustomerPhone.setText(null);
+            textCustomerAddress.setText(null);
+            textCustomerJoinedDate.setText(null);
             showMessage("Your entered customer's ID does not match","Message",null);
         }
     }

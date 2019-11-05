@@ -9,119 +9,89 @@
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea"
             fx:controller="controller.CustomerManagementController">
    <children>
-      <HBox alignment="CENTER" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0"
-            AnchorPane.topAnchor="12.0">
+      <HBox alignment="CENTER" spacing="12.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0"
+            AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0">
          <children>
-            <AnchorPane>
+            <ToolBar orientation="VERTICAL">
+               <items>
+                  <JFXButton fx:id="btnNew" contentDisplay="TOP" focusTraversable="false" prefWidth="120.0" text="New">
+                     <graphic>
+                        <FontAwesomeIcon fill="WHITE" glyphName="PLUS"/>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="btnSave" contentDisplay="TOP" focusTraversable="false" prefWidth="120.0"
+                             text="Save">
+                     <graphic>
+                        <FontAwesomeIcon fill="WHITE" glyphName="SAVE"/>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="btnDelete" contentDisplay="TOP" focusTraversable="false" prefWidth="120.0"
+                             text="Delete">
+                     <graphic>
+                        <FontAwesomeIcon fill="WHITE" glyphName="TRASH"/>
+                     </graphic>
+                  </JFXButton>
+               </items>
+            </ToolBar>
+            <VBox HBox.hgrow="ALWAYS">
                <children>
-                  <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <TextField fx:id="txtCustomerID" editable="false" focusTraversable="false" layoutX="10.0"
-                                   layoutY="10.0" promptText="CustomerID" style="-fx-background-color: #4f81bc;">
-                           <VBox.margin>
-                              <Insets top="20.0"/>
-                           </VBox.margin>
-                        </TextField>
-                        <Text fx:id="lbFName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="txtFname"/>
-                        <TextField fx:id="txtFName" focusTraversable="false" promptText="First Name"
-                                   style="-fx-background-color: #4f81bc;">
-                           <VBox.margin>
-                              <Insets top="24.0"/>
-                           </VBox.margin>
-                        </TextField>
-                        <Text fx:id="lbLname" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="txtLname"/>
-                        <TextField fx:id="txtLName" focusTraversable="false" promptText="Last Name"
-                                   style="-fx-background-color: #4f81bc;">
-                           <VBox.margin>
-                              <Insets top="24.0"/>
-                           </VBox.margin>
-                        </TextField>
-                        <Text fx:id="lbFone" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="txtFone"/>
-                        <TextField fx:id="txtFone" focusTraversable="false" promptText="Phone Number"
-                                   style="-fx-background-color: #4f81bc;">
-                           <VBox.margin>
-                              <Insets top="24.0"/>
-                           </VBox.margin>
-                        </TextField>
-                        <Text fx:id="lbAddress" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="txtAddress"/>
-                        <TextField fx:id="txtAddress" focusTraversable="false" promptText="Address"
-                                   style="-fx-background-color: #4f81bc;">
-                           <VBox.margin>
-                              <Insets top="24.0"/>
-                           </VBox.margin>
-                        </TextField>
-                     </children>
-                  </VBox>
-                  <HBox alignment="BOTTOM_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                        AnchorPane.rightAnchor="0.0">
-                     <children>
-                        <JFXButton fx:id="btnBack" contentDisplay="TOP" focusTraversable="false" prefHeight="50.0"
-                                   prefWidth="245.0" text="Back">
-                           <graphic>
-                              <FontAwesomeIcon fill="WHITE" glyphName="ARROW_LEFT"/>
-                           </graphic>
-                           <HBox.margin>
-                              <Insets right="12.0"/>
-                           </HBox.margin>
-                        </JFXButton>
-                        <JFXButton fx:id="btnNew" contentDisplay="TOP" focusTraversable="false" prefHeight="50.0"
-                                   prefWidth="245.0" text="New">
-                           <graphic>
-                              <FontAwesomeIcon fill="WHITE" glyphName="PLUS"/>
-                           </graphic>
-                           <HBox.margin>
-                              <Insets right="12.0"/>
-                           </HBox.margin>
-                        </JFXButton>
-                        <JFXButton fx:id="btnSave" contentDisplay="TOP" focusTraversable="false" prefHeight="50.0"
-                                   prefWidth="245.0" text="Save">
-                           <graphic>
-                              <FontAwesomeIcon fill="WHITE" glyphName="SAVE"/>
-                           </graphic>
-                           <HBox.margin>
-                              <Insets right="12.0"/>
-                           </HBox.margin>
-                        </JFXButton>
-                        <JFXButton fx:id="btnDelete" contentDisplay="TOP" focusTraversable="false" prefHeight="50.0"
-                                   prefWidth="245.0" text="Delete">
-                           <graphic>
-                              <FontAwesomeIcon fill="WHITE" glyphName="TRASH"/>
-                           </graphic>
-                           <HBox.margin>
-                              <Insets right="12.0"/>
-                           </HBox.margin>
-                        </JFXButton>
-                     </children>
-                  </HBox>
+                  <TextField fx:id="txtCustomerID" editable="false" focusTraversable="false" layoutX="10.0"
+                             layoutY="10.0" maxWidth="1.7976931348623157E308" promptText="CustomerID">
+                     <VBox.margin>
+                        <Insets top="20.0"/>
+                     </VBox.margin>
+                  </TextField>
+                  <Text fx:id="lbFName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="txtFname"/>
+                  <TextField fx:id="txtFName" focusTraversable="false" maxWidth="1.7976931348623157E308"
+                             promptText="First Name">
+                     <VBox.margin>
+                        <Insets top="24.0"/>
+                     </VBox.margin>
+                  </TextField>
+                  <Text fx:id="lbLname" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="txtLname"/>
+                  <TextField fx:id="txtLName" focusTraversable="false" maxWidth="1.7976931348623157E308"
+                             promptText="Last Name">
+                     <VBox.margin>
+                        <Insets top="24.0"/>
+                     </VBox.margin>
+                  </TextField>
+                  <Text fx:id="lbFone" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="txtFone"/>
+                  <TextField fx:id="txtFone" focusTraversable="false" maxWidth="1.7976931348623157E308"
+                             promptText="Phone Number">
+                     <VBox.margin>
+                        <Insets top="24.0"/>
+                     </VBox.margin>
+                  </TextField>
+                  <Text fx:id="lbAddress" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="txtAddress"/>
+                  <TextField fx:id="txtAddress" focusTraversable="false" maxWidth="1.7976931348623157E308"
+                             promptText="Address">
+                     <VBox.margin>
+                        <Insets top="24.0"/>
+                     </VBox.margin>
+                  </TextField>
                </children>
-            </AnchorPane>
-            <AnchorPane>
+            </VBox>
+            <VBox>
                <children>
-                  <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                        AnchorPane.topAnchor="0.0">
-                     <children>
-                        <Label text="List of Customers"/>
-                        <TableView fx:id="table" stylesheets="@../style/style.css">
-                           <columns>
-                              <TableColumn fx:id="colNo" prefWidth="129.0" resizable="false" text="No."/>
-                              <TableColumn fx:id="colCustomerID" prefWidth="129.0" resizable="false"
-                                           text="Customer ID"/>
-                              <TableColumn fx:id="colFName" maxWidth="400.0" prefWidth="210.0" text="First Name"/>
-                              <TableColumn fx:id="colLName" maxWidth="300.0" minWidth="0.0" prefWidth="132.0"
-                                           text="Last Name"/>
-                              <TableColumn fx:id="colNumber" maxWidth="300.0" minWidth="0.0" prefWidth="159.0"
-                                           text="Phone Number"/>
-                              <TableColumn fx:id="colAddress" maxWidth="300.0" minWidth="0.0" prefWidth="280.0"
-                                           text="Address"/>
-                           </columns>
-                        </TableView>
-                     </children>
-                  </VBox>
+                  <Label text="List of Customers"/>
+                  <TableView fx:id="table" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                     <columns>
+                        <TableColumn fx:id="colNo" maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="-1.0"
+                                     resizable="false" text="No."/>
+                        <TableColumn fx:id="colCustomerID" maxWidth="1.7976931348623157E308" minWidth="50.0"
+                                     resizable="false" text="Customer ID"/>
+                        <TableColumn fx:id="colFName" maxWidth="1.7976931348623157E308" minWidth="50.0"
+                                     text="First Name"/>
+                        <TableColumn fx:id="colLName" maxWidth="1.7976931348623157E308" minWidth="50.0"
+                                     text="Last Name"/>
+                        <TableColumn fx:id="colNumber" maxWidth="1.7976931348623157E308" minWidth="50.0"
+                                     text="Phone Number"/>
+                        <TableColumn fx:id="colAddress" maxWidth="1.7976931348623157E308" minWidth="50.0"
+                                     text="Address"/>
+                     </columns>
+                  </TableView>
                </children>
-               <HBox.margin>
-                  <Insets left="24.0"/>
-               </HBox.margin>
-            </AnchorPane>
+            </VBox>
          </children>
       </HBox>
    </children>
