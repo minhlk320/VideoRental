@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class LateChargeInfoController implements Initializable {
-
     @FXML
     private TableView table;
     private Main main;

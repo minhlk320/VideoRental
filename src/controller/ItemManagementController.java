@@ -12,29 +12,28 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import ui.Main;
 
 import java.net.URL;
 import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ItemManagementController implements Initializable{
 
+
     @FXML
     private TextField txtItemID;
-
     @FXML
     private ComboBox<Title> cbTitle;
 
 
     @FXML
     private ComboBox<String> cbStatus;
-
-    @FXML
-    private JFXButton btnBack;
 
     @FXML
     private JFXButton btnNew;
@@ -57,33 +56,29 @@ public class ItemManagementController implements Initializable{
     @FXML
     private TableColumn<Item, String> colStatus;
 
-    @FXML
-    private JFXButton btnLogin;
-
+    private Main main;
+    private ItemDAO itemDAO;
     private List<Item> listItem ;
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        Main main = Main.getInstance();
-        listItem = new ItemDAO().getAll(Item.class);
-        loadTable(listItem);
-        ShowTitleName();
-        ShowStatus();
-        btnNew.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                cbStatus.setDisable(true);
-                if (!listItem.isEmpty()) {
-                    String id_last = listItem.get(listItem.size() - 1).getItemID();
-                    int id = Integer.valueOf((id_last));
-                    String new_id = String.format("%06d", id + 1);
-                    txtItemID.setText(new_id);
-                } else
-                    txtItemID.setText("000001");
-                cbTitle.getSelectionModel().select(-1);
-                cbStatus.getSelectionModel().select(-1);
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+        main = Main.getInstance();
+        itemDAO = main.getItemDAO();
+        listItem = itemDAO.getAll(Item.class);
+	    loadTable(listItem);
+	    ShowTitleName();
+	    ShowStatus();
 
-            }
-
+        btnNew.setOnAction(event -> {
+            cbStatus.setDisable(true);
+            if (!listItem.isEmpty()) {
+                String id_last = listItem.get(listItem.size() - 1).getItemID();
+                int id = Integer.valueOf((id_last));
+                String new_id = String.format("%06d", id + 1);
+                txtItemID.setText(new_id);
+            } else
+                txtItemID.setText("000001");
+            cbTitle.getSelectionModel().select(-1);
+            cbStatus.getSelectionModel().select(-1);
 
         });
 
@@ -91,7 +86,6 @@ public class ItemManagementController implements Initializable{
             @Override
             public void handle(ActionEvent event) {
                 Item item;
-                ItemDAO itemDAO = new ItemDAO();
                 String id = txtItemID.getText();
                 if(itemDAO.getById(Item.class,id)!= null){
                     item = itemDAO.getById(Item.class,id);
@@ -108,42 +102,23 @@ public class ItemManagementController implements Initializable{
             Item getCurrentItem(Item item) {
                 Title title = cbTitle.getSelectionModel().getSelectedItem();
                 String status = cbStatus.getSelectionModel().getSelectedItem()==null?(Item.ON_SHELF):(cbStatus.getSelectionModel().getSelectedItem().toString());
+                item.setTitle(title);
+                item.setStatus(status);
 
-                if(validate()){
-                    item.setTitle(title);
-                    item.setStatus(status);
-                    return item;
-                }else {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Message !");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Choose the title for item please !");
-                    alert.showAndWait();
-                    return null;
-                }
+                return item;
             }
+
         });
 
         btnDelete.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                ItemDAO itemDAO =new ItemDAO();
-                Item item = table.getSelectionModel().getSelectedItem();
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Message !");
-                alert.setHeaderText("Are you sure ?");
-                ButtonType buttonTypeYes = new ButtonType("Yes");
-                ButtonType buttonTypeCancel = new ButtonType("Cancel");
-                alert.getButtonTypes().setAll(buttonTypeYes,buttonTypeCancel);
-                Optional<ButtonType> result = alert.showAndWait();
-                switch (result.get().getText()) {
-                    case "Yes":
-                        boolean x = itemDAO.delete(item);
-                        alert.setContentText("Deleted !");
-                        break;
-                    default:
-                        alert.close();
-                        break;
+               Item item = table.getSelectionModel().getSelectedItem();
+                boolean x = itemDAO.delete(item);
+                if(x){
+                    System.out.println("Deleted !");
+                }else{
+                    System.out.println("Delete Failed ! ");
                 }
                 reloadTable();
             }
@@ -177,10 +152,10 @@ public class ItemManagementController implements Initializable{
     private void loadTable(List<Item> list) {
         ObservableList<Item> tkList = FXCollections.observableArrayList(list);
         for(int i = 0; i<tkList.size(); i++){
-            colItemID.setSortable(false);
-            colItemID.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getItemID()));
-            colTitle.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getTitle().getTitleName()));
-            colStatus.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getStatus()));
+                colItemID.setSortable(false);
+                colItemID.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getItemID()));
+                colTitle.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getTitle().getTitleName()));
+                colStatus.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getStatus()));
         }
         table.setItems(tkList);
     }
@@ -188,14 +163,14 @@ public class ItemManagementController implements Initializable{
     private void reloadTable(){
         table.getColumns().clear();
         table.getColumns().addAll(colItemID,colTitle,colStatus);
-        listItem = new ItemDAO().getAll(Item.class);
+        listItem = itemDAO.getAll(Item.class);
         loadTable(listItem);
     }
 
     private void ShowTitleName(){
-        ObservableList<Title> listTitle = FXCollections.observableArrayList(new TitleDAO().getAll(Title.class));
-        for(int i=0; i<listTitle.size(); i++){
-            cbTitle.setItems(listTitle);
+	    ObservableList<Title> listTitle = FXCollections.observableArrayList(new TitleDAO().getAll(Title.class));
+	    for(int i=0; i<listTitle.size(); i++){
+	        cbTitle.setItems(listTitle);
             cbTitle.getSelectionModel().select(-1);
         }
     }
@@ -204,18 +179,5 @@ public class ItemManagementController implements Initializable{
         ObservableList listItem = FXCollections.observableArrayList(new String[]{Item.ON_HOLD, Item.ON_SHELF, Item.RENTED,Item.LOST_DAMAGE});
         cbStatus.setItems(listItem);
         cbStatus.getSelectionModel().select(-1);
-
     }
-
-    private boolean validate(){
-        if(cbTitle.getSelectionModel().getSelectedItem()==null){
-            return false;
-        }
-        return true;
-    }
-
-
-
-
-
 }

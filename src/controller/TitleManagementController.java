@@ -14,7 +14,10 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
@@ -28,7 +31,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class TitleManagementController implements Initializable {
@@ -47,10 +49,13 @@ public class TitleManagementController implements Initializable {
 	private TextField txtTitle;
 
 	@FXML
+	private Text lbTitle;
+
+	@FXML
 	private JFXTextArea txtDescription;
 
 	@FXML
-	private JFXButton btnBack;
+	private Text lbDescription;
 
 	@FXML
 	private JFXButton btnNew;
@@ -81,23 +86,19 @@ public class TitleManagementController implements Initializable {
 
 	@FXML
 	private TableColumn<Title, String> colDescription;
-
+	private TitleDAO titleDAO;
 	private List<Title> listTitles;
 	private String url_image;
 	private File image;
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		Main main = Main.getInstance();
-
-		listTitles = new TitleDAO().getAll(Title.class);
+		titleDAO = main.getTitleDAO();
+		listTitles = titleDAO.getAll(Title.class);
+		lbTitle.setText("");
+		lbDescription.setText("");
 		loadTable(listTitles);
-
 		ShowItemClass();
-
-		btnBack.setOnAction(e->{
-			main.changeScene(main.SCENE_HOME);
-		});
-
 
 		btnNew.setOnAction(e->{
 			txtTitle.clear();
@@ -119,14 +120,13 @@ public class TitleManagementController implements Initializable {
 			@Override
 			public void handle(ActionEvent event) {
 				Title title;
-				TitleDAO titileDAO = new TitleDAO();
 				String id = txtTitleID.getText();
-				if(titileDAO.getById(Title.class,id)!= null){
-					title = titileDAO.getById(Title.class,id);
-					titileDAO.update(getCurrentTitle(title));
+				if (titleDAO.getById(Title.class, id) != null) {
+					title = titleDAO.getById(Title.class, id);
+					titleDAO.update(getCurrentTitle(title));
 				}else{
 					title = new Title();
-					titileDAO.save(getCurrentTitle(title));
+					titleDAO.save(getCurrentTitle(title));
 				}
 				reloadTable();
 
@@ -135,21 +135,13 @@ public class TitleManagementController implements Initializable {
 				String titleName = txtTitle.getText();
 				String des = txtDescription.getText();
 				Rate rate = cbItemClass.getValue();
-				if(validate()){
-					title.setImage(image);
-					title.setDescription(des);
-					title.setTitleName(titleName);
-					title.setItemClass(rate);
-					return title;
-				}else {
-					Alert alert = new Alert(Alert.AlertType.INFORMATION);
-					alert.setTitle("Message !");
-					alert.setHeaderText(null);
-					alert.setContentText("Complete all information please !");
-					alert.showAndWait();
-					return null;
-				}
+				title.setImage(image);
+				title.setDescription(des);
+				title.setTitleName(titleName);
+				title.setItemClass(rate);
+				return title;
 			}
+
 		});
 
 		btnChoose.setOnAction(e->{
@@ -174,23 +166,12 @@ public class TitleManagementController implements Initializable {
 		btnDelete.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				TitleDAO titleDAO = new TitleDAO();
 				Title title = table.getSelectionModel().getSelectedItem();
-				Alert alert = new Alert(Alert.AlertType.INFORMATION);
-				alert.setTitle("Message !");
-				alert.setHeaderText("Are you sure ?");
-				ButtonType buttonTypeYes = new ButtonType("Yes");
-				ButtonType buttonTypeCancel = new ButtonType("Cancel");
-				alert.getButtonTypes().setAll(buttonTypeYes,buttonTypeCancel);
-				Optional<ButtonType> result = alert.showAndWait();
-				switch (result.get().getText()) {
-					case "Yes":
-						boolean x = titleDAO.delete(title);
-						alert.setContentText("Deleted !");
-						break;
-					default:
-						alert.close();
-						break;
+				boolean x = titleDAO.delete(title);
+				if(x){
+					System.out.println("Deleted !");
+				}else{
+					System.out.println("Delete Failed ! ");
 				}
 				reloadTable();
 			}
@@ -210,36 +191,35 @@ public class TitleManagementController implements Initializable {
 
 	private void loadTable(List<Title> list) {
 		ObservableList<Title> tkList = FXCollections.observableArrayList(list);
-		for(int i=0;i<tkList.size();i++){
-			colTitleID.setSortable(false);
-			colTitleID.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getTitleID()));
-			colTitle.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getTitleName()));
-			colDescription.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getDesciption()));
-			colNumOfCopies.setCellValueFactory((celldata->new SimpleStringProperty("0")));
-			colItemClass.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getItemClass().getItemClassName()));
-		}
-
+		colTitleID.setSortable(false);
+		colTitleID.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getTitleID()));
+		colTitle.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getTitleName()));
+		colDescription.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getDesciption()));
+		colNumOfCopies.setCellValueFactory((celldata->new SimpleStringProperty("0")));
+		colItemClass.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getItemClass().getItemClassName()));
 		table.setItems(tkList);
 	}
 
 	private void reloadTable(){
 		table.getColumns().clear();
-		table.getColumns().addAll(colTitleID,colTitle,colNumOfCopies,colItemClass,colDescription);
-		listTitles = new TitleDAO().getAll(Title.class);
+		table.getColumns().addAll(colTitleID,colTitle,colNumOfCopies,colDescription);
+		listTitles = titleDAO.getAll(Title.class);
 		loadTable(listTitles);
 	}
-
 	private void ShowItemClass(){
 		ObservableList<Rate> listRate = FXCollections.observableArrayList(new RateDAO().getAll(Rate.class));
 		cbItemClass.setItems(listRate);
 		cbItemClass.getSelectionModel().select(-1);
 	}
 
-	private boolean validate(){
-		if(txtTitle.getText().trim().equals("")||cbItemClass.getSelectionModel().getSelectedItem()==null||txtDescription.getText().trim().equals("")||imageView.getImage()==null){
-			return false;
-		}
-		return true;
+	private void configuringDirectoryChooser(DirectoryChooser directoryChooser) {
+
+		// Set tiêu đề cho DirectoryChooser
+		directoryChooser.setTitle("Select your poster");
+
+
+		// Sét thư mục bắt đầu nhìn thấy khi mở DirectoryChooser
+		directoryChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 	}
 
 }
