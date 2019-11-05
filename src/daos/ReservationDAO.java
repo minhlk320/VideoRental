@@ -28,6 +28,15 @@ public class ReservationDAO extends  GeneralCRUD<Reservation> {
            return null;
        }
     }
+    public Reservation getReservationbyItemID(String id){
+        Query q = em.createNativeQuery("SELECT * FROM Reservation WHERE ItemID =:itemID",Reservation.class);
+        q.setParameter("itemID",id);
+        try {
+            return (Reservation) q.getSingleResult();
+        }catch (Exception e){
+            return null;
+        }
+    }
     public Reservation checkReservation(Item item){
         Title titleOfItem = item.getTitle();
         Reservation eldestReservation = this.getEldestReservationByTitleID(titleOfItem.getTitleID());
