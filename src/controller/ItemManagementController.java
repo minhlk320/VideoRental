@@ -74,11 +74,6 @@ public class ItemManagementController implements Initializable{
         ShowTitleName();
         ShowStatus();
 
-
-        btnBack.setOnAction(e->{
-            main.changeScene(main.SCENE_HOME);
-        });
-
         btnNew.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -109,9 +104,11 @@ public class ItemManagementController implements Initializable{
                     itemDAO.update(getCurrentItem(item));
                 }else{
                     item = new Item();
-                    item = getCurrentItem(item);
-                    item.setStatus(Item.ON_SHELF);
-                    itemDAO.save(item);
+                    if(getCurrentItem(item)!=null){
+                        item = getCurrentItem(item);
+                        item.setStatus(Item.ON_SHELF);
+                        itemDAO.save(item);
+                    }
                 }
                 reloadTable();
             }

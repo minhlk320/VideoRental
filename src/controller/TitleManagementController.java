@@ -50,9 +50,6 @@ public class TitleManagementController implements Initializable {
 	private JFXTextArea txtDescription;
 
 	@FXML
-	private JFXButton btnBack;
-
-	@FXML
 	private JFXButton btnNew;
 
 	@FXML
@@ -91,13 +88,7 @@ public class TitleManagementController implements Initializable {
 
 		listTitles = new TitleDAO().getAll(Title.class);
 		loadTable(listTitles);
-
 		ShowItemClass();
-
-		btnBack.setOnAction(e->{
-			main.changeScene(main.SCENE_HOME);
-		});
-
 
 		btnNew.setOnAction(e->{
 			txtTitle.clear();
@@ -197,6 +188,8 @@ public class TitleManagementController implements Initializable {
 		});
 
 		table.setOnMousePressed(e->{
+			if(table.getSelectionModel().getSelectedItem()==null)
+				return;
 			if(e.isPrimaryButtonDown() && e.getClickCount()==1) {
 				txtTitleID.setText(table.getSelectionModel().getSelectedItem().getTitleID());
 				txtTitle.setText(table.getSelectionModel().getSelectedItem().getTitleName());

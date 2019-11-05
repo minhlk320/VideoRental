@@ -6,8 +6,6 @@ import entities.Customer;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -36,9 +34,6 @@ public class CustomerManagementController implements Initializable{
 
     @FXML
     private TextField txtAddress;
-
-    @FXML
-    private JFXButton btnBack;
 
     @FXML
     private JFXButton btnNew;
@@ -77,38 +72,19 @@ public class CustomerManagementController implements Initializable{
     private JFXButton btnLogin;
 
     private List<Customer> listCus;
+    private CustomerDAO customerDAO;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Main main = Main.getInstance();
-        listCus = new CustomerDAO().getAll(Customer.class);
-        loadTable(listCus);
-
-        btnBack.setOnAction(e->{
-            main.changeScene(main.SCENE_HOME);
-        });
-
+        customerDAO = main.getCustomerDAO();
+        listCus = customerDAO.getAll(Customer.class);
+        initTable(listCus);
         btnNew.setOnAction(e->{
-            txtFName.clear();
-            txtLName.clear();
-            txtFone.clear();
-            txtAddress.clear();
-            cboxMale.setSelected(false);
-            if (!listCus.isEmpty()) {
-                String id_last = listCus.get(listCus.size() - 1).getCustomerID();
-                int id = Integer.valueOf((id_last));
-                String new_id = String.format("%06d", id + 1);
-                txtCustomerID.setText(new_id);
-            } else {
-                txtCustomerID.setText("000001");
-            }
-
+            clearForm();
         });
 
-        btnSave.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
+        btnSave.setOnAction(e-> {
                 Customer customer = null;
-                CustomerDAO customerDAO = new CustomerDAO();
                 String id = txtCustomerID.getText();
                 if(customerDAO.getById(Customer.class,id)!= null){
                     customer = customerDAO.getById(Customer.class,id);
@@ -119,63 +95,11 @@ public class CustomerManagementController implements Initializable{
                         customerDAO.save(getCurrentCustomer(customer));
                 }
                 reloadTable();
-            }
-
-            private  Customer getCurrentCustomer(Customer customer) {
-                String fname = txtFName.getText();
-                String lname= txtLName.getText();
-                String fone= txtFone.getText();
-                String address= txtAddress.getText();
-                LocalDate joineddate= LocalDate.now();
-                boolean gender = false;
-                if (cboxMale.isSelected()){
-                    gender = true;
-                }else {
-                    gender = false;
-                }
-
-                if(validate()){
-                    customer.setFirstName(fname);
-                    customer.setLastName(lname);
-                    customer.setPhoneNumber(fone);
-                    customer.setAddress(address);
-                    customer.setJoinedDate(joineddate);
-                    customer.setGender(gender);
-                    return customer;
-                }else {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Message !");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Complete all information please !");
-                    alert.showAndWait();
-                    return null;
-                }
-            }
         });
 
-        btnDelete.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                CustomerDAO customerDAO= new CustomerDAO();
-                Customer customer = table.getSelectionModel().getSelectedItem();
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Message !");
-                alert.setHeaderText("Are you sure ?");
-                ButtonType buttonTypeYes = new ButtonType("Yes");
-                ButtonType buttonTypeCancel = new ButtonType("Cancel");
-                alert.getButtonTypes().setAll(buttonTypeYes,buttonTypeCancel);
-                Optional<ButtonType> result = alert.showAndWait();
-                switch (result.get().getText()) {
-                    case "Yes":
-                        boolean x = customerDAO.delete(customer);
-                        alert.setContentText("Deleted !");
-                        break;
-                    default:
-                        alert.close();
-                        break;
-                }
-                reloadTable();
-            }
+        btnDelete.setOnAction(e->{
+            deleteCustomer();
+            reloadTable();
         });
 
         table.setOnMousePressed(e->{
@@ -204,26 +128,84 @@ public class CustomerManagementController implements Initializable{
 
 
     }
-
-    private void loadTable(List<Customer> list) {
-        ObservableList<Customer> tkList = FXCollections.observableArrayList(list);
-        for(int i = 0;i<tkList.size();i++){
-            colCustomerID.setSortable(false);
-            colCustomerID.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getCustomerID()));
-            colFName.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getFirstName()));
-            colLName.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getLastName()));
-            colFone.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getPhoneNumber()));
-            colAddress.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getAddress()));
-            colGender.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().isGender()==true?"Male":"Female"));
+    private void deleteCustomer(){
+        Customer customer = table.getSelectionModel().getSelectedItem();
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Message !");
+        alert.setHeaderText("Are you sure ?");
+        ButtonType buttonTypeYes = new ButtonType("Yes");
+        ButtonType buttonTypeCancel = new ButtonType("Cancel");
+        alert.getButtonTypes().setAll(buttonTypeYes,buttonTypeCancel);
+        Optional<ButtonType> result = alert.showAndWait();
+        switch (result.get().getText()) {
+            case "Yes":
+                boolean x = customerDAO.delete(customer);
+                alert.setContentText("Deleted !");
+                break;
+            default:
+                alert.close();
+                break;
         }
+    }
+    private  Customer getCurrentCustomer(Customer customer) {
+        String fname = txtFName.getText();
+        String lname= txtLName.getText();
+        String fone= txtFone.getText();
+        String address= txtAddress.getText();
+        LocalDate joineddate= LocalDate.now();
+        boolean gender = false;
+        if (cboxMale.isSelected()){
+            gender = true;
+        }else {
+            gender = false;
+        }
+
+        if(validate()){
+            customer.setFirstName(fname);
+            customer.setLastName(lname);
+            customer.setPhoneNumber(fone);
+            customer.setAddress(address);
+            customer.setJoinedDate(joineddate);
+            customer.setGender(gender);
+            return customer;
+        }else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Message !");
+            alert.setHeaderText(null);
+            alert.setContentText("Complete all information please !");
+            alert.showAndWait();
+            return null;
+        }
+    }
+    private void clearForm(){
+        txtFName.clear();
+        txtLName.clear();
+        txtFone.clear();
+        txtAddress.clear();
+        cboxMale.setSelected(false);
+        if (!listCus.isEmpty()) {
+            String id_last = listCus.get(listCus.size() - 1).getCustomerID();
+            int id = Integer.valueOf((id_last));
+            String new_id = String.format("%06d", id + 1);
+            txtCustomerID.setText(new_id);
+        } else {
+            txtCustomerID.setText("000001");
+        }
+    }
+    private void initTable(List<Customer> list) {
+        ObservableList<Customer> tkList = FXCollections.observableArrayList(list);
+        colCustomerID.setSortable(false);
+        colCustomerID.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getCustomerID()));
+        colFName.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getFirstName()));
+        colLName.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getLastName()));
+        colFone.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getPhoneNumber()));
+        colAddress.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getAddress()));
         table.setItems(tkList);
     }
 
     private void reloadTable(){
-        table.getColumns().clear();
-        table.getColumns().addAll(colCustomerID,colFName,colLName,colFone,colAddress,colGender);
-        listCus = new CustomerDAO().getAll(Customer.class);
-        loadTable(listCus);
+        listCus = customerDAO.getAll(Customer.class);
+        table.getItems().setAll(listCus);
     }
 
     private boolean validate(){
