@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.util.HashMap;
 public class Main extends Application{
 	private static Stage primaryStage;
-	private static HashMap<String, Parent> listUI = new HashMap<>();
+	private static HashMap<String, String> listUI = new HashMap<>();
 	private static Main mainInstance;
 	public final String TITLE_RETURN_ITEM = "Return Item";
 	public final String TITLE_LATE_CHARGE_INFO = "Late Charge List";
@@ -112,6 +112,10 @@ public class Main extends Application{
 		}
 	}
 
+	public BorderPane getRoot() {
+		return root;
+	}
+
 	private void updateProgress(int step) throws Exception {
 		double progress = (double) (TOTAL_PROGRESS - (TOTAL_PROGRESS - step)) / TOTAL_PROGRESS;
 		LauncherImpl.notifyPreloader(this, new Preloader.ProgressNotification(progress));
@@ -152,13 +156,13 @@ public class Main extends Application{
 	}
 
 	public void initLayout() throws IOException {
-		listUI.put(SCENE_HOME, loadFXML(URL_HOME).load());
-		listUI.put(SCENE_CUSTOMER_MANAGEMENT, loadFXML(URL_CUSTOMER_MANAGEMENT).load());
-		listUI.put(SCENE_TITLE_MANAGEMENT, loadFXML(URL_TITLE_MANAGEMENT).load());
-		listUI.put(SCENE_ITEM_MANAGEMENT, loadFXML(URL_ITEM_MANAGEMENT).load());
-		listUI.put(SCENE_LATE_CHARGE_INFO, loadFXML(URL_LATE_CHARGE_INFO).load());
-		listUI.put(SCENE_RESERVATION, loadFXML(URL_RESERVATION).load());
-		listUI.put(SCENE_RESERVATION_MANAGEMENT, loadFXML(URL_RESERVATION_MANAGEMENT).load());
+		listUI.put(SCENE_HOME, URL_HOME);
+		listUI.put(SCENE_CUSTOMER_MANAGEMENT, URL_CUSTOMER_MANAGEMENT);
+		listUI.put(SCENE_TITLE_MANAGEMENT, URL_TITLE_MANAGEMENT);
+		listUI.put(SCENE_ITEM_MANAGEMENT, URL_ITEM_MANAGEMENT);
+		listUI.put(SCENE_LATE_CHARGE_INFO, URL_LATE_CHARGE_INFO);
+		listUI.put(SCENE_RESERVATION, URL_RESERVATION);
+		listUI.put(SCENE_RESERVATION_MANAGEMENT, URL_RESERVATION_MANAGEMENT);
 	}
 
 	public FXMLLoader loadFXML(String url) {
@@ -167,8 +171,14 @@ public class Main extends Application{
 		return loader;
 	}
 	public void changeScene(final String value) {
-		Parent part = listUI.get(value);
-		root.setCenter(part);
+		try {
+			Parent part = loadFXML(listUI.get(value)).load();
+			root.setCenter(part);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+
 	}
 
 	public void displayLateCharge(Customer customer) {

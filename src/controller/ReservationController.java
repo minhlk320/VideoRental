@@ -151,6 +151,7 @@ public class ReservationController implements Initializable {
                    }
             }
         });
+
     }
     private boolean requestConfirmExit() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
