@@ -36,12 +36,12 @@
                   </JFXButton>
                </items>
             </ToolBar>
-            <VBox layoutX="10.0" layoutY="10.0" HBox.hgrow="ALWAYS">
+            <VBox layoutX="10.0" layoutY="10.0" spacing="8.0" HBox.hgrow="ALWAYS">
                <children>
                   <TextField fx:id="txtTitleID" editable="false" focusTraversable="false" layoutX="10.0" layoutY="10.0"
                              maxWidth="1.7976931348623157E308" promptText="No.">
                      <VBox.margin>
-                        <Insets top="20.0" />
+                        <Insets/>
                      </VBox.margin>
                   </TextField>
                   <BorderPane>
@@ -56,20 +56,21 @@
                         </ImageView>
                      </center>
                      <bottom>
-                        <JFXButton fx:id="btnChoose" contentDisplay="TOP" focusTraversable="false" prefHeight="30.0" prefWidth="98.0" text="Choose" BorderPane.alignment="CENTER">
+                        <JFXButton fx:id="btnChoose" contentDisplay="TOP" focusTraversable="false" text="Choose"
+                                   BorderPane.alignment="CENTER">
                            <BorderPane.margin>
-                              <Insets top="12.0" />
+                              <Insets/>
                            </BorderPane.margin>
                         </JFXButton>
                      </bottom>
                      <VBox.margin>
-                        <Insets top="12.0" />
+                        <Insets/>
                      </VBox.margin>
                   </BorderPane>
                   <TextField fx:id="txtTitle" focusTraversable="false" maxWidth="1.7976931348623157E308"
                              promptText="Title">
                      <VBox.margin>
-                        <Insets top="24.0" />
+                        <Insets/>
                      </VBox.margin>
                   </TextField>
                   <Text fx:id="lbTitle" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="txtTitle" />
@@ -80,9 +81,10 @@
                               <Text fx:id="lbDescription" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="txtLname" />
                </children>
             </VBox>
-            <VBox>
+            <VBox spacing="8.0" HBox.hgrow="ALWAYS">
                <children>
                   <Label text="List of Titles"/>
+                  <Button fx:id="btnRefresh" mnemonicParsing="false" text="Refresh"/>
                   <TableView fx:id="table" VBox.vgrow="ALWAYS">
                      <columns>
                         <TableColumn fx:id="colTitleID" maxWidth="1.7976931348623157E308" minWidth="60.0"

@@ -17,8 +17,6 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.text.Text;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import ui.Main;
@@ -57,6 +55,8 @@ public class TitleManagementController implements Initializable {
 
 	@FXML
 	private JFXButton btnDelete;
+	@FXML
+	private Button btnRefresh;
 
 	@FXML
 	private ComboBox<Rate> cbItemClass;
@@ -78,18 +78,23 @@ public class TitleManagementController implements Initializable {
 
 	@FXML
 	private TableColumn<Title, String> colDescription;
-
+	private Main main;
 	private List<Title> listTitles;
+	private TitleDAO titleDAO;
+	private RateDAO rateDAO;
 	private String url_image;
 	private File image;
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		Main main = Main.getInstance();
-
-		listTitles = new TitleDAO().getAll(Title.class);
-		loadTable(listTitles);
-		ShowItemClass();
-
+		main = Main.getInstance();
+		titleDAO = main.getTitleDAO();
+		rateDAO = main.getRateDAO();
+		listTitles = titleDAO.getAll(Title.class);
+		initTable(listTitles);
+		showItemClass();
+		btnRefresh.setOnAction(event -> {
+			refreshTable();
+		});
 		btnNew.setOnAction(e->{
 			txtTitle.clear();
 			txtDescription.clear();
@@ -110,16 +115,15 @@ public class TitleManagementController implements Initializable {
 			@Override
 			public void handle(ActionEvent event) {
 				Title title;
-				TitleDAO titileDAO = new TitleDAO();
 				String id = txtTitleID.getText();
-				if(titileDAO.getById(Title.class,id)!= null){
-					title = titileDAO.getById(Title.class,id);
-					titileDAO.update(getCurrentTitle(title));
+				if (titleDAO.getById(Title.class, id) != null) {
+					title = titleDAO.getById(Title.class, id);
+					titleDAO.update(getCurrentTitle(title));
 				}else{
 					title = new Title();
-					titileDAO.save(getCurrentTitle(title));
+					titleDAO.save(getCurrentTitle(title));
 				}
-				reloadTable();
+				refreshTable();
 
 			}
 			Title getCurrentTitle(Title title) {
@@ -183,7 +187,7 @@ public class TitleManagementController implements Initializable {
 						alert.close();
 						break;
 				}
-				reloadTable();
+				refreshTable();
 			}
 		});
 
@@ -201,29 +205,25 @@ public class TitleManagementController implements Initializable {
 	}
 
 
-	private void loadTable(List<Title> list) {
+	private void initTable(List<Title> list) {
 		ObservableList<Title> tkList = FXCollections.observableArrayList(list);
-		for(int i=0;i<tkList.size();i++){
 			colTitleID.setSortable(false);
 			colTitleID.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getTitleID()));
 			colTitle.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getTitleName()));
 			colDescription.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getDesciption()));
 			colNumOfCopies.setCellValueFactory((celldata->new SimpleStringProperty("0")));
 			colItemClass.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getItemClass().getItemClassName()));
-		}
-
 		table.setItems(tkList);
 	}
 
-	private void reloadTable(){
-		table.getColumns().clear();
-		table.getColumns().addAll(colTitleID,colTitle,colNumOfCopies,colItemClass,colDescription);
-		listTitles = new TitleDAO().getAll(Title.class);
-		loadTable(listTitles);
+	private void refreshTable() {
+		listTitles = titleDAO.getAll(Title.class);
+		table.getItems().setAll(listTitles);
+		table.refresh();
 	}
 
-	private void ShowItemClass(){
-		ObservableList<Rate> listRate = FXCollections.observableArrayList(new RateDAO().getAll(Rate.class));
+	private void showItemClass() {
+		ObservableList<Rate> listRate = FXCollections.observableArrayList(rateDAO.getAll(Rate.class));
 		cbItemClass.setItems(listRate);
 		cbItemClass.getSelectionModel().select(-1);
 	}

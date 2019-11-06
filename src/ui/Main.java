@@ -64,6 +64,7 @@ public class Main extends Application{
 	private TitleDAO titleDAO;
 	private LateChargeDAO lateChargeDAO;
 	private ReservationDAO reservationDAO;
+	private RateDAO rateDAO;
 
 	public Main() {
 		mainInstance = this;
@@ -131,6 +132,7 @@ public class Main extends Application{
 		titleDAO = new TitleDAO();
 		lateChargeDAO = new LateChargeDAO();
 		reservationDAO = new ReservationDAO();
+		rateDAO = new RateDAO();
 	}
 
 	public ReservationDAO getReservationDAO() {
@@ -335,4 +337,7 @@ public class Main extends Application{
 	}
 
 
+	public RateDAO getRateDAO() {
+		return rateDAO;
+	}
 }
