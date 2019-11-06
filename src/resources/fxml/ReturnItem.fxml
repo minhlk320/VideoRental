@@ -3,15 +3,13 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReturnItemController">
+<?import javafx.scene.layout.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="controller.ReturnItemController">
    <children>
       <HBox spacing="32.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="4.0">
          <children>
             <Label alignment="CENTER" text="ItemID" />
-            <JFXTextField fx:id="tf_ItemID" promptText="Enter Item ID" />
+            <JFXTextField fx:id="tfItemID" promptText="Enter Item ID"/>
             <JFXButton fx:id="btnEnter" text="Enter" />
          </children>
       </HBox>
