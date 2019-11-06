@@ -65,9 +65,10 @@
                   </ComboBox>
                </children>
             </VBox>
-            <VBox HBox.hgrow="ALWAYS">
+            <VBox spacing="12.0" HBox.hgrow="ALWAYS">
                <children>
-                  <Label text="List of DVD/DISK" VBox.vgrow="ALWAYS"/>
+                  <Label text="List of DVD/DISK"/>
+                  <Button fx:id="btnRefresh" mnemonicParsing="false" text="Refresh"/>
                   <TableView fx:id="table" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
                      <columns>
                         <TableColumn fx:id="colItemID" maxWidth="1.7976931348623157E308" minWidth="50.0"

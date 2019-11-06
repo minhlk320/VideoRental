@@ -51,13 +51,13 @@ public class MainLayoutController implements Initializable {
             main.displayRental();
         });
         btnReturnItems.setOnAction(e -> {
-            main.displayReturn();
+            main.openWindow(main.SCENE_RETURN_ITEM, main.TITLE_RETURN_ITEM);
         });
         btnPayLateCharge.setOnAction(e -> {
             main.displayLateCharge(null);
         });
         btnMakeReservation.setOnAction(e->{
-            main.displayMakeReservation();
+            main.openWindow(main.SCENE_RESERVATION, main.TITLE_RESERVATION);
         });
         tabPane.getSelectionModel().selectedIndexProperty().addListener((ov, oldValue, newValue) -> {
             switch ((int) newValue) {

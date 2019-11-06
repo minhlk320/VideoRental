@@ -22,11 +22,13 @@ import javafx.stage.StageStyle;
 import java.io.IOException;
 import java.util.HashMap;
 public class Main extends Application{
+
 	private static Stage primaryStage;
 	private static HashMap<String, String> listUI = new HashMap<>();
 	private static Main mainInstance;
 	public final String TITLE_RETURN_ITEM = "Return Item";
 	public final String TITLE_LATE_CHARGE_INFO = "Late Charge List";
+	public final String TITLE_RESERVATION = "Make Reservation";
 	public final String SCENE_HOME = "Home";
 	public final String SCENE_CUSTOMER_MANAGEMENT = "CustomerManagement";
 	public final String SCENE_TITLE_MANAGEMENT = "TitleManagement";
@@ -49,7 +51,6 @@ public class Main extends Application{
 	public final String URL_RESERVATION_MANAGEMENT = "/resources/fxml/ReservationList.fxml";
 	public final String URL_RETURN_ITEM = "/resources/fxml/ReturnItem.fxml";
 	public final String TITLE_RENTAL_ITEM = "Rental Item";
-	private final String TITLE_RESERVATION = "Make Reservation";
 	private final double MIN_HEIGHT = 720;
 	private final double MIN_WIDTH = 1280;
 	private final int TOTAL_PROGRESS = 3;
@@ -241,37 +242,59 @@ public class Main extends Application{
 
 	}
 
-	public void displayMakeReservation() {
-		try {
-			Stage stage = new Stage();
-			FXMLLoader loader = loadFXML(URL_RESERVATION);
-			Parent root = loader.load();
-			root.getStylesheets().setAll(this.root.getStylesheets());
-			root.getStyleClass().setAll(this.root.getStyleClass());
-			Scene scene = new Scene(root);
-			stage.setTitle(TITLE_RESERVATION);
-			scene.setFill(Color.TRANSPARENT);
-			stage.setResizable(true);
-			stage.getIcons().add(MAIN_ICON);
-			stage.setScene(scene);
-			stage.initStyle(StageStyle.DECORATED);
-			stage.initModality(Modality.WINDOW_MODAL);
-			stage.initOwner(primaryStage);
-			stage.show();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+//	public void displayMakeReservation() {
+//		try {
+//			Stage stage = new Stage();
+//			FXMLLoader loader = loadFXML(URL_RESERVATION);
+//			Parent root = loader.load();
+//			root.getStylesheets().setAll(this.root.getStylesheets());
+//			root.getStyleClass().setAll(this.root.getStyleClass());
+//			Scene scene = new Scene(root);
+//			stage.setTitle(TITLE_RESERVATION);
+//			scene.setFill(Color.TRANSPARENT);
+//			stage.setResizable(true);
+//			stage.getIcons().add(MAIN_ICON);
+//			stage.setScene(scene);
+//			stage.initStyle(StageStyle.DECORATED);
+//			stage.initModality(Modality.WINDOW_MODAL);
+//			stage.initOwner(primaryStage);
+//			stage.show();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 
-	public void displayReturn() {
+//	public void displayReturn() {
+//		try {
+//			Stage stage = new Stage();
+//			FXMLLoader loader = loadFXML(URL_RETURN_ITEM);
+//			Parent root = loader.load();
+//			root.getStylesheets().setAll(this.root.getStylesheets());
+//			root.getStyleClass().setAll(this.root.getStyleClass());
+//			Scene scene = new Scene(root);
+//			stage.setTitle(TITLE_RETURN_ITEM);
+//			scene.setFill(Color.TRANSPARENT);
+//			stage.setResizable(true);
+//			stage.getIcons().add(MAIN_ICON);
+//			stage.setScene(scene);
+//			stage.initStyle(StageStyle.DECORATED);
+//			stage.initModality(Modality.WINDOW_MODAL);
+//			stage.initOwner(primaryStage);
+//			stage.show();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
+
+	public void openWindow(String name, String title) {
 		try {
 			Stage stage = new Stage();
-			FXMLLoader loader = loadFXML(URL_RETURN_ITEM);
+			FXMLLoader loader = loadFXML(listUI.get(name));
 			Parent root = loader.load();
 			root.getStylesheets().setAll(this.root.getStylesheets());
 			root.getStyleClass().setAll(this.root.getStyleClass());
 			Scene scene = new Scene(root);
-			stage.setTitle(TITLE_RETURN_ITEM);
+			stage.setTitle(title);
 			scene.setFill(Color.TRANSPARENT);
 			stage.setResizable(true);
 			stage.getIcons().add(MAIN_ICON);
