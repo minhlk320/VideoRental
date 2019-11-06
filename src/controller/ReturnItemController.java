@@ -41,9 +41,8 @@ public class ReturnItemController implements Initializable {
         itemDAO = main.getItemDAO();
         lateChargeDAO = main.getLateChargeDAO();
         reservationDAO = main.getReservationDAO();
-        btnEnter.setOnAction(e->{
+        btnEnter.setOnAction(e -> {
             returnItem(tfItemID.getText());
-
         });
         tfItemID.setOnKeyReleased(e -> {
             if (e.getCode() == KeyCode.ENTER) {
