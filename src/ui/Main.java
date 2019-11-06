@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
@@ -26,7 +27,7 @@ public class Main extends Application{
 	private static Stage primaryStage;
 	private static HashMap<String, String> listUI = new HashMap<>();
 	private static Main mainInstance;
-	public final String TITLE_RETURN_ITEM = "Return Item";
+	public final String TITLE_RETURN_ITEM = "returnItem Item";
 	public final String TITLE_LATE_CHARGE_INFO = "Late Charge List";
 	public final String TITLE_RESERVATION = "Make Reservation";
 	public final String SCENE_HOME = "Home";
@@ -182,6 +183,13 @@ public class Main extends Application{
 
 	}
 
+	public void showMessage(String message, String title, String header) {
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.setTitle(title);
+		alert.setHeaderText(header);
+		alert.setContentText(message);
+		alert.showAndWait();
+	}
 	public void displayLateCharge(Customer customer) {
 		try {
 			Stage stage = new Stage();

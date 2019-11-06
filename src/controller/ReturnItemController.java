@@ -9,7 +9,6 @@ import daos.ReservationDAO;
 import entities.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.input.KeyCode;
 import ui.Main;
 
@@ -42,39 +41,30 @@ public class ReturnItemController implements Initializable {
         lateChargeDAO = main.getLateChargeDAO();
         reservationDAO = main.getReservationDAO();
         btnEnter.setOnAction(e->{
-            doReturn();
+            returnItem(tf_ItemID.getText());
+
         });
         tf_ItemID.setOnKeyReleased(e->{
             if (e.getCode() == KeyCode.ENTER) {
-                doReturn();
+                returnItem(tf_ItemID.getText());
             }
         });
     }
-    private void showMessage(String message, String title, String header){
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(header);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-    private void doReturn(){
-        Item item = itemDAO.getById(Item.class,tf_ItemID.getText());
-        if(item==null)
-            showMessage("Entered ID not found, please check again!","Message",null);
-        else if(!item.getStatus().equalsIgnoreCase(Item.RENTED))
-            showMessage("Entered ID can not be return due to entered item's status is : " + item.getStatus(),"Message",null);
-        else{
-            Return(item.getItemID());
-            if(late)
-                showMessage("This item has been returned lately (Todo call function 5c to record if chose yes)","Message",null);
-            else
-                showMessage("Returned : " + item.getItemID(),"Message",null);
-        }
-    }
 
-    public boolean Return(String id){
+
+    public void returnItem(String id) {
         Item item = itemDAO.getById(Item.class,id);
-        if(item.equals(null))return false;
+        if (item == null)
+            main.showMessage("Entered ID not found, please check again!", "Message", null);
+        else if (!item.getStatus().equalsIgnoreCase(Item.RENTED))
+            main.showMessage("Entered ID can not be return due to entered item's status is : " + item.getStatus(), "Message", null);
+        else {
+            returnItem(item.getItemID());
+            if (late)
+                main.showMessage("This item has been returned lately (Todo call function 5c to record if chose yes)", "Message", null);
+            else
+                main.showMessage("Returned : " + item.getItemID(), "Message", null);
+        }
         Rental lastestRental = rentalDAO.getLatestRentalByItemID(id);
         Customer customer = lastestRental.getCustomer();
         RentalDetail rentalDetailofItem = null;
@@ -92,15 +82,14 @@ public class ReturnItemController implements Initializable {
             LocalDate dueOn = rentedDate.plusDays(rentalDetailofItem.getRentalPeriod());
             Duration diff = Duration.between(dueOn.atStartOfDay(), currentDate.atStartOfDay());
             int numOfOverDueDay = (int) diff.toDays();
-            double totalAmout = numOfOverDueDay * rentalDetailofItem.getLateRate();
-            lateChargeDAO.addLateCharge(item, customer, totalAmout, dueOn);
+            double totalAmount = numOfOverDueDay * rentalDetailofItem.getLateRate();
+            lateChargeDAO.addLateCharge(item, customer, totalAmount, dueOn);
             late = true;
         }
         Reservation reservation = reservationDAO.checkReservation(item);
         if(reservation!=null)
-            showMessage("The newly returned Item has been placed ON_HOLD to :  " + reservation.getCustomer().getFirstName() +" " +reservation.getCustomer().getLastName()+"\n"
+            main.showMessage("The newly returned Item has been placed ON_HOLD to :  " + reservation.getCustomer().getFirstName() + " " + reservation.getCustomer().getLastName() + "\n"
                     + "Phone: " +reservation.getCustomer().getPhoneNumber(),"Message",null);
-        return true;
     }
 
 
