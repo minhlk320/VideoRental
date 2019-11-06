@@ -3,7 +3,6 @@ package controller;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import ui.Main;
 
@@ -21,34 +20,19 @@ public class MainLayoutController implements Initializable {
     @FXML
     private TabPane tabPane;
     @FXML
-    private Tab reservation;
-    @FXML
-    private Tab customer;
-    @FXML
-    private Tab item;
-    @FXML
-    private Tab title;
-    @FXML
     private Button btnRentalItems;
     @FXML
     private Button btnReturnItems;
     @FXML
     private Button btnMakeReservation;
     @FXML
-    private Button btnReservationList;
-    @FXML
     private Button btnPayLateCharge;
-    @FXML
-    private Button btnTitle;
-    @FXML
-    private Button btnItems;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         main = Main.getInstance();
         btnRentalItems.setOnAction(e -> {
-            main.displayRental();
+            main.openWindow(main.SCENE_RENTAL_ITEMS, main.TITLE_RENTAL_ITEM);
         });
         btnReturnItems.setOnAction(e -> {
             main.openWindow(main.SCENE_RETURN_ITEM, main.TITLE_RETURN_ITEM);

@@ -9,8 +9,8 @@
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea"
             fx:controller="controller.ReservationManagementController">
    <children>
-       <HBox alignment="CENTER" spacing="8.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0"
-             AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0">
+       <HBox spacing="8.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0"
+             AnchorPane.topAnchor="8.0">
          <children>
              <ToolBar orientation="VERTICAL" HBox.hgrow="ALWAYS">
                <items>
