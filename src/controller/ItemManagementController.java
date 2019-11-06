@@ -70,7 +70,7 @@ public class ItemManagementController implements Initializable {
         showTitleName();
         showStatus();
         btnRefresh.setOnAction(e -> {
-
+            refreshTable();
         });
         btnNew.setOnAction(e -> {
             cbStatus.setDisable(true);
