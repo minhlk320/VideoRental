@@ -22,11 +22,17 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.util.HashMap;
-public class Main extends Application{
 
+/**
+ *
+ */
+public class Main extends Application{
 	private static Stage primaryStage;
 	private static HashMap<String, String> listUI = new HashMap<>();
 	private static Main mainInstance;
+	public final String SCENE_LOGIN = "Login";
+	public final String URL_LOGIN = "/resources/fxml/Login.fxml";
+	public final String TITLE_LOGIN = "Login";
 	public final String TITLE_RETURN_ITEM = "returnItem Item";
 	public final String TITLE_LATE_CHARGE_INFO = "Late Charge List";
 	public final String TITLE_RESERVATION = "Make Reservation";
@@ -52,12 +58,15 @@ public class Main extends Application{
 	public final String URL_RESERVATION_MANAGEMENT = "/resources/fxml/ReservationList.fxml";
 	public final String URL_RETURN_ITEM = "/resources/fxml/ReturnItem.fxml";
 	public final String TITLE_RENTAL_ITEM = "Rental Item";
-	private final double MIN_HEIGHT = 720;
-	private final double MIN_WIDTH = 1280;
+	public final double MIN_HEIGHT = 720;
+	public final double MIN_WIDTH = 1280;
+	private final String USER = "admin";
+	private final String PASSWORD = "admin";
 	private final int TOTAL_PROGRESS = 3;
 	public Image MAIN_ICON = new Image("/resources/img/icon.png");
 	@FXML
 	public BorderPane root;
+	public boolean isLogged = false;
 	private ItemDAO itemDAO;
 	private CustomerDAO customerDAO;
 	private RentalDAO rentalDAO;
@@ -115,16 +124,28 @@ public class Main extends Application{
 		}
 	}
 
+	/**
+	 * @return root
+	 */
 	public BorderPane getRoot() {
 		return root;
 	}
 
+	/**
+	 *
+	 * @param step count for initial data
+	 * @throws Exception
+	 *
+	 */
 	private void updateProgress(int step) throws Exception {
 		double progress = (double) (TOTAL_PROGRESS - (TOTAL_PROGRESS - step)) / TOTAL_PROGRESS;
 		LauncherImpl.notifyPreloader(this, new Preloader.ProgressNotification(progress));
 		Thread.sleep(500);
 	}
 
+	/**
+	 * Initial DAO for recall
+	 */
 	public void initDAO() {
 		itemDAO = new ItemDAO();
 		customerDAO = new CustomerDAO();
@@ -135,30 +156,11 @@ public class Main extends Application{
 		rateDAO = new RateDAO();
 	}
 
-	public ReservationDAO getReservationDAO() {
-		return reservationDAO;
-	}
-
-	public CustomerDAO getCustomerDAO() {
-		return customerDAO;
-	}
-
-	public ItemDAO getItemDAO() {
-		return itemDAO;
-	}
-
-	public RentalDAO getRentalDAO() {
-		return rentalDAO;
-	}
-
-	public TitleDAO getTitleDAO() {
-		return titleDAO;
-	}
-
-	public LateChargeDAO getLateChargeDAO() {
-		return lateChargeDAO;
-	}
-
+	/**
+	 * Initial Layout ( put URL to list and call for use )
+	 *
+	 * @throws IOException
+	 */
 	public void initLayout() throws IOException {
 		listUI.put(SCENE_HOME, URL_HOME);
 		listUI.put(SCENE_CUSTOMER_MANAGEMENT, URL_CUSTOMER_MANAGEMENT);
@@ -171,11 +173,76 @@ public class Main extends Application{
 		listUI.put(SCENE_RESERVATION_MANAGEMENT, URL_RESERVATION_MANAGEMENT);
 	}
 
+	/**
+	 *
+	 * @return ReservationDAO
+	 */
+	public ReservationDAO getReservationDAO() {
+		return reservationDAO;
+	}
+
+	/**
+	 *
+	 * @return CustomerDAO
+	 */
+	public CustomerDAO getCustomerDAO() {
+		return customerDAO;
+	}
+
+	/**
+	 *
+	 * @return ItemDAO
+	 */
+	public ItemDAO getItemDAO() {
+		return itemDAO;
+	}
+
+	/**
+	 *
+	 * @return RentalDAO
+	 */
+	public RentalDAO getRentalDAO() {
+		return rentalDAO;
+	}
+
+	/**
+	 *
+	 * @return TitleDAO
+	 */
+	public TitleDAO getTitleDAO() {
+		return titleDAO;
+	}
+
+	/**
+	 *
+	 * @return LateChargeDAO
+	 */
+	public LateChargeDAO getLateChargeDAO() {
+		return lateChargeDAO;
+	}
+
+	/**
+	 * @return RateDAO
+	 */
+	public RateDAO getRateDAO() {
+		return rateDAO;
+	}
+
+	/**
+	 *	load FXML from URL to FXMLoader
+	 * @param url
+	 * @return FXMLoader
+	 */
 	public FXMLLoader loadFXML(String url) {
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(Main.class.getResource(url));
 		return loader;
 	}
+
+	/**
+	 * Change content of main scene
+	 * @param value
+	 */
 	public void changeScene(final String value) {
 		try {
 			Parent part = loadFXML(listUI.get(value)).load();
@@ -187,6 +254,65 @@ public class Main extends Application{
 
 	}
 
+	/**
+	 * Check login
+	 *
+	 * @param username
+	 * @param password
+	 * @return true if username and password matched
+	 */
+	public boolean checkLogin(String username, String password) {
+		if ((username.equals(USER)) && (password.equals(PASSWORD))) {
+			isLogged = true;
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Open window form for login
+	 */
+	public void doLogin() {
+		try {
+			Stage stage = new Stage();
+			FXMLLoader loader = loadFXML(URL_LOGIN);
+			Parent root = loader.load();
+			root.getStylesheets().setAll(this.root.getStylesheets());
+			root.getStyleClass().setAll(this.root.getStyleClass());
+			Scene scene = new Scene(root);
+			stage.setTitle(TITLE_LOGIN);
+			scene.setFill(Color.TRANSPARENT);
+			stage.setResizable(true);
+			stage.getIcons().add(MAIN_ICON);
+			stage.setScene(scene);
+			stage.initStyle(StageStyle.DECORATED);
+			stage.initModality(Modality.WINDOW_MODAL);
+			stage.initOwner(primaryStage);
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Logout
+	 *
+	 * @return
+	 */
+	public boolean doLogout() {
+		if (isLogged) {
+			isLogged = false;
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Show message
+	 * @param message
+	 * @param title
+	 * @param header
+	 */
 	public void showMessage(String message, String title, String header) {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
 		alert.setTitle(title);
@@ -194,6 +320,11 @@ public class Main extends Application{
 		alert.setContentText(message);
 		alert.showAndWait();
 	}
+
+	/**
+	 * Display late charge scene ( popup window)
+	 * @param customer
+	 */
 	public void displayLateCharge(Customer customer) {
 		try {
 			Stage stage = new Stage();
@@ -231,6 +362,11 @@ public class Main extends Application{
 
 	}
 
+	/**
+	 * Open new window (scene contain in list (name = key) )
+	 * @param name
+	 * @param title
+	 */
 	public void openWindow(String name, String title) {
 		try {
 			Stage stage = new Stage();
@@ -252,27 +388,20 @@ public class Main extends Application{
 			e.printStackTrace();
 		}
 	}
+
+	/**
+	 * Close window
+	 */
 	public void closeWindow(final Object btn) {
 		final Stage stage = (Stage) ((Node) btn).getScene().getWindow();
 		stage.close();
 		stage.setScene(null);
 	}
 
-	public void enableWindow() {
-		primaryStage.show();
-	}
-
-	public void disableWindow() {
-		primaryStage.hide();
-
-	}
-
+	/**
+	 * Clear center content
+	 */
 	public void closeCenter() {
 		root.setCenter(null);
-	}
-
-
-	public RateDAO getRateDAO() {
-		return rateDAO;
 	}
 }

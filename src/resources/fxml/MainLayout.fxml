@@ -21,13 +21,24 @@
         </VBox>
     </bottom>
     <top>
-        <VBox prefHeight="180.0" BorderPane.alignment="CENTER">
+        <VBox prefHeight="180.0" spacing="8.0" BorderPane.alignment="CENTER">
             <children>
-                <Label style="-fx-font-size: 25;" text="Video Rental Store">
-                    <font>
-                        <Font name="System Bold" size="27.0" />
-                    </font>
-                </Label>
+                <HBox spacing="8.0">
+                    <children>
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                               style="-fx-font-size: 25;" text="Video Rental Store" HBox.hgrow="ALWAYS">
+                            <font>
+                                <Font name="System Bold" size="27.0"/>
+                            </font>
+                        </Label>
+                        <Label fx:id="labelUser"/>
+                        <Button fx:id="btnLogin" mnemonicParsing="false" text="Login">
+                            <graphic>
+                                <FontAwesomeIcon fill="WHITE" glyphName="KEY" strokeType="OUTSIDE" strokeWidth="0.0"/>
+                            </graphic>
+                        </Button>
+                    </children>
+                </HBox>
                 <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
                         <Tab fx:id="item" text="Item">

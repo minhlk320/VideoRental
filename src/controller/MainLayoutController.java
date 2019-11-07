@@ -3,6 +3,7 @@ package controller;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
 import ui.Main;
 
@@ -18,6 +19,8 @@ public class MainLayoutController implements Initializable {
 
     private Main main;
     @FXML
+    private Button btnLogin;
+    @FXML
     private TabPane tabPane;
     @FXML
     private Button btnRentalItems;
@@ -27,6 +30,8 @@ public class MainLayoutController implements Initializable {
     private Button btnMakeReservation;
     @FXML
     private Button btnPayLateCharge;
+    @FXML
+    private Label labelUser;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -42,6 +47,14 @@ public class MainLayoutController implements Initializable {
         });
         btnMakeReservation.setOnAction(e->{
             main.openWindow(main.SCENE_RESERVATION, main.TITLE_RESERVATION);
+        });
+        btnLogin.setOnAction(event -> {
+            if (!main.isLogged) {
+                main.doLogin();
+            } else {
+                main.doLogout();
+            }
+
         });
         tabPane.getSelectionModel().selectedIndexProperty().addListener((ov, oldValue, newValue) -> {
             switch ((int) newValue) {
