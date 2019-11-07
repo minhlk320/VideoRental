@@ -70,19 +70,19 @@ public class LateChargeInfoController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        clearForm();
         main = Main.getInstance();
+
         customerDAO = main.getCustomerDAO();
         lateChargeDAO = main.getLateChargeDAO();
         lateChargeList = new ArrayList<>();
         lateChargeChosenList = new ArrayList<>();
         initTable(lateChargeList);
+        clearForm();
         if (currentCustomer == null) {
             tfCustomerID.requestFocus();
         } else {
             tfCustomerID.setText(currentCustomer.getCustomerID());
             loadCustomer();
-            reloadTable();
         }
         //Button
         btnEnter.setOnAction(e -> {
@@ -92,7 +92,6 @@ public class LateChargeInfoController implements Initializable {
         tfCustomerID.setOnKeyReleased(e -> {
             if (e.getCode() == KeyCode.ENTER) {
                 loadCustomer();
-
             }
         });
         btnCancel.setOnAction(e -> {
@@ -118,14 +117,6 @@ public class LateChargeInfoController implements Initializable {
         });
     }
 
-    private void loadCustomerInfo(Customer customer) {
-        textCustomerName.setText(customer.getFirstName() + " " + customer.getLastName());
-        textCustomerAddress.setText(customer.getAddress());
-        textCustomerPhone.setText(customer.getPhoneNumber());
-        textCustomerJoinedDate.setText(customer.getJoinedDate().toString());
-        currentCustomer = customer;
-    }
-
     private void loadCustomer() {
         String id = tfCustomerID.getText();
         if (id.isEmpty()) {
@@ -140,18 +131,26 @@ public class LateChargeInfoController implements Initializable {
             main.showMessage("Customer not found, please try again!", "Message", null);
             return;
         }
-        lateChargeList = lateChargeDAO.getLateChargeByCustomerID(customer.getCustomerID());
+        loadCustomerInfo(customer);
+        reloadTable();
         if (lateChargeList.isEmpty()) {
             main.showMessage(String.format("Customer %s does't have any unpaid late charge!", customer.getCustomerID()), "Message", null);
             tfCustomerID.clear();
         }
-        reloadTable();
-        loadCustomerInfo(customer);
     }
+    private void loadCustomerInfo(Customer customer) {
+        textCustomerName.setText(customer.getFirstName() + " " + customer.getLastName());
+        textCustomerAddress.setText(customer.getAddress());
+        textCustomerPhone.setText(customer.getPhoneNumber());
+        textCustomerJoinedDate.setText(customer.getJoinedDate().toString());
+        currentCustomer = customer;
+    }
+
 
     private void reloadTable() {
         lateChargeList = lateChargeDAO.getLateChargeByCustomerID(currentCustomer.getCustomerID());
-        table.getItems().setAll(lateChargeChosenList);
+        table.getItems().clear();
+        table.getItems().addAll(lateChargeList);
     }
     private void initTable(List<LateCharge> list) {
         ObservableList<LateCharge> tkList = FXCollections.observableArrayList(list);
