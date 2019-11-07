@@ -96,12 +96,14 @@ public class ReservationController implements Initializable {
         customerDAO = main.getCustomerDAO();
         btnEnterCustomerID.setOnAction(e -> {
             String id = tfCustomerID.getText();
-            findCustomer(id);
+            Customer customer = findCustomer(id);
+            updateCustomerInfo(customer);
         });
         tfCustomerID.setOnKeyReleased(e -> {
             if (e.getCode() == KeyCode.ENTER) {
                 String id = tfCustomerID.getText();
-                findCustomer(id);
+                Customer customer = findCustomer(id);
+                updateCustomerInfo(customer);
             }
         });
         btnDone.setOnAction(e -> {
@@ -110,7 +112,7 @@ public class ReservationController implements Initializable {
            }
         });
         btnCancel.setOnAction(e -> {
-            if (requestConfirmExit()) {
+            if (confirmExit()) {
                 Stage stage = (Stage) ((Button) e.getSource()).getScene().getWindow();
                 stage.close();
             }
@@ -167,16 +169,17 @@ public class ReservationController implements Initializable {
 
     }
 
-    private void findCustomer(String id) {
+    private Customer findCustomer(String id) {
         String customerID = tfCustomerID.getText();
         if (customerID.isEmpty()) {
             tfCustomerID.requestFocus();
-            return;
+            return null;
         }
         Customer customer = customerDAO.getById(Customer.class, customerID);
-        currentCustomer = customer;
+        return customer;
     }
-    private boolean requestConfirmExit() {
+
+    private boolean confirmExit() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation");
         alert.setHeaderText("Do you want to exit ?");
@@ -233,20 +236,18 @@ public class ReservationController implements Initializable {
     }
 
     private void updateCustomerInfo(Customer customer) {
-        if (customer != null) {
-            textCustomerName.setText(customer.getFirstName() + " " + customer.getLastName());
-            textCustomerPhone.setText(customer.getPhoneNumber());
-            textCustomerAddress.setText(customer.getAddress());
-            textCustomerJoinedDate.setText(customer.getJoinedDate().toString());
-
-        } else {
+        if (customer == null) {
             textCustomerName.setText(null);
             textCustomerPhone.setText(null);
             textCustomerAddress.setText(null);
             textCustomerJoinedDate.setText(null);
             main.showMessage("Your entered customer's ID does not match", "Message", null);
+            return;
         }
+        textCustomerName.setText(customer.getFirstName() + " " + customer.getLastName());
+        textCustomerPhone.setText(customer.getPhoneNumber());
+        textCustomerAddress.setText(customer.getAddress());
+        textCustomerJoinedDate.setText(customer.getJoinedDate().toString());
+        currentCustomer = customer;
     }
-
-
 }
