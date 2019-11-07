@@ -74,24 +74,25 @@ public class LateChargeInfoController implements Initializable {
         main = Main.getInstance();
         customerDAO = main.getCustomerDAO();
         lateChargeDAO = main.getLateChargeDAO();
-
+        lateChargeList = new ArrayList<>();
+        lateChargeChosenList = new ArrayList<>();
+        initTable(lateChargeList);
         if (currentCustomer == null) {
             tfCustomerID.requestFocus();
         } else {
             tfCustomerID.setText(currentCustomer.getCustomerID());
-            checkCustomer();
+            loadCustomer();
+            reloadTable();
         }
-        lateChargeList = new ArrayList<>();
-        lateChargeChosenList = new ArrayList<>();
-        initTable(lateChargeList);
         //Button
         btnEnter.setOnAction(e -> {
-            checkCustomer();
+            loadCustomer();
         });
         //Listener for Enter Key
         tfCustomerID.setOnKeyReleased(e -> {
             if (e.getCode() == KeyCode.ENTER) {
-                checkCustomer();
+                loadCustomer();
+
             }
         });
         btnCancel.setOnAction(e -> {
@@ -112,7 +113,6 @@ public class LateChargeInfoController implements Initializable {
                     lateChargeDAO.update(lc);
                 }
                 lateChargeList.removeAll(lateChargeChosenList);
-
                 lateChargeChosenList.clear();
             }
         });
@@ -126,7 +126,7 @@ public class LateChargeInfoController implements Initializable {
         currentCustomer = customer;
     }
 
-    private void checkCustomer() {
+    private void loadCustomer() {
         String id = tfCustomerID.getText();
         if (id.isEmpty()) {
             tfCustomerID.requestFocus();
@@ -144,11 +144,15 @@ public class LateChargeInfoController implements Initializable {
         if (lateChargeList.isEmpty()) {
             main.showMessage(String.format("Customer %s does't have any unpaid late charge!", customer.getCustomerID()), "Message", null);
             tfCustomerID.clear();
-            return;
         }
+        reloadTable();
         loadCustomerInfo(customer);
     }
 
+    private void reloadTable() {
+        lateChargeList = lateChargeDAO.getLateChargeByCustomerID(currentCustomer.getCustomerID());
+        table.getItems().setAll(lateChargeChosenList);
+    }
     private void initTable(List<LateCharge> list) {
         ObservableList<LateCharge> tkList = FXCollections.observableArrayList(list);
         colNo.setCellValueFactory(param -> {
