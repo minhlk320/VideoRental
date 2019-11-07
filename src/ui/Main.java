@@ -162,7 +162,6 @@ public class Main extends Application{
 	 * @throws IOException
 	 */
 	public void initLayout() throws IOException {
-		listUI.put(SCENE_HOME, URL_HOME);
 		listUI.put(SCENE_CUSTOMER_MANAGEMENT, URL_CUSTOMER_MANAGEMENT);
 		listUI.put(SCENE_RENTAL_ITEMS, URL_RENTAL);
 		listUI.put(SCENE_RETURN_ITEM, URL_RETURN_ITEM);
