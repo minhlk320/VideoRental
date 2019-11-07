@@ -13,7 +13,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -34,19 +33,19 @@ public class LateChargeInfoController implements Initializable {
     private CustomerDAO customerDAO;
     private LateChargeDAO lateChargeDAO;
     private List<LateCharge> lateChargeList;
-    private List<LateCharge> lateChargeChosenList = new ArrayList<>();
+    private List<LateCharge> lateChargeChosenList;
     @FXML
     private TableColumn<LateCharge, LateCharge> colNo;
     @FXML
-    private TableColumn<LateCharge,String> colReturnDate;
+    private TableColumn<LateCharge, String> colReturnDate;
     @FXML
-    private TableColumn<LateCharge,String> colDueOn;
+    private TableColumn<LateCharge, String> colDueOn;
     @FXML
-    private TableColumn<LateCharge,String> colTitleName;
+    private TableColumn<LateCharge, String> colTitleName;
     @FXML
-    private TableColumn<LateCharge,String> colPurchaseDate;
+    private TableColumn<LateCharge, String> colPurchaseDate;
     @FXML
-    private TableColumn<LateCharge,String> colTotalAmount;
+    private TableColumn<LateCharge, String> colTotalAmount;
     @FXML
     private TableColumn<LateCharge, LateCharge> colCheckBox;
     @FXML
@@ -70,147 +69,160 @@ public class LateChargeInfoController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        clear();
+        clearForm();
         main = Main.getInstance();
         customerDAO = main.getCustomerDAO();
         lateChargeDAO = main.getLateChargeDAO();
-        lateChargeList = new ArrayList<>();
-        if (currentCustomer != null) {
-            tfCustomerID.setText(currentCustomer.getCustomerID());
-            loadCustomerInfo();
-        } else {
+
+        if (currentCustomer == null) {
             tfCustomerID.requestFocus();
+            return;
         }
+        tfCustomerID.setText(currentCustomer.getCustomerID());
+        checkCustomer();
+        lateChargeList = new ArrayList<>();
+        lateChargeChosenList = new ArrayList<>();
+        initTable(lateChargeList);
+        //Button
         btnEnter.setOnAction(e -> {
-            findCustomer();
+            checkCustomer();
         });
-        tfCustomerID.setOnKeyReleased(e->{
-            if(e.getCode()== KeyCode.ENTER)
-                findCustomer();
+        //Listener for Enter Key
+        tfCustomerID.setOnKeyReleased(e -> {
+            checkCustomer();
         });
-        btnCancel.setOnAction(e->{
-            if(requestConfirm("Do you want to exit?","Message",null)){
+        btnCancel.setOnAction(e -> {
+            if (requestConfirm("Do you want to exit?", "Message", null)) {
                 Stage stage = (Stage) ((Button) e.getSource()).getScene().getWindow();
                 stage.close();
             }
         });
-        btnPaid.setOnAction(e->{
-            if(lateChargeChosenList.isEmpty())
-                showMessage("You haven't chosen any late charge to proceed, please choose at least one item to proceed!","Message",null);
-           else{
-                String message = "Total Payment is $" + this.lateChargeDAO.getTotalLatechargePayment(lateChargeChosenList);
-                if(requestConfirm(message,"Message",null)){
-                        for(LateCharge lc : lateChargeChosenList){
-                            lc.setPurchaseDate(LocalDate.now());
-                            this.lateChargeDAO.update(lc);
-                        }
-                        lateChargeList.removeAll(lateChargeChosenList);
-                        loadTable(lateChargeList);
-                        lateChargeChosenList.clear();
+        btnPaid.setOnAction(e -> {
+            if (lateChargeChosenList.isEmpty()) {
+                showMessage("You haven't chosen any late charge to proceed, please choose at least one item to proceed!", "Message", null);
+                return;
+            }
+            String message = "Total Payment is $" + lateChargeDAO.getTotalLatechargePayment(lateChargeChosenList);
+            if (requestConfirm(message, "Message", null)) {
+                for (LateCharge lc : lateChargeChosenList) {
+                    lc.setPurchaseDate(LocalDate.now());
+                    lateChargeDAO.update(lc);
                 }
+                lateChargeList.removeAll(lateChargeChosenList);
+
+                lateChargeChosenList.clear();
             }
         });
     }
 
-    private void loadTable(List<LateCharge> list) {
-        ObservableList<LateCharge> tkList = FXCollections.observableArrayList(list);
-        for(int i = 0; i<tkList.size(); i++) {
-            colNo.setCellValueFactory(
-                    param -> {
-                        return new ReadOnlyObjectWrapper<>(param.getValue());
-                    });
-            colNo.setCellFactory(new Callback<TableColumn<LateCharge, LateCharge>, TableCell<LateCharge, LateCharge>>() {
-
-                @Override
-                public TableCell<LateCharge, LateCharge> call(TableColumn<LateCharge, LateCharge> param) {
-                    return new TableCell<LateCharge, LateCharge>() {
-                        @Override
-                        protected void updateItem(LateCharge arg0, boolean arg1) {
-                            super.updateItem(arg0, arg1);
-                            if (this.getTableRow() != null && arg0 != null) {
-                                setText(this.getTableRow().getIndex() + 1 + "");
-                            } else {
-                                setText("");
-                            }
-                        }
-                    };
-                }
-            });
-            colPurchaseDate.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getPurchaseDate()==null?"":celldata.getValue().getPurchaseDate().toString()));
-            colTitleName.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getItem().getTitleName()));
-            colDueOn.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getDueOn().toString()));
-            colReturnDate.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getReturnDate().toString()));
-            colTotalAmount.setCellValueFactory(celldata->new SimpleStringProperty("$" + String.valueOf(celldata.getValue().getTotalAmount())));
-            colCheckBox.setSortable(false);
-            colCheckBox.setCellValueFactory(
-                    param -> new ReadOnlyObjectWrapper<>(param.getValue())
-            );
-            colCheckBox.setCellFactory(param -> new TableCell<LateCharge, LateCharge>() {
-                private final CheckBox btnCheck = new CheckBox();
-
-                @Override
-                protected void updateItem(LateCharge item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (item == null) {
-                        setGraphic(null);
-                        return;
-                    }
-                    setGraphic(btnCheck);
-                    btnCheck.setOnAction(e-> {
-                       if(btnCheck.isSelected()){
-                           lateChargeChosenList.add(item);
-                           loadTotalAmountPayment();
-                       }
-                       else{
-                           lateChargeChosenList.remove(item);
-                           loadTotalAmountPayment();
-                       }
-                    });
-                }
-            });
+    private void checkCustomer() {
+        String id = tfCustomerID.getText();
+        Customer customer = findCustomer(id);
+        if (customer == null) {
+            clearForm();
+            showMessage("Customer not found, please try again!", "Message", null);
+            return;
         }
+        loadCustomerInfo(customer);
+        loadLateCharge(customer);
+    }
+
+    private void initTable(List<LateCharge> list) {
+        ObservableList<LateCharge> tkList = FXCollections.observableArrayList(list);
+        colNo.setCellValueFactory(param -> {
+            return new ReadOnlyObjectWrapper<>(param.getValue());
+        });
+        colNo.setCellFactory(new Callback<TableColumn<LateCharge, LateCharge>, TableCell<LateCharge, LateCharge>>() {
+            @Override
+            public TableCell<LateCharge, LateCharge> call(TableColumn<LateCharge, LateCharge> param) {
+                return new TableCell<LateCharge, LateCharge>() {
+                    @Override
+                    protected void updateItem(LateCharge arg0, boolean arg1) {
+                        super.updateItem(arg0, arg1);
+                        if (this.getTableRow() != null && arg0 != null) {
+                            setText(this.getTableRow().getIndex() + 1 + "");
+                        } else {
+                            setText("");
+                        }
+                    }
+                };
+            }
+        });
+        colPurchaseDate.setCellValueFactory(celldata -> new SimpleStringProperty(celldata.getValue().getPurchaseDate() == null ? "" : celldata.getValue().getPurchaseDate().toString()));
+        colTitleName.setCellValueFactory(celldata -> new SimpleStringProperty(celldata.getValue().getItem().getTitleName()));
+        colDueOn.setCellValueFactory(celldata -> new SimpleStringProperty(celldata.getValue().getDueOn().toString()));
+        colReturnDate.setCellValueFactory(celldata -> new SimpleStringProperty(celldata.getValue().getReturnDate().toString()));
+        colTotalAmount.setCellValueFactory(celldata -> new SimpleStringProperty("$" + String.valueOf(celldata.getValue().getTotalAmount())));
+        colCheckBox.setSortable(false);
+        colCheckBox.setCellValueFactory(
+                param -> new ReadOnlyObjectWrapper<>(param.getValue())
+        );
+        colCheckBox.setCellFactory(param -> new TableCell<LateCharge, LateCharge>() {
+            private final CheckBox btnCheck = new CheckBox();
+
+            @Override
+            protected void updateItem(LateCharge item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null) {
+                    setGraphic(null);
+                    return;
+                }
+                setGraphic(btnCheck);
+                btnCheck.setOnAction(e -> {
+                    if (btnCheck.isSelected()) {
+                        lateChargeChosenList.add(item);
+                        loadTotalAmountPayment();
+                    } else {
+                        lateChargeChosenList.remove(item);
+                        loadTotalAmountPayment();
+                    }
+                });
+            }
+        });
         table.setItems(tkList);
     }
+
+    /**
+     * call from Main function
+     *
+     * @param currentCustomer
+     */
     public void setCurrentCustomer(Customer currentCustomer) {
         this.currentCustomer = currentCustomer;
     }
-    private void findCustomer(){
-        String id = tfCustomerID.getText().trim();
+
+    private Customer findCustomer(String id) {
         Customer customer = customerDAO.getById(Customer.class, id);
-        if (customer != null) {
-            setCurrentCustomer(customer);
-            loadCustomerInfo();
-            loadLateCharge();
-        } else {
-            clear();
-            showMessage("Customer not found, please try again!","Message",null);
-        }
+        return customer;
+
     }
-    private void loadCustomerInfo(){
-        textCustomerName.setText(currentCustomer.getFirstName() + " " +currentCustomer.getLastName());
-        textCustomerAddress.setText(currentCustomer.getAddress());
-        textCustomerPhone.setText(currentCustomer.getPhoneNumber());
-        textCustomerJoinedDate.setText(currentCustomer.getJoinedDate().toString());
+
+    private void loadCustomerInfo(Customer customer) {
+        textCustomerName.setText(customer.getFirstName() + " " + customer.getLastName());
+        textCustomerAddress.setText(customer.getAddress());
+        textCustomerPhone.setText(customer.getPhoneNumber());
+        textCustomerJoinedDate.setText(customer.getJoinedDate().toString());
+        currentCustomer = customer;
     }
-    private void showMessage(String message, String title, String header){
+
+    private void showMessage(String message, String title, String header) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(header);
         alert.setContentText(message);
         alert.showAndWait();
     }
-    private void loadLateCharge(){
-        if(currentCustomer==null)
-            return;
-        lateChargeList = this.lateChargeDAO.getLateChargeByCustomerID(currentCustomer.getCustomerID());
-        if(lateChargeList.isEmpty())
-            showMessage("Customer does't have any unpaid late charge!","Message",null);
-        loadTable(lateChargeList);
+
+    private void loadLateCharge(Customer customer) {
+        lateChargeList = lateChargeDAO.getLateChargeByCustomerID(customer.getCustomerID());
+        if (lateChargeList.isEmpty()) showMessage("Customer does't have any unpaid late charge!", "Message", null);
     }
-    private void loadTotalAmountPayment(){
-        double total = this.lateChargeDAO.getTotalLatechargePayment(lateChargeChosenList);
+
+    private void loadTotalAmountPayment() {
+        double total = lateChargeDAO.getTotalLatechargePayment(lateChargeChosenList);
         textTotalCharge.setText("$" + total);
     }
+
     private boolean requestConfirm(String message, String title, String header) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(title);
@@ -228,7 +240,8 @@ public class LateChargeInfoController implements Initializable {
         }
         return false;
     }
-    private void clear(){
+
+    private void clearForm() {
         textCustomerName.setText("");
         textCustomerAddress.setText("");
         textCustomerPhone.setText("");
