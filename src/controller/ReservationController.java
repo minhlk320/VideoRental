@@ -31,10 +31,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ReservationController implements Initializable {
-    private Main main;
-    private List<Title> titleList;
-    private TitleDAO titleDAO;
-    private Customer customer;
+
     @FXML
     private JFXTextField tfCustomerID;
 
@@ -86,16 +83,25 @@ public class ReservationController implements Initializable {
     @FXML
     private Button btnCancel;
 
+    private Main main;
+    private List<Title> titleList;
+    private TitleDAO titleDAO;
+    private CustomerDAO customerDAO;
+    private Customer currentCustomer;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         main = Main.getInstance();
         titleDAO = main.getTitleDAO();
+        customerDAO = main.getCustomerDAO();
         btnEnterCustomerID.setOnAction(e -> {
-           searchForCustomer();
+            String id = tfCustomerID.getText();
+            findCustomer(id);
         });
         tfCustomerID.setOnKeyReleased(e -> {
             if (e.getCode() == KeyCode.ENTER) {
-                searchForCustomer();
+                String id = tfCustomerID.getText();
+                findCustomer(id);
             }
         });
         btnDone.setOnAction(e -> {
@@ -127,31 +133,48 @@ public class ReservationController implements Initializable {
                 ex.printStackTrace();
             }
         });
-        btnDone.setOnAction(e -> {
+        btnDone.setOnAction(event -> {
             Title title = cbTitle.getSelectionModel().getSelectedItem();
-            if(customer==null)
-                showMessage("You haven't chosen a customer","Message",null);
-            else if(title==null)
-                showMessage("You haven't chosen a title","Message",null);
-            else{
-                List itemList = new ItemDAO().getAvailableItemForRentByTitle(title.getTitleID());
-                if(!itemList.isEmpty())
-                    showMessage("Your chosen title has some available item for rent, can not make a reservation for this situation","Message",null);
-                else
-                   if(confirmReservation()){
-                       Reservation reservation = new Reservation();
-                       reservation.setCustomer(customer);
-                       reservation.setTitle(title);
-                       reservation.setReservationDate(LocalDate.now());
-                       reservation.setComment(txtAreaComment.getText());
-                       System.out.println(new ReservationDAO().save(reservation));
-                       showMessage("Reservation has been added!","Message",null);
-                       Stage stage = (Stage) ((Button) e.getSource()).getScene().getWindow();
-                       stage.close();
-                   }
+            if (currentCustomer == null) {
+                main.showMessage("You haven't chosen a customer", "Message", null);
+                return;
+            }
+            if (title == null) {
+                main.showMessage("You haven't chosen a title", "Message", null);
+                tfTitleName.requestFocus();
+                return;
+            }
+            List itemList = new ItemDAO().getAvailableItemForRentByTitle(title.getTitleID());
+            if (!itemList.isEmpty()) {
+                main.showMessage("Your chosen title has some available item for rent, can not make a reservation for this situation", "Message", null);
+                tfTitleName.requestFocus();
+                return;
+            }
+            if (confirmReservation()) {
+                Reservation reservation = new Reservation();
+                reservation.setCustomer(currentCustomer);
+                reservation.setTitle(title);
+                reservation.setReservationDate(LocalDate.now());
+                reservation.setComment(txtAreaComment.getText());
+                //Check
+                System.out.println(new ReservationDAO().save(reservation));
+                main.showMessage("Reservation has been added!", "Message", null);
+                //Close window
+                Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+                stage.close();
             }
         });
 
+    }
+
+    private void findCustomer(String id) {
+        String customerID = tfCustomerID.getText();
+        if (customerID.isEmpty()) {
+            tfCustomerID.requestFocus();
+            return;
+        }
+        Customer customer = customerDAO.getById(Customer.class, customerID);
+        currentCustomer = customer;
     }
     private boolean requestConfirmExit() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -169,13 +192,6 @@ public class ReservationController implements Initializable {
         }
         return false;
     }
-    private void showMessage(String message, String title, String header){
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(header);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
     private boolean confirmReservation() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation");
@@ -192,6 +208,11 @@ public class ReservationController implements Initializable {
         }
         return false;
     }
+
+    /**
+     * @param name
+     * @Minh
+     */
     private void loadComboTitle(String name){
         titleList = titleDAO.getTitleListByName(name);
         if(titleList!=null){
@@ -204,33 +225,28 @@ public class ReservationController implements Initializable {
 
     }
     private void loadTitleInfo(Title title){
-        if(title==null)
-            return;
+        if (title == null) return;
         imgTitle.setImage(title.getImage());
         txtTitleName.setText(title.getTitleName());
         txtTitleType.setText(title.getItemClass().getItemClassName());
         txtAreaDescription.setText(title.getDesciption());
     }
-    private void searchForCustomer(){
-        String customerID = tfCustomerID.getText();
-        if (customerID.isEmpty()) {
-            tfCustomerID.requestFocus();
-            return;
-        }
-        Customer customer = new CustomerDAO().getById(Customer.class,customerID);
+
+    private void updateCustomerInfo(Customer customer) {
         if (customer != null) {
             textCustomerName.setText(customer.getFirstName() + " " + customer.getLastName());
             textCustomerPhone.setText(customer.getPhoneNumber());
             textCustomerAddress.setText(customer.getAddress());
             textCustomerJoinedDate.setText(customer.getJoinedDate().toString());
-            this.customer = customer;
-        }
-        else{
+
+        } else {
             textCustomerName.setText(null);
             textCustomerPhone.setText(null);
             textCustomerAddress.setText(null);
             textCustomerJoinedDate.setText(null);
-            showMessage("Your entered customer's ID does not match","Message",null);
+            main.showMessage("Your entered customer's ID does not match", "Message", null);
         }
     }
+
+
 }
