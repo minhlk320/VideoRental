@@ -55,8 +55,17 @@ public class MainLayoutController implements Initializable {
         btnLogin.setOnAction(event -> {
             if (!main.isLogged) {
                 main.doLogin();
+                if (main.isLogged) {
+                    labelUser.setText(main.USER);
+                    btnLogin.setText("Logout");
+                } else {
+                    btnLogin.setText("Login");
+                    labelUser.setText("");
+                }
             } else {
                 main.doLogout();
+                btnLogin.setText("Login");
+                labelUser.setText("");
             }
 
         });

@@ -23,7 +23,7 @@
     <top>
         <VBox prefHeight="180.0" spacing="8.0" BorderPane.alignment="CENTER">
             <children>
-                <HBox spacing="8.0">
+                <HBox alignment="CENTER_LEFT" spacing="8.0">
                     <children>
                         <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
                                style="-fx-font-size: 25;" text="Video Rental Store" HBox.hgrow="ALWAYS">

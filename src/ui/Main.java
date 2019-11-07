@@ -60,8 +60,8 @@ public class Main extends Application{
 	public final String TITLE_RENTAL_ITEM = "Rental Item";
 	public final double MIN_HEIGHT = 720;
 	public final double MIN_WIDTH = 1280;
-	private final String USER = "admin";
-	private final String PASSWORD = "admin";
+	public final String USER = "admin";
+	public final String PASSWORD = "admin";
 	private final int TOTAL_PROGRESS = 3;
 	public Image MAIN_ICON = new Image("/resources/img/icon.png");
 	@FXML
@@ -287,7 +287,7 @@ public class Main extends Application{
 			stage.initStyle(StageStyle.DECORATED);
 			stage.initModality(Modality.WINDOW_MODAL);
 			stage.initOwner(primaryStage);
-			stage.show();
+			stage.showAndWait();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
