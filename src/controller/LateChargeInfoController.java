@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -76,10 +77,10 @@ public class LateChargeInfoController implements Initializable {
 
         if (currentCustomer == null) {
             tfCustomerID.requestFocus();
-            return;
+        } else {
+            tfCustomerID.setText(currentCustomer.getCustomerID());
+            checkCustomer();
         }
-        tfCustomerID.setText(currentCustomer.getCustomerID());
-        checkCustomer();
         lateChargeList = new ArrayList<>();
         lateChargeChosenList = new ArrayList<>();
         initTable(lateChargeList);
@@ -89,7 +90,9 @@ public class LateChargeInfoController implements Initializable {
         });
         //Listener for Enter Key
         tfCustomerID.setOnKeyReleased(e -> {
-            checkCustomer();
+            if (e.getCode() == KeyCode.ENTER) {
+                checkCustomer();
+            }
         });
         btnCancel.setOnAction(e -> {
             if (requestConfirm("Do you want to exit?", "Message", null)) {
@@ -99,7 +102,7 @@ public class LateChargeInfoController implements Initializable {
         });
         btnPaid.setOnAction(e -> {
             if (lateChargeChosenList.isEmpty()) {
-                showMessage("You haven't chosen any late charge to proceed, please choose at least one item to proceed!", "Message", null);
+                main.showMessage("You haven't chosen any late charge to proceed, please choose at least one item to proceed!", "Message", null);
                 return;
             }
             String message = "Total Payment is $" + lateChargeDAO.getTotalLatechargePayment(lateChargeChosenList);
@@ -115,16 +118,35 @@ public class LateChargeInfoController implements Initializable {
         });
     }
 
+    private void loadCustomerInfo(Customer customer) {
+        textCustomerName.setText(customer.getFirstName() + " " + customer.getLastName());
+        textCustomerAddress.setText(customer.getAddress());
+        textCustomerPhone.setText(customer.getPhoneNumber());
+        textCustomerJoinedDate.setText(customer.getJoinedDate().toString());
+        currentCustomer = customer;
+    }
+
     private void checkCustomer() {
         String id = tfCustomerID.getText();
+        if (id.isEmpty()) {
+            tfCustomerID.requestFocus();
+            return;
+        }
         Customer customer = findCustomer(id);
         if (customer == null) {
             clearForm();
-            showMessage("Customer not found, please try again!", "Message", null);
+            tfCustomerID.clear();
+            tfCustomerID.requestFocus();
+            main.showMessage("Customer not found, please try again!", "Message", null);
+            return;
+        }
+        lateChargeList = lateChargeDAO.getLateChargeByCustomerID(customer.getCustomerID());
+        if (lateChargeList.isEmpty()) {
+            main.showMessage(String.format("Customer %s does't have any unpaid late charge!", customer.getCustomerID()), "Message", null);
+            tfCustomerID.clear();
             return;
         }
         loadCustomerInfo(customer);
-        loadLateCharge(customer);
     }
 
     private void initTable(List<LateCharge> list) {
@@ -194,28 +216,6 @@ public class LateChargeInfoController implements Initializable {
     private Customer findCustomer(String id) {
         Customer customer = customerDAO.getById(Customer.class, id);
         return customer;
-
-    }
-
-    private void loadCustomerInfo(Customer customer) {
-        textCustomerName.setText(customer.getFirstName() + " " + customer.getLastName());
-        textCustomerAddress.setText(customer.getAddress());
-        textCustomerPhone.setText(customer.getPhoneNumber());
-        textCustomerJoinedDate.setText(customer.getJoinedDate().toString());
-        currentCustomer = customer;
-    }
-
-    private void showMessage(String message, String title, String header) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(header);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
-    private void loadLateCharge(Customer customer) {
-        lateChargeList = lateChargeDAO.getLateChargeByCustomerID(customer.getCustomerID());
-        if (lateChargeList.isEmpty()) showMessage("Customer does't have any unpaid late charge!", "Message", null);
     }
 
     private void loadTotalAmountPayment() {

@@ -159,9 +159,9 @@ public class Main extends Application{
 	/**
 	 * Initial Layout ( put URL to list and call for use )
 	 *
-	 * @throws IOException
+	 *
 	 */
-	public void initLayout() throws IOException {
+	public void initLayout() {
 		listUI.put(SCENE_CUSTOMER_MANAGEMENT, URL_CUSTOMER_MANAGEMENT);
 		listUI.put(SCENE_RENTAL_ITEMS, URL_RENTAL);
 		listUI.put(SCENE_RETURN_ITEM, URL_RETURN_ITEM);
@@ -317,7 +317,12 @@ public class Main extends Application{
 		alert.setTitle(title);
 		alert.setHeaderText(header);
 		alert.setContentText(message);
+		alert.getDialogPane().getStylesheets().addAll(this.root.getStylesheets());
+		alert.getDialogPane().getStyleClass().addAll(this.root.getStyleClass());
+		Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+		stage.getIcons().setAll(MAIN_ICON);
 		alert.showAndWait();
+
 	}
 
 	/**
@@ -345,6 +350,8 @@ public class Main extends Application{
 			}
 			Parent root = loader.load();
 			Scene scene = new Scene(root);
+			root.getStylesheets().setAll(this.root.getStylesheets());
+			root.getStyleClass().setAll(this.root.getStyleClass());
 			stage.setTitle(TITLE_LATE_CHARGE_INFO);
 			scene.setFill(Color.TRANSPARENT);
 			stage.setResizable(true);
