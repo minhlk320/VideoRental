@@ -69,7 +69,7 @@
                   <Label text="Item Id"/>
                   <HBox spacing="12.0">
                      <children>
-                        <JFXTextField fx:id="tfitemID" prefWidth="219.0" unFocusColor="WHITE" HBox.hgrow="ALWAYS"/>
+                        <JFXTextField fx:id="tfItemID" prefWidth="219.0" unFocusColor="WHITE" HBox.hgrow="ALWAYS"/>
                         <Button fx:id="btnEnterItemID" mnemonicParsing="false" text="Enter"/>
                      </children>
                   </HBox>

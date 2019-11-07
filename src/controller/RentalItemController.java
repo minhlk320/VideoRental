@@ -2,7 +2,6 @@ package controller;
 
 import com.jfoenix.controls.JFXTextField;
 import daos.*;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import entities.*;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleStringProperty;
@@ -25,6 +24,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * UC01a - Rental Item
+ * Main controller for rental item
+ */
 public class RentalItemController implements Initializable {
 
 
@@ -33,7 +36,6 @@ public class RentalItemController implements Initializable {
     private CustomerDAO customerDAO;
     private RentalDAO rentalDAO;
     private ReservationDAO reservationDAO;
-
 
 
     private Customer currentCustomer;
@@ -49,7 +51,7 @@ public class RentalItemController implements Initializable {
     @FXML
     private Text textCustomerJoinedDate;
     @FXML
-    private JFXTextField tfitemID;
+    private JFXTextField tfItemID;
     @FXML
     private TableView<Item> tableItemList;
     @FXML
@@ -81,10 +83,10 @@ public class RentalItemController implements Initializable {
     private ArrayList<Reservation> reservationList = new ArrayList<>();
 
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         main = Main.getInstance();
+        //Get necessary DAO for data call
         itemDAO = main.getItemDAO();
         customerDAO = main.getCustomerDAO();
         rentalDAO = main.getRentalDAO();
@@ -103,7 +105,7 @@ public class RentalItemController implements Initializable {
         btnEnterItemID.setOnAction(e -> {
             inputItem();
         });
-        tfitemID.setOnKeyPressed(e -> {
+        tfItemID.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.ENTER) {
                 inputItem();
             }
@@ -119,42 +121,51 @@ public class RentalItemController implements Initializable {
         initTable();
     }
 
-    private void showMessage(String message, String title, String header) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(header);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
+    /**
+     * @Minh
+     */
     private void inputItem() {
-        String itemID = tfitemID.getText();
+        String itemID = tfItemID.getText();
         if (itemID.isEmpty()) {
-            showMessage("Item'ID is empty!", "Alert", "Item ID");
-            tfitemID.requestFocus();
+            main.showMessage("Item'ID is empty!", "Alert", "Item ID");
+            tfItemID.requestFocus();
             return;
         }
         Item item = itemDAO.getById(Item.class,itemID);
-        if (item != null) {
-            if(item.getStatus().equalsIgnoreCase(Item.ON_HOLD)){
-                    Reservation reservation = reservationDAO.getReservationbyItemID(item.getItemID());
-                    if(currentCustomer.equals(reservation.getCustomer())&&item.equals(reservation.getItem())){
-                        reservationList.add(reservation);
-                        addToTable(item);
-                        addToTable(item);
-                    }
-                    else  showMessage("This Item has been placed ON_HOLD to the customer: " + reservation.getCustomer().getCustomerID()+"!","Message",null);
-            }else if(item.getStatus().equalsIgnoreCase(Item.ON_SHELF)){
-                addToTable(item);
-                addToTable(item);
-            }
-            else{
-                showMessage("This Item is not available to be rented!","Message",null);
-            }
-            updateTotal();
+        if (item == null) {
+            main.showMessage("Entered ID not found, please check again!", "Message", null);
+            return;
         }
-        else
-            showMessage("Entered ID not found, please check again!","Message",null);
+
+        if (item.getStatus().equalsIgnoreCase(Item.ON_HOLD)) {
+            checkReservation(item);
+            updateTotal();
+            return;
+        }
+        if (item.getStatus().equalsIgnoreCase(Item.ON_SHELF)) {
+            addToTable(item);
+            updateTotal();
+            return;
+        }
+        main.showMessage("This Item is not available to be rented!", "Message", null);
+
+
     }
+
+    /**
+     * @param item
+     * @Minh
+     */
+    private void checkReservation(Item item) {
+        Reservation reservation = reservationDAO.getReservationbyItemID(item.getItemID());
+        if (currentCustomer.equals(reservation.getCustomer()) && item.equals(reservation.getItem())) {
+            reservationList.add(reservation);
+            addToTable(item);
+            return;
+        }
+        main.showMessage("This Item has been placed ON_HOLD to the customer: " + reservation.getCustomer().getCustomerID() + "!", "Message", null);
+    }
+
     private void updateCustomerInfo() {
         if (currentCustomer != null) {
             textCustomerName.setText(currentCustomer.getFirstName() + " " + currentCustomer.getLastName());
@@ -198,6 +209,7 @@ public class RentalItemController implements Initializable {
         );
         colDeleteButton.setCellFactory(param -> new TableCell<Item, Item>() {
             private final Button deleteButton = new Button("X");
+
             @Override
             protected void updateItem(Item item, boolean empty) {
                 super.updateItem(item, empty);
@@ -225,22 +237,28 @@ public class RentalItemController implements Initializable {
         colTitle.setCellValueFactory(cdata -> new SimpleStringProperty(cdata.getValue().getTitle().getTitleName()));
         colPrice.setCellValueFactory(cdata -> new SimpleStringProperty(String.format("%2.2f", cdata.getValue().getTitle().getItemClass().getRentalRate())));
         tableItemList.setItems(items);
-        btnResetTable.setOnAction(e->clearForm());
+        btnResetTable.setOnAction(event -> resetForm());
 
     }
 
-    private void clearForm() {
-        tfCustomerID.clear();
-        textRentalTotal.setText("$0");
-        text_AmountDue.setText("$0");
-        tfitemID.clear();
-        listItems.clear();
-        tableItemList.getItems().clear();
-        currentCustomer=null;
-        clearCustomerInfo();
+    /**
+     * Add Item to table
+     *
+     * @param item
+     */
+    private void addToTable(Item item) {
+        if (item == null) return;
+        if (listItems.contains(item)) {
+            return;
+        }
+        tfItemID.clear();
+        listItems.add(item);
+        tableItemList.getItems().setAll(listItems);
+        tableItemList.refresh();
     }
+
     private void resetForm() {
-        tfitemID.clear();
+        tfItemID.clear();
         textRentalTotal.setText("$0");
         text_AmountDue.setText("$0");
         listItems.clear();
@@ -249,18 +267,22 @@ public class RentalItemController implements Initializable {
         clearCustomerInfo();
     }
 
+    /**
+     * Popup confirm for Transaction
+     */
     private void requestConfirm() {
         //Validate
         if (currentCustomer == null) {
-            showMessage("Customer unavailable!", "Alert", "Customer");
+            main.showMessage("Customer unavailable!", "Alert", "Customer");
             tfCustomerID.requestFocus();
             return;
         }
         if (listItems.isEmpty()) {
-            showMessage("List must not be empty, at least one chosen item", "Alert", "List Item");
-            tfitemID.requestFocus();
+            main.showMessage("List must not be empty, at least one chosen item", "Alert", "List Item");
+            tfItemID.requestFocus();
             return;
         }
+        //Custom Dialog
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirm");
         alert.setHeaderText("Confirm rental transaction");
@@ -271,6 +293,7 @@ public class RentalItemController implements Initializable {
         alert.getButtonTypes().clear();
         alert.getButtonTypes().addAll(makePayement, cancel);
         List<LateCharge> lateCharge = lateChargeDAO.getLateChargeByCustomerID(currentCustomer.getCustomerID());
+        //Check late charge - display when customer had late charge
         if (!lateCharge.isEmpty()) {
             //Check Late Charge
             alert.getButtonTypes().add(payLateCharge);
@@ -283,7 +306,7 @@ public class RentalItemController implements Initializable {
                 reservationDAO.delete(r);
             saveRentalDetail(currentCustomer, listItems);
             currentCustomer = null;
-            clearForm();
+            resetForm();
             updateCustomerInfo();
 
         }
@@ -295,6 +318,11 @@ public class RentalItemController implements Initializable {
         }
     }
 
+    /**
+     * Get total rental
+     *
+     * @return total rental fee
+     */
     private double getRentalTotal() {
         double rental_Total = 0;
         for (Item item : listItems) {
@@ -303,28 +331,30 @@ public class RentalItemController implements Initializable {
         return rental_Total;
     }
 
+    /**
+     * Get AmountDue
+     *
+     * @return
+     */
     private double getAmountDue() {
         return getRentalTotal();
     }
 
+    /**
+     * Update text total
+     */
     public void updateTotal() {
         textRentalTotal.setText(String.format("%2.2f", getRentalTotal()));
         text_AmountDue.setText(String.format("%2.2f", getAmountDue()));
     }
 
-
-    private void addToTable(Item item) {
-        if (item == null) return;
-        if (listItems.contains(item)) {
-            return;
-        }
-        tfitemID.clear();
-        listItems.add(item);
-        tableItemList.getItems().setAll(listItems);
-        tableItemList.refresh();
-    }
-
-
+    /**
+     * @param customer
+     * @param itemList
+     * @return
+     * @UC01a Rental Item
+     * Save rental information
+     */
     public boolean saveRentalDetail(Customer customer, ArrayList<Item> itemList) {
         Rental rental = new Rental(LocalDate.now());
         ArrayList<RentalDetail> rentalDetailList = new ArrayList<>();
@@ -338,6 +368,10 @@ public class RentalItemController implements Initializable {
             return true;
         return false;
     }
+
+    /**
+     * Find Customer form database
+     */
     private void findCustomer(){
         String id = tfCustomerID.getText().trim();
         Customer customer = customerDAO.getById(Customer.class, id);
@@ -346,15 +380,23 @@ public class RentalItemController implements Initializable {
             loadCustomerInfo();
         } else {
             clearCustomerInfo();
-            showMessage("Customer not found, please try again!","Message",null);
+            main.showMessage("Customer not found, please try again!", "Message", null);
         }
     }
+
+    /**
+     * Load customer info to view
+     */
     private void loadCustomerInfo(){
         textCustomerName.setText(currentCustomer.getFirstName() + " " +currentCustomer.getLastName());
         textCustomerAddress.setText(currentCustomer.getAddress());
         textCustomerPhone.setText(currentCustomer.getPhoneNumber());
         textCustomerJoinedDate.setText(currentCustomer.getJoinedDate().toString());
     }
+
+    /**
+     * Clear Customer Info
+     */
     private void clearCustomerInfo(){
         textCustomerName.setText("");
         textCustomerAddress.setText("");
@@ -362,6 +404,12 @@ public class RentalItemController implements Initializable {
         textCustomerJoinedDate.setText("");
         text_AmountDue.setText("$0");
     }
+
+    /**
+     * Set current customer for call Late charge function or other
+     *
+     * @param currentCustomer
+     */
     public void setCurrentCustomer(Customer currentCustomer) {
         this.currentCustomer = currentCustomer;
     }
