@@ -27,12 +27,10 @@ public class ReturnItemController implements Initializable {
 
     @FXML
     private JFXButton btnEnter;
-
     private RentalDAO rentalDAO;
     private ItemDAO itemDAO;
     private LateChargeDAO lateChargeDAO;
     private ReservationDAO reservationDAO;
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -51,6 +49,11 @@ public class ReturnItemController implements Initializable {
         });
     }
 
+    /**
+     * @param id
+     * @UC01b Return Item
+     * Return Item by id
+     */
     public void returnItem(String id) {
         Item item = itemDAO.getById(Item.class,id);
         if (item == null) {
@@ -70,6 +73,11 @@ public class ReturnItemController implements Initializable {
         }
     }
 
+    /**
+     * @param item
+     * @UC01b Return item
+     * check item for return action/
+     */
     private void checkReturnItem(Item item) {
         Rental lastestRental = rentalDAO.getLatestRentalByItemID(item.getItemID());
         LocalDate currentDate = LocalDate.now();
