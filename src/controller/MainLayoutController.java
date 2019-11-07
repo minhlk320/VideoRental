@@ -34,20 +34,24 @@ public class MainLayoutController implements Initializable {
     private Label labelUser;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         main = Main.getInstance();
-        btnRentalItems.setOnAction(e -> {
+        //Active UC01a - Rental Item
+        btnRentalItems.setOnAction(event -> {
             main.openWindow(main.SCENE_RENTAL_ITEMS, main.TITLE_RENTAL_ITEM);
         });
-        btnReturnItems.setOnAction(e -> {
+        //Active UC01b - Return Item
+        btnReturnItems.setOnAction(event -> {
             main.openWindow(main.SCENE_RETURN_ITEM, main.TITLE_RETURN_ITEM);
         });
-        btnPayLateCharge.setOnAction(e -> {
+        //Active UC05c - Record late charge payment
+        btnPayLateCharge.setOnAction(event -> {
             main.displayLateCharge(null);
         });
-        btnMakeReservation.setOnAction(e->{
+        //Active UC06a - Make reservation
+        btnMakeReservation.setOnAction(event -> {
             main.openWindow(main.SCENE_RESERVATION, main.TITLE_RESERVATION);
         });
+        //Active UC11 - Login
         btnLogin.setOnAction(event -> {
             if (!main.isLogged) {
                 main.doLogin();
@@ -56,6 +60,7 @@ public class MainLayoutController implements Initializable {
             }
 
         });
+        // Listener for Tab change - content change
         tabPane.getSelectionModel().selectedIndexProperty().addListener((ov, oldValue, newValue) -> {
             switch ((int) newValue) {
                 case TAB_ITEM:
