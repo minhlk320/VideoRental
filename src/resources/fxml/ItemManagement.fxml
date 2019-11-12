@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ItemManagementController">
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.192" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ItemManagementController">
    <children>
       <HBox spacing="8.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0">
          <children>
@@ -77,6 +77,8 @@
                         <TableColumn fx:id="colItemID" maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="-1.0" resizable="false" text="No." />
                         <TableColumn fx:id="colTitle" maxWidth="1.7976931348623157E308" minWidth="60.0" prefWidth="240.0" resizable="false" text="Title" />
                         <TableColumn fx:id="colStatus" maxWidth="1.7976931348623157E308" minWidth="70.0" prefWidth="-1.0" resizable="false" text="Status" />
+                        <TableColumn fx:id="colCreatedDate" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="-1.0" resizable="false" text="Created Date" />
+                        <TableColumn fx:id="colLastModifiedDate" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="-1.0" resizable="false" text="Last Modified Date" />
                      </columns>
                   </TableView>
                </children>

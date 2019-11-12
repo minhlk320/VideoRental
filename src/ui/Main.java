@@ -33,7 +33,8 @@ public class Main extends Application{
 	public final String SCENE_LOGIN = "Login";
 	public final String URL_LOGIN = "/resources/fxml/Login.fxml";
 	public final String TITLE_LOGIN = "Login";
-	public final String TITLE_RETURN_ITEM = "returnItem Item";
+	public final String TITLE_RETURN_ITEM = "Return Item";
+	public final String TITLE_REPORT_ITEM = "Report Item";
 	public final String TITLE_LATE_CHARGE_INFO = "Late Charge List";
 	public final String TITLE_RESERVATION = "Make Reservation";
 	public final String SCENE_HOME = "Home";
@@ -42,6 +43,7 @@ public class Main extends Application{
 	public final String SCENE_LOADING = "Loading";
 	public final String SCENE_ITEM_MANAGEMENT = "ItemManagement";
 	public final String SCENE_RENTAL_ITEMS = "RentalItems";
+	public final String SCENE_REPORT_ITEM = "ReportItem";
 	public final String SCENE_RESERVATION = "Reservation";
 	public final String SCENE_RESERVATION_MANAGEMENT = "ReservationManagement";
 	public final String SCENE_RETURN_ITEM = "ReturnItem";
@@ -57,7 +59,8 @@ public class Main extends Application{
 	public final String URL_RESERVATION = "/resources/fxml/Reservation.fxml";
 	public final String URL_RESERVATION_MANAGEMENT = "/resources/fxml/ReservationList.fxml";
 	public final String URL_RETURN_ITEM = "/resources/fxml/ReturnItem.fxml";
-	public final String TITLE_RENTAL_ITEM = "Rental Item";
+	public final String URL_REPORT_ITEM = "/resources/fxml/ReportItem.fxml";
+	public final String TITLE_RENTAL_ITEM = "Rent Item";
 	public final double MIN_HEIGHT = 720;
 	public final double MIN_WIDTH = 1280;
 	public final String USER = "admin";
@@ -170,6 +173,7 @@ public class Main extends Application{
 		listUI.put(SCENE_LATE_CHARGE_INFO, URL_LATE_CHARGE_INFO);
 		listUI.put(SCENE_RESERVATION, URL_RESERVATION);
 		listUI.put(SCENE_RESERVATION_MANAGEMENT, URL_RESERVATION_MANAGEMENT);
+		listUI.put(SCENE_REPORT_ITEM, URL_REPORT_ITEM);
 	}
 
 	/**

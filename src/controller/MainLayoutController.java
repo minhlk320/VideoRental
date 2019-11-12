@@ -32,6 +32,8 @@ public class MainLayoutController implements Initializable {
     private Button btnPayLateCharge;
     @FXML
     private Label labelUser;
+    @FXML
+    private Button btnReportItem;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         main = Main.getInstance();
@@ -50,6 +52,10 @@ public class MainLayoutController implements Initializable {
         //Active UC06a - Make reservation
         btnMakeReservation.setOnAction(event -> {
             main.openWindow(main.SCENE_RESERVATION, main.TITLE_RESERVATION);
+        });
+        //Active UC01c - Report Item
+        btnReportItem.setOnAction(event -> {
+            main.openWindow(main.SCENE_REPORT_ITEM, main.TITLE_REPORT_ITEM);
         });
         //Active UC11 - Login
         btnLogin.setOnAction(event -> {

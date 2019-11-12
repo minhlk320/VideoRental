@@ -5,6 +5,7 @@ import entities.Reservation;
 import entities.Title;
 
 import javax.persistence.Query;
+import java.time.LocalDate;
 import java.util.List;
 
 public class ReservationDAO extends  GeneralCRUD<Reservation> {
@@ -40,6 +41,7 @@ public class ReservationDAO extends  GeneralCRUD<Reservation> {
     public Reservation checkReservation(Item item){
         Title titleOfItem = item.getTitle();
         Reservation eldestReservation = this.getEldestReservationByTitleID(titleOfItem.getTitleID());
+        item.setLastModifiedDate(LocalDate.now());
         if(eldestReservation!=null){
             item.setStatus(Item.ON_HOLD);
             eldestReservation.setItem(item);

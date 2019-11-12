@@ -200,6 +200,7 @@ public class CustomerManagementController implements Initializable{
         colLName.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getLastName()));
         colFone.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getPhoneNumber()));
         colAddress.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getAddress()));
+        colGender.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().isGender()==true?"Male":"Female"));
         table.setItems(tkList);
     }
 

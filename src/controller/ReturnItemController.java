@@ -9,6 +9,8 @@ import daos.ReservationDAO;
 import entities.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.input.KeyCode;
 import ui.Main;
 
@@ -16,6 +18,7 @@ import java.net.URL;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ReturnItemController implements Initializable {
@@ -65,12 +68,16 @@ public class ReturnItemController implements Initializable {
             main.showMessage("Entered ID can not be return due to entered item's status is : " + item.getStatus(), "Message", null);
             return;
         }
-        checkReturnItem(item);
-        Reservation reservation = reservationDAO.checkReservation(item);
-        if (reservation != null) {
-            main.showMessage("The newly returned Item has been placed ON_HOLD to :  " + reservation.getCustomer().getFirstName() + " " + reservation.getCustomer().getLastName() + "\n" + "Phone: " + reservation.getCustomer().getPhoneNumber(), "Message", null);
-            return;
+        Rental lastestRental = rentalDAO.getLatestRentalByItemID(item.getItemID());
+        if(confirmRequest("Do you want to return this Item?" + "\n ItemID:" + item.getItemID() + "\n Title: "+ item.getTitle().getTitleName() +  "\n Customer Info:\n" + lastestRental.getCustomer().getFirstName() + " " +lastestRental.getCustomer().getLastName() + "\n Address: " + lastestRental.getCustomer().getAddress() + "\n Phone:" + lastestRental.getCustomer().getPhoneNumber(),"Message")){
+            checkReturnItem(item);
+            Reservation reservation = reservationDAO.checkReservation(item);
+            if (reservation != null) {
+                main.showMessage("The newly returned Item has been placed ON_HOLD to :  " + reservation.getCustomer().getFirstName() + " " + reservation.getCustomer().getLastName() + "\n" + "Phone: " + reservation.getCustomer().getPhoneNumber(), "Message", null);
+                return;
+            }
         }
+
     }
 
     /**
@@ -99,5 +106,21 @@ public class ReturnItemController implements Initializable {
             main.showMessage("This item has been returned lately (Todo call function 5c to record if chose yes)", "Message", null);
         }
         main.showMessage("Returned : " + item.getItemID(), "Message", null);
+    }
+    private boolean confirmRequest(String message, String title) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setContentText(message);
+        Optional<ButtonType> option = alert.showAndWait();
+        if (option.get() == null) {
+            return false;
+        }
+        if (option.get() == ButtonType.OK) {
+            return true;
+        }
+        if (option.get() == ButtonType.CANCEL) {
+            return false;
+        }
+        return false;
     }
 }

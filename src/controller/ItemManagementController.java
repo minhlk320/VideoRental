@@ -16,6 +16,7 @@ import javafx.scene.input.MouseEvent;
 import ui.Main;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -57,6 +58,12 @@ public class ItemManagementController implements Initializable {
     private TableColumn<Item, String> colStatus;
 
     @FXML
+    private TableColumn<Item, String> colCreatedDate;
+
+    @FXML
+    private TableColumn<Item, String> colLastModifiedDate;
+
+    @FXML
     private JFXButton btnLogin;
     private ItemDAO itemDAO;
     private List<Item> listItem;
@@ -92,6 +99,7 @@ public class ItemManagementController implements Initializable {
             String id = txtItemID.getText();
             if (itemDAO.getById(Item.class, id) != null) {
                 item = itemDAO.getById(Item.class, id);
+                item.setLastModifiedDate(LocalDate.now());
                 itemDAO.update(getCurrentItem(item));
             } else {
                 item = new Item();
@@ -180,6 +188,8 @@ public class ItemManagementController implements Initializable {
         colItemID.setCellValueFactory(celldata -> new SimpleStringProperty(celldata.getValue().getItemID()));
         colTitle.setCellValueFactory(celldata -> new SimpleStringProperty(celldata.getValue().getTitle().getTitleName()));
         colStatus.setCellValueFactory(celldata -> new SimpleStringProperty(celldata.getValue().getStatus()));
+        colCreatedDate.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getCreatedDate().toString()));
+        colLastModifiedDate.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getLastModifiedDate().toString()));
         table.setItems(tkList);
     }
 

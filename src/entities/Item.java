@@ -1,6 +1,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,11 +31,15 @@ public class Item implements Serializable{
 	@JoinColumn(name = "TitleID")
 	private Title title;
 	private String status;
+	private LocalDate createdDate;
+	private LocalDate lastModifiedDate;
 	
 	public Item(Title title, String status) {
 		super();
 		this.title = title;
 		this.status = status;
+		this.createdDate = LocalDate.now();
+		this.lastModifiedDate = LocalDate.now();
 	}
 	public Item() {
 		super();
@@ -57,8 +62,17 @@ public class Item implements Serializable{
 	public void setItemID(String itemID) {
 		this.itemID = itemID;
 	}
-	
-	
+	public LocalDate getCreatedDate() {return createdDate;}
+	public void setCreatedDate(LocalDate createdDate) {this.createdDate = createdDate;}
+
+	public LocalDate getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	public void setLastModifiedDate(LocalDate lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
