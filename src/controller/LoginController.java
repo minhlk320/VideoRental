@@ -44,6 +44,7 @@ public class LoginController implements Initializable {
     }
 
     private void closeWindow(ActionEvent event) {
+        main.refreshContent();
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
         stage.close();
     }

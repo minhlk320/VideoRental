@@ -83,7 +83,7 @@ public class Main extends Application{
 	private LateChargeDAO lateChargeDAO;
 	private ReservationDAO reservationDAO;
 	private RateDAO rateDAO;
-
+	private String currentContent;
 	public Main() {
 		mainInstance = this;
 	}
@@ -101,6 +101,7 @@ public class Main extends Application{
 		Main.primaryStage = primaryStage;
 		root = loadFXML(URL_MAIN_LAYOUT).load();
 		root.setCenter(loadFXML(URL_ITEM_MANAGEMENT).load());
+		currentContent = SCENE_ITEM_MANAGEMENT;
 		primaryStage.setScene(new Scene(root));
 		primaryStage.getIcons().add(MAIN_ICON);
 		primaryStage.setTitle("Video Rental Store Application");
@@ -254,6 +255,8 @@ public class Main extends Application{
 		try {
 			Parent part = loadFXML(listUI.get(value)).load();
 			root.setCenter(part);
+			currentContent = value;
+			System.out.println(currentContent);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -299,6 +302,11 @@ public class Main extends Application{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+	}
+
+	public void refreshContent() {
+		changeScene(currentContent);
 	}
 
 	/**

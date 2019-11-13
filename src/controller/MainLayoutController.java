@@ -67,26 +67,29 @@ public class MainLayoutController implements Initializable {
                 main.doLogout();
                 btnLogin.setText("Login");
                 labelUser.setText("");
+                main.refreshContent();
             }
-
         });
         // Listener for Tab change - content change
         tabPane.getSelectionModel().selectedIndexProperty().addListener((ov, oldValue, newValue) -> {
-            switch ((int) newValue) {
-                case TAB_ITEM:
-                    main.changeScene(main.SCENE_ITEM_MANAGEMENT);
-                    break;
-                case TAB_RESERVATION:
-                    main.changeScene(main.SCENE_RESERVATION_MANAGEMENT);
-                    break;
-                case TAB_CUSTOMER:
-                    main.changeScene(main.SCENE_CUSTOMER_MANAGEMENT);
-                    break;
-                case TAB_TITLE:
-                    main.changeScene(main.SCENE_TITLE_MANAGEMENT);
-                    break;
-            }
+            selectTab((int) newValue);
         });
     }
 
+    private void selectTab(int index) {
+        switch (index) {
+            case TAB_ITEM:
+                main.changeScene(main.SCENE_ITEM_MANAGEMENT);
+                break;
+            case TAB_RESERVATION:
+                main.changeScene(main.SCENE_RESERVATION_MANAGEMENT);
+                break;
+            case TAB_CUSTOMER:
+                main.changeScene(main.SCENE_CUSTOMER_MANAGEMENT);
+                break;
+            case TAB_TITLE:
+                main.changeScene(main.SCENE_TITLE_MANAGEMENT);
+                break;
+        }
+    }
 }

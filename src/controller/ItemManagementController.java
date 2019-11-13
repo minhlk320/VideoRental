@@ -91,6 +91,15 @@ public class ItemManagementController implements Initializable {
         initTable(listItem);
         showTitleName();
         showStatus();
+        if (main.isLogged) {
+            btnDelete.setDisable(false);
+            btnSave.setDisable(false);
+            btnNew.setDisable(false);
+        } else {
+            btnDelete.setDisable(true);
+            btnSave.setDisable(true);
+            btnNew.setDisable(true);
+        }
         btnRefresh.setOnAction(e -> {
             clearForm();
             refreshTable();

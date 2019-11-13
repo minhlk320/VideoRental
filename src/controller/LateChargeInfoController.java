@@ -23,7 +23,6 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class LateChargeInfoController implements Initializable {
@@ -85,6 +84,11 @@ public class LateChargeInfoController implements Initializable {
         } else {
             tfCustomerID.setText(currentCustomer.getCustomerID());
             loadCustomer();
+        }
+        if (main.isLogged) {
+            btnCancelLateCharge.setDisable(false);
+        } else {
+            btnCancelLateCharge.setDisable(true);
         }
         //Button
         btnEnter.setOnAction(e -> {
