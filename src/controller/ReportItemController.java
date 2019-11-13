@@ -9,8 +9,6 @@ import daos.ReservationDAO;
 import entities.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -20,7 +18,6 @@ import ui.Main;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ReportItemController implements Initializable {
@@ -51,7 +48,7 @@ public class ReportItemController implements Initializable {
     private CustomerDAO customerDAO;
     private RentalDAO rentalDAO;
     private ReservationDAO reservationDAO;
-
+    private Item item;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -62,24 +59,17 @@ public class ReportItemController implements Initializable {
         customerDAO = main.getCustomerDAO();
         rentalDAO = main.getRentalDAO();
         reservationDAO = main.getReservationDAO();
+        findItem();
         tfItemID.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.ENTER){
                 clearForm();
+                this.item = itemDAO.getById(Item.class, tfItemID.getText());
                 findItem();
             }
         });
-        btnEnter.setOnAction(e->{
-            clearForm();
-            findItem();
-        });
-
-
     }
     void findItem(){
-        String id = tfItemID.getText().trim();
-        Item item = itemDAO.getById(Item.class,id);
         if (item == null) {
-            main.showMessage("Entered ID not found, please check again!", "Message", null);
             tfItemID.requestFocus();
             return;
         }
@@ -115,14 +105,20 @@ public class ReportItemController implements Initializable {
         customerInfo.setText("");
     }
     private void loadBasicInfo(Item item){
+        tfItemID.setText(item.getItemID());
         lbTitle.setText(item.getTitle().getTitleName());
         lbStatus.setText(item.getStatus());
         imgTitle.setImage(item.getTitle().getImage());
     }
+
     private void loadCustomerInfo(Customer customer){
         String info ="Customer ID: " + customer.getCustomerID() + "\n" + "Customer Name: " + customer.getFirstName() + " " + customer.getLastName()+"\n"
-        + "Address: " + customer.getAddress() + "\n" + "Phone Number: " + customer.getPhoneNumber();
+                + "Address: " + customer.getAddress() + "\n" + "Phone Number: " + customer.getPhoneNumber();
         customerInfo.setText(info);
 
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
     }
 }

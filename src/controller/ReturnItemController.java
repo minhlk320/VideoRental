@@ -34,7 +34,6 @@ public class ReturnItemController implements Initializable {
     private ItemDAO itemDAO;
     private LateChargeDAO lateChargeDAO;
     private ReservationDAO reservationDAO;
-    private Customer currentCustomer;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -91,7 +90,6 @@ public class ReturnItemController implements Initializable {
         LocalDate currentDate = LocalDate.now();
         LocalDate rentedDate = lastestRental.getDate();
         Customer customer = lastestRental.getCustomer();
-        this.currentCustomer = customer;
         RentalDetail rentalDetailofItem = null;
         List<RentalDetail> rentalDetailList = lastestRental.getItems();
         for (RentalDetail rentalDetail : rentalDetailList) {
@@ -106,7 +104,7 @@ public class ReturnItemController implements Initializable {
             double totalAmount = numOfOverDueDay * rentalDetailofItem.getLateRate();
             lateChargeDAO.addLateCharge(item, customer, totalAmount, dueOn);
             if(main.requestConfirm("This item has been returned lately! Do you want to make late charge payment now?","Message",null))
-                  main.displayLateCharge(currentCustomer);
+                main.displayLateCharge(customer);
         }
         main.showMessage("Returned : " + item.getItemID(), "Message", null);
     }

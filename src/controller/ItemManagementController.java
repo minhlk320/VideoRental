@@ -1,13 +1,15 @@
 package controller;
 
 import com.jfoenix.controls.JFXButton;
-import daos.ItemDAO;
-import daos.TitleDAO;
+import com.jfoenix.controls.JFXTextField;
+import daos.*;
 import entities.Item;
 import entities.Title;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,7 +24,10 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ItemManagementController implements Initializable {
-
+    @FXML
+    private Button btnReturnItem;
+    @FXML
+    private Button btnReportItem;
     @FXML
     private TextField txtItemID;
 
@@ -35,6 +40,8 @@ public class ItemManagementController implements Initializable {
 
     @FXML
     private Button btnRefresh;
+    @FXML
+    private JFXTextField tfFilter;
 
     @FXML
     private JFXButton btnNew;
@@ -63,20 +70,29 @@ public class ItemManagementController implements Initializable {
     @FXML
     private TableColumn<Item, String> colLastModifiedDate;
 
-    @FXML
-    private JFXButton btnLogin;
     private ItemDAO itemDAO;
+    private RentalDAO rentalDAO;
+    private LateChargeDAO lateChargeDAO;
+    private TitleDAO titleDAO;
+    private ReservationDAO reservationDAO;
     private List<Item> listItem;
-
+    private FilteredList<Item> filterItem;
+    private SortedList<Item> sortedList;
+    private Main main;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Main main = Main.getInstance();
+        main = Main.getInstance();
         itemDAO = main.getItemDAO();
+        rentalDAO = main.getRentalDAO();
+        lateChargeDAO = main.getLateChargeDAO();
+        reservationDAO = main.getReservationDAO();
+        titleDAO = main.getTitleDAO();
         listItem = itemDAO.getAll(Item.class);
         initTable(listItem);
         showTitleName();
         showStatus();
         btnRefresh.setOnAction(e -> {
+            clearForm();
             refreshTable();
         });
         btnNew.setOnAction(e -> {
@@ -125,13 +141,36 @@ public class ItemManagementController implements Initializable {
                 case "Yes":
                     boolean x = itemDAO.delete(item);
                     alert.setContentText("Deleted !");
+                    clearForm();
                     break;
                 default:
                     alert.close();
                     break;
             }
+
             refreshTable();
 
+        });
+        tfFilter.textProperty().addListener((observable, oldValue, newValue) -> {
+            filterItem.setPredicate(item -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (item.getItemID().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                }
+                return false;
+            });
+        });
+
+        btnReturnItem.setOnAction(e -> {
+            //Return Item
+            main.displayInputItem(txtItemID.getText());
+        });
+        btnReportItem.setOnAction(e -> {
+            main.displayStatus(table.getSelectionModel().getSelectedItem());
         });
         table.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
@@ -147,8 +186,8 @@ public class ItemManagementController implements Initializable {
                 }
             }
 
-            private int getIndexForStatus(String s) {
-                switch (s) {
+            private int getIndexForStatus(String status) {
+                switch (status) {
                     case Item.ON_HOLD:
                         return 0;
                     case Item.ON_SHELF:
@@ -160,6 +199,16 @@ public class ItemManagementController implements Initializable {
                 }
                 return -1;
             }
+        });
+        table.setRowFactory(tv -> {
+            TableRow<Item> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (!row.isEmpty())) {
+                    Item rowData = row.getItem();
+                    main.displayStatus(rowData);
+                }
+            });
+            return row;
         });
 
     }
@@ -182,6 +231,11 @@ public class ItemManagementController implements Initializable {
         }
     }
 
+    private void clearForm() {
+        txtItemID.clear();
+        cbTitle.getSelectionModel().select(-1);
+        cbStatus.getSelectionModel().select(-1);
+    }
     private void initTable(List<Item> list) {
         ObservableList<Item> tkList = FXCollections.observableArrayList(list);
         colItemID.setSortable(false);
@@ -190,17 +244,21 @@ public class ItemManagementController implements Initializable {
         colStatus.setCellValueFactory(celldata -> new SimpleStringProperty(celldata.getValue().getStatus()));
         colCreatedDate.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getCreatedDate().toString()));
         colLastModifiedDate.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getLastModifiedDate().toString()));
-        table.setItems(tkList);
+        filterItem = new FilteredList<>(tkList, p -> true);
+        sortedList = new SortedList<>(filterItem);
+        sortedList.comparatorProperty().bind(table.comparatorProperty());
+        table.setItems(sortedList);
     }
 
     private void refreshTable() {
+        tfFilter.clear();
         listItem = itemDAO.getAll(Item.class);
-        table.getItems().setAll(listItem);
+        table.setItems(FXCollections.observableArrayList(listItem));
         table.refresh();
     }
 
     private void showTitleName() {
-        ObservableList<Title> listTitle = FXCollections.observableArrayList(new TitleDAO().getAll(Title.class));
+        ObservableList<Title> listTitle = FXCollections.observableArrayList(titleDAO.getAll(Title.class));
         for (int i = 0; i < listTitle.size(); i++) {
             cbTitle.setItems(listTitle);
             cbTitle.getSelectionModel().select(-1);
@@ -220,5 +278,6 @@ public class ItemManagementController implements Initializable {
         }
         return true;
     }
+
 
 }

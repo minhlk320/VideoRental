@@ -2,8 +2,9 @@ package ui;
 
 import com.sun.javafx.application.LauncherImpl;
 import controller.LateChargeInfoController;
+import controller.ReportItemController;
 import daos.*;
-import entities.Customer;
+import entities.*;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.application.Preloader;
@@ -14,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
@@ -22,7 +24,10 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -175,7 +180,6 @@ public class Main extends Application{
 		listUI.put(SCENE_LATE_CHARGE_INFO, URL_LATE_CHARGE_INFO);
 		listUI.put(SCENE_RESERVATION, URL_RESERVATION);
 		listUI.put(SCENE_RESERVATION_MANAGEMENT, URL_RESERVATION_MANAGEMENT);
-		listUI.put(SCENE_REPORT_ITEM, URL_REPORT_ITEM);
 	}
 
 	/**
@@ -341,6 +345,10 @@ public class Main extends Application{
 		alert.setTitle(title);
 		alert.setHeaderText(header);
 		alert.setContentText(message);
+		alert.getDialogPane().getStylesheets().addAll(this.root.getStylesheets());
+		alert.getDialogPane().getStyleClass().addAll(this.root.getStyleClass());
+		Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+		stage.getIcons().setAll(MAIN_ICON);
 		Optional<ButtonType> option = alert.showAndWait();
 		if (option.get() == null) {
 			return false;
@@ -397,6 +405,81 @@ public class Main extends Application{
 
 	}
 
+	public void displayInputItem(String itemID) {
+		TextInputDialog dialog = new TextInputDialog(itemID);
+		dialog.setTitle("Input ItemID");
+		dialog.setHeaderText("Return Item");
+		dialog.setContentText("Input ID here :");
+
+		dialog.getDialogPane().getStylesheets().addAll(this.root.getStylesheets());
+		dialog.getDialogPane().getStyleClass().addAll(this.root.getStyleClass());
+		Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+		stage.getIcons().setAll(MAIN_ICON);
+
+		Optional<String> result = dialog.showAndWait();
+		result.ifPresent(itemItd -> {
+			returnItem(itemItd);
+		});
+	}
+
+	/**
+	 * @param id
+	 * @UC01b Return Item
+	 * Return Item by id
+	 */
+	public void returnItem(String id) {
+		Item item = itemDAO.getById(Item.class, id);
+		if (item == null) {
+			showMessage("Entered ID not found, please check again!", "Message", null);
+			//tfItemID.requestFocus();
+			return;
+		}
+		if (!item.getStatus().equalsIgnoreCase(Item.RENTED)) {
+			showMessage("Entered ID can not be return due to entered item's status is : " + item.getStatus(), "Message", null);
+			return;
+		}
+		Rental lastestRental = rentalDAO.getLatestRentalByItemID(item.getItemID());
+		if (requestConfirm("Do you want to return this Item?" + "\n ItemID:" + item.getItemID() + "\n Title: " + item.getTitle().getTitleName() + "\n Customer Info:\n" + lastestRental.getCustomer().getFirstName() + " " + lastestRental.getCustomer().getLastName() + "\n Address: " + lastestRental.getCustomer().getAddress() + "\n Phone:" + lastestRental.getCustomer().getPhoneNumber(), "Message", null)) {
+			checkReturnItem(item);
+			Reservation reservation = reservationDAO.checkReservation(item);
+			if (reservation != null) {
+				showMessage("The newly returned Item has been placed ON_HOLD to :  " + reservation.getCustomer().getFirstName() + " " + reservation.getCustomer().getLastName() + "\n" + "Phone: " + reservation.getCustomer().getPhoneNumber(), "Message", null);
+				return;
+			}
+		}
+
+	}
+
+	/**
+	 * @param item
+	 * @UC01b Return item
+	 * check item for return action/
+	 */
+	private void checkReturnItem(Item item) {
+
+		Rental lastestRental = rentalDAO.getLatestRentalByItemID(item.getItemID());
+		LocalDate currentDate = LocalDate.now();
+		LocalDate rentedDate = lastestRental.getDate();
+		Customer customer = lastestRental.getCustomer();
+		RentalDetail rentalDetailofItem = null;
+		List<RentalDetail> rentalDetailList = lastestRental.getItems();
+		for (RentalDetail rentalDetail : rentalDetailList) {
+			if (rentalDetail.getItem().equals(item)) {
+				rentalDetailofItem = rentalDetail;
+			}
+		}
+		if (currentDate.isAfter(rentedDate.plusDays(rentalDetailofItem.getRentalPeriod()))) {
+			LocalDate dueOn = rentedDate.plusDays(rentalDetailofItem.getRentalPeriod());
+			Duration diff = Duration.between(dueOn.atStartOfDay(), currentDate.atStartOfDay());
+			int numOfOverDueDay = (int) diff.toDays();
+			double totalAmount = numOfOverDueDay * rentalDetailofItem.getLateRate();
+			lateChargeDAO.addLateCharge(item, customer, totalAmount, dueOn);
+			if (requestConfirm("This item has been returned lately! Do you want to make late charge payment now?", "Message", null))
+				displayLateCharge(customer);
+		}
+		showMessage("Returned : " + item.getItemID(), "Message", null);
+	}
+
 	/**
 	 * Open new window (scene contain in list (name = key) )
 	 * @param name
@@ -424,6 +507,50 @@ public class Main extends Application{
 		}
 	}
 
+	/**
+	 * Report Item Info
+	 *
+	 * @param item
+	 */
+	public void displayStatus(Item item) {
+		try {
+			Stage stage = new Stage();
+			FXMLLoader loader = loadFXML(URL_REPORT_ITEM);
+			if (item != null) {
+				loader.setControllerFactory((Class<?> controllerType) -> {
+					if (controllerType == ReportItemController.class) {
+						ReportItemController controller = new ReportItemController();
+						controller.setItem(item);
+						return controller;
+					} else {
+						try {
+							return controllerType.newInstance();
+						} catch (Exception e) {
+							throw new RuntimeException(e);
+						}
+					}
+				});
+			}
+			Parent root = loader.load();
+			Scene scene = new Scene(root);
+			root.getStylesheets().setAll(this.root.getStylesheets());
+			root.getStyleClass().setAll(this.root.getStyleClass());
+			stage.setTitle(TITLE_REPORT_ITEM);
+			scene.setFill(Color.TRANSPARENT);
+			stage.setResizable(true);
+			stage.getIcons().add(MAIN_ICON);
+			stage.setScene(scene);
+			stage.initStyle(StageStyle.DECORATED);
+			stage.initModality(Modality.WINDOW_MODAL);
+			stage.initOwner(primaryStage);
+			stage.setResizable(false);
+			stage.show();
+
+		} catch (final IOException e) {
+			e.printStackTrace();
+		}
+
+	}
 	/**
 	 * Close window
 	 */

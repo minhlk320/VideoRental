@@ -94,6 +94,15 @@
     -fx-font-size: 10pt;
     -fx-font-family: "Segoe UI Semibold";
 }
+
+.header-panel {
+    -fx-background-color: #070d59;
+}
+
+.header-panel .label {
+    -fx-font-size: 18px;
+    -fx-fill: #ceddef;
+}
 .tab-pane:top .tab-header-area .tab-header-background{
     -fx-padding: 5 22 5 22;
     -fx-background-radius: 0;

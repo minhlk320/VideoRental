@@ -6,14 +6,15 @@ import javafx.application.Preloader;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class MyPreloader extends Preloader {
     public final String URL_LOADING = "/resources/fxml/Loading.fxml";
+    public Image ICON = new Image("/resources/img/icon.png");
     private Stage preloaderStage;
     private Scene scene;
-
     public MyPreloader() {
 
     }
@@ -26,8 +27,8 @@ public class MyPreloader extends Preloader {
 
     @Override
     public void start(Stage primaryStage) {
-
         this.preloaderStage = primaryStage;
+        preloaderStage.getIcons().add(ICON);
         preloaderStage.setScene(scene);
         preloaderStage.initStyle(StageStyle.UNDECORATED);
         preloaderStage.show();
