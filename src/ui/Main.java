@@ -13,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
@@ -22,6 +23,7 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Optional;
 
 /**
  *
@@ -327,6 +329,29 @@ public class Main extends Application{
 		stage.getIcons().setAll(MAIN_ICON);
 		alert.showAndWait();
 
+	}
+	/**
+	 * Show confirm dialog
+	 * @param message
+	 * @param title
+	 * @param header
+	 */
+	public boolean requestConfirm(String message, String title, String header) {
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setTitle(title);
+		alert.setHeaderText(header);
+		alert.setContentText(message);
+		Optional<ButtonType> option = alert.showAndWait();
+		if (option.get() == null) {
+			return false;
+		}
+		if (option.get() == ButtonType.OK) {
+			return true;
+		}
+		if (option.get() == ButtonType.CANCEL) {
+			return false;
+		}
+		return false;
 	}
 
 	/**

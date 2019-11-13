@@ -43,6 +43,8 @@ public class Item implements Serializable{
 	}
 	public Item() {
 		super();
+		this.createdDate = LocalDate.now();
+		this.lastModifiedDate = LocalDate.now();
 	}
 	public Title getTitle() {
 		return title;

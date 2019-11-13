@@ -66,6 +66,8 @@ public class LateChargeInfoController implements Initializable {
     @FXML
     private Button btnEnter;
     @FXML
+    private Button btnCancelLateCharge;
+    @FXML
     private JFXTextField tfCustomerID;
 
     @Override
@@ -94,8 +96,21 @@ public class LateChargeInfoController implements Initializable {
                 loadCustomer();
             }
         });
+        btnCancelLateCharge.setOnAction(e->{
+            if (table.getSelectionModel().getSelectedItem()==null)
+            {
+                main.showMessage("Choose a late charge to procced","Message",null);
+                return;
+            }
+
+            if(main.requestConfirm("Do you want to cancel this Late charge?","Message",null)){
+                LateCharge lateCharge = (LateCharge) table.getSelectionModel().getSelectedItem();
+                lateChargeDAO.delete(lateCharge);
+                main.showMessage("Deleted!","Message",null);
+            }
+        });
         btnCancel.setOnAction(e -> {
-            if (requestConfirm("Do you want to exit?", "Message", null)) {
+            if (main.requestConfirm("Do you want to exit?", "Message", null)) {
                 Stage stage = (Stage) ((Button) e.getSource()).getScene().getWindow();
                 stage.close();
             }
@@ -106,7 +121,7 @@ public class LateChargeInfoController implements Initializable {
                 return;
             }
             String message = "Total Payment is $" + lateChargeDAO.getTotalLatechargePayment(lateChargeChosenList);
-            if (requestConfirm(message, "Message", null)) {
+            if (main.requestConfirm(message, "Message", null)) {
                 for (LateCharge lc : lateChargeChosenList) {
                     lc.setPurchaseDate(LocalDate.now());
                     lateChargeDAO.update(lc);
@@ -118,6 +133,7 @@ public class LateChargeInfoController implements Initializable {
     }
 
     private void loadCustomer() {
+        clearForm();
         String id = tfCustomerID.getText();
         if (id.isEmpty()) {
             tfCustomerID.requestFocus();
@@ -125,7 +141,6 @@ public class LateChargeInfoController implements Initializable {
         }
         Customer customer = findCustomer(id);
         if (customer == null) {
-            clearForm();
             tfCustomerID.clear();
             tfCustomerID.requestFocus();
             main.showMessage("Customer not found, please try again!", "Message", null);
@@ -225,30 +240,14 @@ public class LateChargeInfoController implements Initializable {
         double total = lateChargeDAO.getTotalLatechargePayment(lateChargeChosenList);
         textTotalCharge.setText("$" + total);
     }
-
-    private boolean requestConfirm(String message, String title, String header) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(header);
-        alert.setContentText(message);
-        Optional<ButtonType> option = alert.showAndWait();
-        if (option.get() == null) {
-            return false;
-        }
-        if (option.get() == ButtonType.OK) {
-            return true;
-        }
-        if (option.get() == ButtonType.CANCEL) {
-            return false;
-        }
-        return false;
-    }
-
     private void clearForm() {
         textCustomerName.setText("");
         textCustomerAddress.setText("");
         textCustomerPhone.setText("");
         textCustomerJoinedDate.setText("");
         textTotalCharge.setText("$0");
+        lateChargeList.clear();
+        lateChargeChosenList.clear();
+        table.getItems().clear();
     }
 }

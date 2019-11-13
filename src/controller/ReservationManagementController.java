@@ -29,13 +29,7 @@ public class ReservationManagementController implements Initializable {
     private Button btnEnter;
 
     @FXML
-    private Button btnNew;
-
-    @FXML
     private Button btnCancelReservation;
-
-    @FXML
-    private Button btnRecall;
 
     @FXML
     private TableView<Reservation> table;
@@ -73,51 +67,21 @@ public class ReservationManagementController implements Initializable {
         btnEnter.setOnAction(e->{
             loadTable(reservationDAO.getReservationbyCustomerID(tf_customerID.getText()));
         });
-        btnNew.setOnAction(e->{
-            main.changeScene(main.SCENE_RESERVATION);
-        });
         btnCancelReservation.setOnAction(e->{
             Reservation reservation = table.getSelectionModel().getSelectedItem();
             if(reservation==null)
-                showMessage("Choose a line on table to cancel","Message",null);
+                main.showMessage("Choose a line on table to cancel","Message",null);
             else
             {
-                if(confirmDialog("Warning","Do you want to cancel the chosen reservation")){
+                if(main.requestConfirm("Do you want to cancel the chosen reservation","Warning",null)){
                     table.getItems().remove(reservation);
                     reservationDAO.delete(reservation);
                     if (reservation.getItem()!=null)
                         reservationDAO.checkReservation(reservation.getItem());
-                    showMessage("Cancellation successful!","Message",null);
+                    main.showMessage("Cancellation successful!","Message",null);
                 }
             }
         });
-        btnRecall.setOnAction(e->{
-            showMessage("Todo, call rental function to make a rental transaction to this customer along with on-hold item","Message",null);
-        });
-
-    }
-    private boolean confirmDialog(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(message);
-        Optional<ButtonType> option = alert.showAndWait();
-        if (option.get() == null) {
-            return false;
-        }
-        if (option.get() == ButtonType.OK) {
-            return true;
-        }
-        if (option.get() == ButtonType.CANCEL) {
-            return false;
-        }
-        return false;
-    }
-    private void showMessage(String message, String title, String header){
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(header);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
     private void loadTable(List<Reservation> list) {
 //        if (list.isEmpty()){

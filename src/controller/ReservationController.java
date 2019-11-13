@@ -106,13 +106,8 @@ public class ReservationController implements Initializable {
                 updateCustomerInfo(customer);
             }
         });
-        btnDone.setOnAction(e -> {
-           if(confirmReservation()){
-               //?
-           }
-        });
         btnCancel.setOnAction(e -> {
-            if (confirmExit()) {
+            if (main.requestConfirm("Do you want to exit?","Message",null)) {
                 Stage stage = (Stage) ((Button) e.getSource()).getScene().getWindow();
                 stage.close();
             }
@@ -152,7 +147,7 @@ public class ReservationController implements Initializable {
                 tfTitleName.requestFocus();
                 return;
             }
-            if (confirmReservation()) {
+            if (main.requestConfirm("Do you want to make this reservation","Message",null)) {
                 Reservation reservation = new Reservation();
                 reservation.setCustomer(currentCustomer);
                 reservation.setTitle(title);
@@ -178,40 +173,6 @@ public class ReservationController implements Initializable {
         Customer customer = customerDAO.getById(Customer.class, customerID);
         return customer;
     }
-
-    private boolean confirmExit() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation");
-        alert.setHeaderText("Do you want to exit ?");
-        Optional<ButtonType> option = alert.showAndWait();
-        if (option.get() == null) {
-            return false;
-        }
-        if (option.get() == ButtonType.OK) {
-            return true;
-        }
-        if (option.get() == ButtonType.CANCEL) {
-            return false;
-        }
-        return false;
-    }
-    private boolean confirmReservation() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation");
-        alert.setHeaderText("Do you want to make this reservation ?");
-        Optional<ButtonType> option = alert.showAndWait();
-        if (option.get() == null) {
-            return false;
-        }
-        if (option.get() == ButtonType.OK) {
-            return true;
-        }
-        if (option.get() == ButtonType.CANCEL) {
-            return false;
-        }
-        return false;
-    }
-
     /**
      * @param name
      * @Minh

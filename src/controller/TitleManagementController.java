@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 import daos.RateDAO;
 import daos.TitleDAO;
+import entities.Item;
 import entities.Rate;
 import entities.Title;
 import javafx.beans.property.SimpleStringProperty;
@@ -75,6 +76,20 @@ public class TitleManagementController implements Initializable {
 
 	@FXML
 	private TableColumn<Title, String> colNumOfCopies;
+	@FXML
+	private TableColumn<Title, String> colAllCopies;
+
+	@FXML
+	private TableColumn<Title, String> colRented;
+
+	@FXML
+	private TableColumn<Title, String> colOnHold;
+
+	@FXML
+	private TableColumn<Title, String> colOnShelf;
+
+	@FXML
+	private TableColumn<Title, String> colLost_Damage;
 
 	@FXML
 	private TableColumn<Title, String> colDescription;
@@ -211,7 +226,12 @@ public class TitleManagementController implements Initializable {
 			colTitleID.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getTitleID()));
 			colTitle.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getTitleName()));
 			colDescription.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getDesciption()));
-			colNumOfCopies.setCellValueFactory((celldata->new SimpleStringProperty("0")));
+			//colNumOfCopies.setCellValueFactory((celldata->new SimpleStringProperty("0")));
+			colAllCopies.setCellValueFactory((celldata->new SimpleStringProperty(titleDAO.getNumberAllcopies(celldata.getValue().getTitleID())+"")));
+			colLost_Damage.setCellValueFactory(celldata->new SimpleStringProperty(titleDAO.getNumbercopiesByStatus(celldata.getValue().getTitleID(), Item.LOST_DAMAGE)+""));
+			colOnHold.setCellValueFactory(celldata->new SimpleStringProperty(titleDAO.getNumbercopiesByStatus(celldata.getValue().getTitleID(), Item.ON_HOLD)+""));
+			colOnShelf.setCellValueFactory(celldata->new SimpleStringProperty(titleDAO.getNumbercopiesByStatus(celldata.getValue().getTitleID(), Item.ON_SHELF)+""));
+			colRented.setCellValueFactory(celldata->new SimpleStringProperty(titleDAO.getNumbercopiesByStatus(celldata.getValue().getTitleID(), Item.RENTED)+""));
 			colItemClass.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getItemClass().getItemClassName()));
 		table.setItems(tkList);
 	}
