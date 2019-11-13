@@ -1,20 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
-
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.192" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReservationManagementController">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea"
+            fx:controller="controller.ReservationManagementController">
    <children>
        <HBox spacing="8.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0">
          <children>
@@ -39,8 +31,8 @@
                          <Insets />
                      </VBox.margin>
                      <children>
-                         <TextField fx:id="tf_customerID" focusTraversable="false" promptText="Enter Customer ID" HBox.hgrow="ALWAYS" />
-                         <JFXButton fx:id="btnEnter" text="Enter" HBox.hgrow="ALWAYS" />
+                         <TextField fx:id="tfCustomerID" focusTraversable="false" promptText="Filter Customer ID"
+                                    HBox.hgrow="ALWAYS"/>
                      </children>
                   </HBox>
                   <VBox VBox.vgrow="ALWAYS">

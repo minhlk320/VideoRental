@@ -5,28 +5,24 @@ import entities.Reservation;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
-import javafx.scene.text.Text;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import ui.Main;
 
 import java.net.URL;
 import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ReservationManagementController implements Initializable {
 
     @FXML
-    private Text lbItemID;
-
-    @FXML
-    private TextField tf_customerID;
-
-    @FXML
-    private Button btnEnter;
+    private TextField tfCustomerID;
 
     @FXML
     private Button btnCancelReservation;
@@ -53,19 +49,27 @@ public class ReservationManagementController implements Initializable {
     private TableColumn<Reservation, String> colComment;
     private Main main;
     private ReservationDAO reservationDAO;
+    private List<Reservation> reservationList;
+    private FilteredList<Reservation> filterReservation;
+    private SortedList<Reservation> sortedList;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         main = Main.getInstance();
         reservationDAO = main.getReservationDAO();
-        List<Reservation> reservationList = reservationDAO.getAll(Reservation.class);
-        loadTable(reservationList);
-        tf_customerID.setOnKeyReleased(e->{
-            if (e.getCode() == KeyCode.ENTER) {
-                loadTable(reservationDAO.getReservationbyCustomerID(tf_customerID.getText()));
-            }
-        });
-        btnEnter.setOnAction(e->{
-            loadTable(reservationDAO.getReservationbyCustomerID(tf_customerID.getText()));
+        reservationList = reservationDAO.getAll(Reservation.class);
+        initTable(reservationList);
+        tfCustomerID.textProperty().addListener((observable, oldValue, newValue) -> {
+            filterReservation.setPredicate(reservation -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (reservation.getCustomer().getCustomerID().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                }
+                return false;
+            });
         });
         btnCancelReservation.setOnAction(e->{
             Reservation reservation = table.getSelectionModel().getSelectedItem();
@@ -83,23 +87,26 @@ public class ReservationManagementController implements Initializable {
             }
         });
     }
-    private void loadTable(List<Reservation> list) {
-//        if (list.isEmpty()){
-//            showMessage("Reservation not found, please try again!", "Message",null);
-//            return;
-//        }
 
+    private void refreshTable() {
+        tfCustomerID.clear();
+        reservationList = reservationDAO.getAll(Reservation.class);
+        table.setItems(FXCollections.observableArrayList(reservationList));
+        table.refresh();
+    }
+
+    private void initTable(List<Reservation> list) {
         ObservableList<Reservation> tkList = FXCollections.observableArrayList(list);
-        for(int i = 0; i<tkList.size(); i++){
-            colReservationID.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getReservationID()));
-            colItemID.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getItem()==null?"":celldata.getValue().getItem().getItemID()));
-            colTitle.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getTitle().getTitleName()));
-            colCustomerID.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getCustomer().getCustomerID()));
-            colComment.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getComment()));
-            colReservationDate.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getReservationDate().toString()));
-
-        }
-        table.setItems(tkList);
+        colReservationID.setCellValueFactory(celldata -> new SimpleStringProperty(celldata.getValue().getReservationID()));
+        colItemID.setCellValueFactory(celldata -> new SimpleStringProperty(celldata.getValue().getItem() == null ? "" : celldata.getValue().getItem().getItemID()));
+        colTitle.setCellValueFactory(celldata -> new SimpleStringProperty(celldata.getValue().getTitle().getTitleName()));
+        colCustomerID.setCellValueFactory(celldata -> new SimpleStringProperty(celldata.getValue().getCustomer().getCustomerID()));
+        colComment.setCellValueFactory(celldata -> new SimpleStringProperty(celldata.getValue().getComment()));
+        colReservationDate.setCellValueFactory(celldata -> new SimpleStringProperty(celldata.getValue().getReservationDate().toString()));
+        filterReservation = new FilteredList<>(tkList, p -> true);
+        sortedList = new SortedList<>(filterReservation);
+        sortedList.comparatorProperty().bind(table.comparatorProperty());
+        table.setItems(sortedList);
     }
 
 }
