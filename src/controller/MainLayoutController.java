@@ -42,7 +42,7 @@ public class MainLayoutController implements Initializable {
         });
         //Active UC01b - Return Item
         btnReturnItems.setOnAction(event -> {
-            main.displayInputItem(null);
+            main.displayReturnItem(null);
         });
         //Active UC05c - Record late charge payment
         btnPayLateCharge.setOnAction(event -> {

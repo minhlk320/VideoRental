@@ -167,7 +167,7 @@ public class ItemManagementController implements Initializable {
 
         btnReturnItem.setOnAction(e -> {
             //Return Item
-            main.displayInputItem(txtItemID.getText());
+            main.displayReturnItem(txtItemID.getText());
         });
         btnReportItem.setOnAction(e -> {
             main.displayStatus(table.getSelectionModel().getSelectedItem());
@@ -178,6 +178,11 @@ public class ItemManagementController implements Initializable {
                 if (e.isPrimaryButtonDown() && e.getClickCount() == 1) {
 
                     Item item = table.getSelectionModel().getSelectedItem();
+                    if (item.getStatus().equals(Item.RENTED)) {
+                        btnReturnItem.setDisable(false);
+                    } else {
+                        btnReturnItem.setDisable(true);
+                    }
                     txtItemID.setText(item.getItemID());
                     cbTitle.setValue(item.getTitle());
                     cbStatus.setDisable(false);

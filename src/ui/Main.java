@@ -65,7 +65,6 @@ public class Main extends Application{
 	public final String URL_RENTAL = "/resources/fxml/RentalItem.fxml";
 	public final String URL_RESERVATION = "/resources/fxml/Reservation.fxml";
 	public final String URL_RESERVATION_MANAGEMENT = "/resources/fxml/ReservationList.fxml";
-	public final String URL_RETURN_ITEM = "/resources/fxml/ReturnItem.fxml";
 	public final String URL_REPORT_ITEM = "/resources/fxml/ReportItem.fxml";
 	public final String TITLE_RENTAL_ITEM = "Rent Item";
 	public final double MIN_HEIGHT = 720;
@@ -174,7 +173,6 @@ public class Main extends Application{
 	public void initLayout() {
 		listUI.put(SCENE_CUSTOMER_MANAGEMENT, URL_CUSTOMER_MANAGEMENT);
 		listUI.put(SCENE_RENTAL_ITEMS, URL_RENTAL);
-		listUI.put(SCENE_RETURN_ITEM, URL_RETURN_ITEM);
 		listUI.put(SCENE_TITLE_MANAGEMENT, URL_TITLE_MANAGEMENT);
 		listUI.put(SCENE_ITEM_MANAGEMENT, URL_ITEM_MANAGEMENT);
 		listUI.put(SCENE_LATE_CHARGE_INFO, URL_LATE_CHARGE_INFO);
@@ -405,12 +403,17 @@ public class Main extends Application{
 
 	}
 
-	public void displayInputItem(String itemID) {
+	/**
+	 * UC001b - Return Item
+	 * Display Input Text Dialog
+	 *
+	 * @param itemID
+	 */
+	public void displayReturnItem(String itemID) {
 		TextInputDialog dialog = new TextInputDialog(itemID);
-		dialog.setTitle("Input ItemID");
+		dialog.setTitle(TITLE_RETURN_ITEM);
 		dialog.setHeaderText("Return Item");
 		dialog.setContentText("Input ID here :");
-
 		dialog.getDialogPane().getStylesheets().addAll(this.root.getStylesheets());
 		dialog.getDialogPane().getStyleClass().addAll(this.root.getStyleClass());
 		Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
@@ -425,6 +428,7 @@ public class Main extends Application{
 	/**
 	 * @param id
 	 * @UC01b Return Item
+	 * Process
 	 * Return Item by id
 	 */
 	public void returnItem(String id) {
