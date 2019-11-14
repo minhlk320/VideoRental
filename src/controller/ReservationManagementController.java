@@ -73,19 +73,25 @@ public class ReservationManagementController implements Initializable {
         });
         btnCancelReservation.setOnAction(e->{
             Reservation reservation = table.getSelectionModel().getSelectedItem();
-            if(reservation==null)
-                main.showMessage("Choose a line on table to cancel","Message",null);
-            else
-            {
-                if(main.requestConfirm("Do you want to cancel the chosen reservation","Warning",null)){
-                    table.getItems().remove(reservation);
-                    reservationDAO.delete(reservation);
-                    if (reservation.getItem()!=null)
-                        reservationDAO.checkReservation(reservation.getItem());
-                    main.showMessage("Cancellation successful!","Message",null);
-                }
-            }
+            deleteReservation(reservation);
+            refreshTable();
         });
+    }
+
+    private void deleteReservation(Reservation reservation) {
+        if (reservation == null) {
+            main.showMessage("Choose a line on table to cancel", "Message", null);
+            return;
+        }
+        boolean confirmDelete = main.requestConfirm("Do you want to cancel the chosen reservation", "Warning", null);
+        if (confirmDelete) {
+            reservationDAO.delete(reservation);
+            if (reservation.getItem() != null) {
+                reservationDAO.checkReservation(reservation.getItem());
+            }
+            main.showMessage("Cancellation successful!", "Message", null);
+        }
+        refreshTable();
     }
 
     private void refreshTable() {

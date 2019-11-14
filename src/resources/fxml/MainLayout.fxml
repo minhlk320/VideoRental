@@ -46,7 +46,9 @@
                                     <children>
                                         <HBox alignment="CENTER_LEFT" spacing="12.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <children>
-                                                <Button fx:id="btnRentalItems" minHeight="80.0" minWidth="160.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="140.0">
+                                                <Button id="button-rental" fx:id="btnRentalItems" minHeight="80.0"
+                                                        minWidth="160.0" mnemonicParsing="false" prefHeight="80.0"
+                                                        prefWidth="140.0">
                                                     <graphic>
                                                         <VBox alignment="CENTER">
                                                             <children>
@@ -56,7 +58,9 @@
                                                         </VBox>
                                                     </graphic>
                                                 </Button>
-                                                <Button fx:id="btnReturnItems" layoutX="10.0" layoutY="10.0" minHeight="80.0" minWidth="160.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="140.0">
+                                                <Button id="button-return" fx:id="btnReturnItems" layoutX="10.0"
+                                                        layoutY="10.0" minHeight="80.0" minWidth="160.0"
+                                                        mnemonicParsing="false" prefHeight="80.0" prefWidth="140.0">
                                                     <graphic>
                                                         <VBox alignment="CENTER">
                                                             <children>
@@ -86,7 +90,7 @@
                                                         <VBox alignment="CENTER">
                                                             <children>
                                                                 <FontAwesomeIcon fill="WHITE" glyphName="TH" size="3EM" />
-                                                                <Label text="Make Reservations" wrapText="true" />
+                                                                <Label text="Make Reservation" wrapText="true"/>
                                                             </children>
                                                         </VBox>
                                                     </graphic>
@@ -110,7 +114,8 @@
                                                     <graphic>
                                                         <VBox alignment="CENTER">
                                                             <children>
-                                                                <FontAwesomeIcon fill="WHITE" glyphName="TITLE" size="3EM" />
+                                                                <FontAwesomeIcon fill="WHITE" glyphName="CLIPBOARD"
+                                                                                 size="3EM"/>
                                                                 <Label text="Title" wrapText="true" />
                                                             </children>
                                                         </VBox>
@@ -135,7 +140,8 @@
                                                     <graphic>
                                                         <VBox alignment="CENTER">
                                                             <children>
-                                                                <FontAwesomeIcon fill="WHITE" glyphName="USERS" size="3EM" />
+                                                                <FontAwesomeIcon fill="WHITE" glyphName="TICKET"
+                                                                                 size="3EM"/>
                                                                 <Label text="Pay Late Charge" wrapText="true" />
                                                             </children>
                                                         </VBox>

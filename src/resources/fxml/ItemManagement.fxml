@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.*?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
@@ -30,27 +29,19 @@
                   </JFXButton>
                </items>
             </ToolBar>
-            <VBox spacing="12.0" HBox.hgrow="ALWAYS">
+            <VBox id="content" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="12.0"
+                  HBox.hgrow="ALWAYS">
                <children>
-                  <Label text="ItemID"/>
                   <TextField fx:id="txtItemID" editable="false" focusTraversable="false" layoutX="10.0" layoutY="10.0"
-                             promptText="ItemID" VBox.vgrow="ALWAYS">
+                             maxWidth="1.7976931348623157E308" minWidth="264.0" promptText="ItemID" VBox.vgrow="ALWAYS">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
                   </TextField>
                   <Label layoutX="10.0" layoutY="10.0" text="Title Name"/>
-                  <ComboBox fx:id="cbTitle" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </ComboBox>
+                  <JFXComboBox fx:id="cbTitle" layoutX="18.0" layoutY="150.0" prefWidth="150.0" promptText="Title"/>
                   <Label layoutX="10.0" layoutY="10.0" text="Status"/>
-                  <ComboBox fx:id="cbStatus" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </ComboBox>
+                  <JFXComboBox fx:id="cbStatus" prefWidth="150.0" promptText="Status"/>
                   <HBox spacing="8.0" VBox.vgrow="ALWAYS">
                      <children>
                         <Button fx:id="btnReturnItem" mnemonicParsing="false" text="Return Item" HBox.hgrow="ALWAYS"/>
@@ -58,8 +49,11 @@
                      </children>
                   </HBox>
                </children>
+               <padding>
+                  <Insets bottom="9.0" left="8.0" right="8.0" top="8.0"/>
+               </padding>
             </VBox>
-            <VBox spacing="12.0" HBox.hgrow="ALWAYS">
+            <VBox id="content" spacing="12.0" HBox.hgrow="ALWAYS">
                <children>
                   <HBox>
                      <children>
@@ -67,17 +61,21 @@
                      </children>
                   </HBox>
                   <Label text="List of DVD/DISK" />
-                  <Button fx:id="btnRefresh" mnemonicParsing="false" text="Refresh" />
                   <TableView fx:id="table" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
                      <columns>
                         <TableColumn fx:id="colItemID" maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="-1.0" resizable="false" text="No." />
                         <TableColumn fx:id="colTitle" maxWidth="1.7976931348623157E308" minWidth="60.0" prefWidth="240.0" resizable="false" text="Title" />
                         <TableColumn fx:id="colStatus" maxWidth="1.7976931348623157E308" minWidth="70.0" prefWidth="-1.0" resizable="false" text="Status" />
-                        <TableColumn fx:id="colCreatedDate" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="-1.0" resizable="false" text="Created Date" />
-                        <TableColumn fx:id="colLastModifiedDate" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="-1.0" resizable="false" text="Last Modified Date" />
+                        <TableColumn fx:id="colCreatedDate" maxWidth="1.7976931348623157E308" minWidth="180.0"
+                                     prefWidth="-1.0" resizable="false" text="Created Date"/>
+                        <TableColumn fx:id="colLastModifiedDate" maxWidth="1.7976931348623157E308" minWidth="180.0"
+                                     prefWidth="-1.0" resizable="false" text="Last Modified Date"/>
                      </columns>
                   </TableView>
                </children>
+               <padding>
+                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+               </padding>
             </VBox>
          </children>
       </HBox>

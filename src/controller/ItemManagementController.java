@@ -1,6 +1,7 @@
 package controller;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import daos.*;
 import entities.Item;
@@ -32,14 +33,12 @@ public class ItemManagementController implements Initializable {
     private TextField txtItemID;
 
     @FXML
-    private ComboBox<Title> cbTitle;
+    private JFXComboBox<Title> cbTitle;
 
 
     @FXML
-    private ComboBox<String> cbStatus;
+    private JFXComboBox<String> cbStatus;
 
-    @FXML
-    private Button btnRefresh;
     @FXML
     private JFXTextField tfFilter;
 
@@ -100,10 +99,6 @@ public class ItemManagementController implements Initializable {
             btnSave.setDisable(true);
             btnNew.setDisable(true);
         }
-        btnRefresh.setOnAction(e -> {
-            clearForm();
-            refreshTable();
-        });
         btnNew.setOnAction(e -> {
             cbStatus.setDisable(true);
             if (!listItem.isEmpty()) {
@@ -273,10 +268,8 @@ public class ItemManagementController implements Initializable {
 
     private void showTitleName() {
         ObservableList<Title> listTitle = FXCollections.observableArrayList(titleDAO.getAll(Title.class));
-        for (int i = 0; i < listTitle.size(); i++) {
-            cbTitle.setItems(listTitle);
-            cbTitle.getSelectionModel().select(-1);
-        }
+        cbTitle.setItems(listTitle);
+        cbTitle.getSelectionModel().select(-1);
     }
 
     private void showStatus() {

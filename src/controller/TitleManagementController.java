@@ -107,9 +107,6 @@ public class TitleManagementController implements Initializable {
 		listTitles = titleDAO.getAll(Title.class);
 		initTable(listTitles);
 		showItemClass();
-		btnRefresh.setOnAction(event -> {
-			refreshTable();
-		});
 		btnNew.setOnAction(e->{
 			txtTitle.clear();
 			txtDescription.clear();
@@ -184,7 +181,6 @@ public class TitleManagementController implements Initializable {
 		btnDelete.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				TitleDAO titleDAO = new TitleDAO();
 				Title title = table.getSelectionModel().getSelectedItem();
 				Alert alert = new Alert(Alert.AlertType.INFORMATION);
 				alert.setTitle("Message !");
@@ -207,9 +203,8 @@ public class TitleManagementController implements Initializable {
 		});
 
 		table.setOnMousePressed(e->{
-			if(table.getSelectionModel().getSelectedItem()==null)
-				return;
-			if(e.isPrimaryButtonDown() && e.getClickCount()==1) {
+			if (table.getSelectionModel().getSelectedItem() == null) return;
+			if (e.isPrimaryButtonDown() && e.getClickCount() == 1) {
 				txtTitleID.setText(table.getSelectionModel().getSelectedItem().getTitleID());
 				txtTitle.setText(table.getSelectionModel().getSelectedItem().getTitleName());
 				txtDescription.setText(table.getSelectionModel().getSelectedItem().getDesciption());
@@ -222,17 +217,17 @@ public class TitleManagementController implements Initializable {
 
 	private void initTable(List<Title> list) {
 		ObservableList<Title> tkList = FXCollections.observableArrayList(list);
-			colTitleID.setSortable(false);
-			colTitleID.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getTitleID()));
-			colTitle.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getTitleName()));
-			colDescription.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getDesciption()));
+		colTitleID.setSortable(false);
+		colTitleID.setCellValueFactory(celldata -> new SimpleStringProperty(celldata.getValue().getTitleID()));
+		colTitle.setCellValueFactory(celldata -> new SimpleStringProperty(celldata.getValue().getTitleName()));
+		colDescription.setCellValueFactory(celldata -> new SimpleStringProperty(celldata.getValue().getDesciption()));
 			//colNumOfCopies.setCellValueFactory((celldata->new SimpleStringProperty("0")));
-			colAllCopies.setCellValueFactory((celldata->new SimpleStringProperty(titleDAO.getNumberAllcopies(celldata.getValue().getTitleID())+"")));
-			colLost_Damage.setCellValueFactory(celldata->new SimpleStringProperty(titleDAO.getNumbercopiesByStatus(celldata.getValue().getTitleID(), Item.LOST_DAMAGE)+""));
-			colOnHold.setCellValueFactory(celldata->new SimpleStringProperty(titleDAO.getNumbercopiesByStatus(celldata.getValue().getTitleID(), Item.ON_HOLD)+""));
-			colOnShelf.setCellValueFactory(celldata->new SimpleStringProperty(titleDAO.getNumbercopiesByStatus(celldata.getValue().getTitleID(), Item.ON_SHELF)+""));
-			colRented.setCellValueFactory(celldata->new SimpleStringProperty(titleDAO.getNumbercopiesByStatus(celldata.getValue().getTitleID(), Item.RENTED)+""));
-			colItemClass.setCellValueFactory(celldata->new SimpleStringProperty(celldata.getValue().getItemClass().getItemClassName()));
+		colAllCopies.setCellValueFactory((celldata -> new SimpleStringProperty(titleDAO.getNumberAllcopies(celldata.getValue().getTitleID()) + "")));
+		colLost_Damage.setCellValueFactory(celldata -> new SimpleStringProperty(titleDAO.getNumbercopiesByStatus(celldata.getValue().getTitleID(), Item.LOST_DAMAGE) + ""));
+		colOnHold.setCellValueFactory(celldata -> new SimpleStringProperty(titleDAO.getNumbercopiesByStatus(celldata.getValue().getTitleID(), Item.ON_HOLD) + ""));
+		colOnShelf.setCellValueFactory(celldata -> new SimpleStringProperty(titleDAO.getNumbercopiesByStatus(celldata.getValue().getTitleID(), Item.ON_SHELF) + ""));
+		colRented.setCellValueFactory(celldata -> new SimpleStringProperty(titleDAO.getNumbercopiesByStatus(celldata.getValue().getTitleID(), Item.RENTED) + ""));
+		colItemClass.setCellValueFactory(celldata -> new SimpleStringProperty(celldata.getValue().getItemClass().getItemClassName()));
 		table.setItems(tkList);
 	}
 

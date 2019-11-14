@@ -18,12 +18,7 @@
     -fx-opacity: 1;
 }
 
-.label-header {
-    -fx-font-size: 32pt;
-    -fx-font-family: "Segoe UI Light";
-    -fx-text-fill: #3d6cb9;
-    -fx-opacity: 1;
-}
+
 
 .table-view {
     -fx-base: white;
@@ -37,6 +32,7 @@
 .table-view .column-header-background {
     -fx-background-color: transparent;
 }
+
 
 .table-view .column-header, .table-view .filler {
     -fx-size: 20;
@@ -58,6 +54,21 @@
     -fx-opacity: 1;
 }
 
+#column-copies-parent .column-header .label {
+    -fx-alignment: center;
+}
+
+#column-copies-parent .column-header {
+    -fx-border-color: grey;
+}
+
+
+.label-header {
+    -fx-font-size: 8pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: #3d6cb9;
+    -fx-opacity: 1;
+}
 .table-view:focused .table-row-cell:filled:focused:selected {
     -fx-background-color: -fx-focus-color;
 }
@@ -106,14 +117,14 @@
 .tab-pane:top .tab-header-area .tab-header-background{
     -fx-padding: 5 22 5 22;
     -fx-background-radius: 0;
-    -fx-background-color: #070d59;
+    -fx-background-color: #34699a;
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
     -fx-font-size: 11pt;
     -fx-text-fill: #ceddef;
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
 }
 .tab-pane{
-    -fx-border-color: #5893d4;
+    -fx-border-color: transparent;
     -fx-border-width: 2;
     -fx-background-radius: 0;
 }
@@ -122,11 +133,11 @@
 }
 .tab-pane>*.tab-header-area>*.tab-header-background 
 {
-    -fx-background-color: -fx-outer-border, -fx-text-box-border, #1f3c88;
+    -fx-background-color: -fx-outer-border, -fx-text-box-border, #ff000c;
 }
 
 .tab-debt {
-    -fx-background-color: #1f3c88;
+    -fx-background-color: #408ab4;
 }
 .tab{
     -fx-padding: 5 22 5 22;
@@ -140,7 +151,7 @@
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
 }
 .tab:selected {
-    -fx-background-color: #1f3c88;
+    -fx-background-color: #408ab4;
 }
 #tab-text{
     -fx-text-fill: white;
@@ -265,6 +276,88 @@
 	
 }
 .back {
-	-fx-background-image:url('../img/Background.png');
+    -fx-background-color: #113f67;
 	-fx-background-size:cover;
+}
+
+#column-copies.column-header .label {
+    -fx-font-size: 8pt;
+    -fx-border-color: transparent;
+    -fx-alignment: center-left;
+}
+
+#column-copies.column-header {
+    -fx-border-color: transparent;
+}
+
+.text-area {
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: #c3c3c3;
+}
+
+.combo-box .list-cell {
+    -fx-background: white;
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-text-base-color;
+}
+
+.combo-box-popup .list-view {
+    -fx-background-color: white, white;
+}
+
+.combo-box-popup .list-view .list-cell {
+    -fx-background-color: white;
+}
+
+.combo-box-popup .list-view .list-cell:filled:selected, .combo-box-popup .list-view .list-cell:filled:selected:hover {
+    -fx-text-fill: -fx-selection-bar-text;
+}
+
+.combo-box-popup .list-view .list-cell:filled:hover {
+    -fx-background-color: white;
+    -fx-text-fill: -fx-text-inner-color;
+}
+
+.combo-box-base {
+    -fx-background-color: white, white, white, white;
+    -fx-padding: 0;
+}
+
+.combo-box-base:showing {
+    -fx-color: -fx-pressed-base;
+}
+
+.combo-box-base:disabled {
+    -fx-opacity: .4;
+}
+
+.text-field {
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: #c3c3c3;
+    -fx-background-color: transparent;
+}
+
+#button-danger {
+    -fx-background-color: #ff000a;
+}
+
+#button-success {
+    -fx-background-color: #66ae25;
+}
+
+#button-info {
+    -fx-background-color: #83a0ee;
+}
+
+#button-rental {
+    -fx-background-color: #8064a1;
+}
+
+#button-return {
+    -fx-background-color: #4aacc5;
+}
+
+#content {
+    -fx-border-color: #65c6c4;
+
 }
